@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pluginInfo>
+  <author>
+    <name>UrbanCode</name>
+    <email></email>
+    <website>http://urbancode.com</website>
+  </author>
+  <licenses>
+    <license></license>
+  </licenses>
+  <!--integrationType should be one of the following SCM, Automation, or Deploy -->
+  <integrationType>Automation</integrationType>
+  <categories>
+    <!--You may specify multiple categories like test, cloud, IBM-->
+    <category>example category</category>
+  </categories>
+  <versions>
+    <version name="1">
+      <!--Release Note may contain text or referance a file in the zip directory-->
+	  <releaseNote>
+        Example Release Note 
+	  </releaseNote>
+    </version>
+  </versions>
+</pluginInfo>
