@@ -31,7 +31,7 @@
   or 
   The plugin deploys to a middleware server 
   the Type would be "Deploy"
-  --->
+  -->
   
   <integration type=""/>
   
