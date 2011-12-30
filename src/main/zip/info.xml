@@ -43,20 +43,20 @@
   For example 
   https://github.com/...
   -->
-  
+  <!--
   <source url=""/>
-  
+  -->
   <!-- 
   **license type is NOT required**
   
   If your plugin uses any licensed software please acknowledge it by 
   listing the license type below  
   -->
-  
+  <!--
   <licenses>
     <license type=""/>
   </licenses>
-  
+  -->
   <!-- 
   **tool-description IS required**
   
@@ -83,11 +83,11 @@
   
   excepted values for type include: PDF, WEBSITE, VIDEO  
   -->
-  
+  <!--
   <related-info>
     <link title="" type="" description="" url =""/>
   </related-info>
-
+  -->
   <!-- 
   **meta-html in NOT required**
   
