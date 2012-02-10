@@ -132,32 +132,6 @@
         <directory>lib/test</directory>
       </delivery>
     </dependency>
-    
-    <!-- ############################################################ -->
-    <!-- USED WITH AXIS FOR SOAP                                      -->
-    <!-- ############################################################ -->
-<!--
-    <dependency>
-      <cs-project name="Apache Axis"/>
-      <criteria stamp="1.4"/>
-      <delivery artifact-set="Default">
-        <directory>lib</directory>
-      </delivery>
-    </dependency>
-    <dependency>
-      <cs-project name="Jakarta Commons Logging"/>
-      <criteria stamp="1.1"/>
-      <delivery artifact-set="Default">
-        <directory>lib</directory>
-      </delivery>
-    </dependency>
-    <dependency>
-      <cs-project name="Jakarta Commons Discovery"/>
-      <criteria stamp="0.2"/>
-      <delivery artifact-set="Default">
-        <directory>lib</directory>
-      </delivery>
-    </dependency>
--->
+
   </dependencies>
 </project>

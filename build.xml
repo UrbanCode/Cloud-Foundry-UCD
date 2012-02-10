@@ -203,6 +203,7 @@
       </fileset>
       <pathelement location="${build.main.classes.dir}"/>
       <pathelement location="${build.test.classes.dir}"/>
+      <path refid="classpath"/>
     </path>
     <!-- =================================================== -->
     <!-- TARGETS                                             -->
