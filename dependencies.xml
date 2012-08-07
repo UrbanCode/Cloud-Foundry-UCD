@@ -151,5 +151,20 @@
       </delivery>
     </dependency>
 
+    <!-- NATIVE OS SUPPORT -->
+    <dependency>
+        <ah-project name="WinAPI" workflow="build workflow [master]"/>
+        <criteria status="success"/>
+        <delivery artifact-set="Jars">
+            <directory>lib/test</directory>
+        </delivery>
+        <delivery artifact-set="x64 DLLs">
+            <directory>lib/test/native/windows/x64</directory>
+        </delivery>
+        <delivery artifact-set="x86 DLLs">
+            <directory>lib/test/native/windows/x86</directory>
+        </delivery>
+    </dependency>
+
   </dependencies>
 </project>
