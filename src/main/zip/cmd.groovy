@@ -1,11 +1,18 @@
 //This is an example step groovy to show the proper use of APTool
 import com.urbancode.air.AirPluginTool;
+import com.urbancode.air.CommandHelper;
 
 def apTool = new AirPluginTool(this.args[0], this.args[1]) //assuming that args[0] is input props file and args[1] is output props file
 
 def props = apTool.getStepProperties();
 
 def propValue = props['propName'];
+
+//example commandHelper
+def workDir = new File(".");
+def ch = new CommandHelper(workDir);
+def args = ['fileToExecute', 'arg1', 'arg2'];
+ch.runCommand("Message to display about running command", args);
 
 //do stuff here
 apTool.setOutputProperty("outPropName", "outPropValue");
