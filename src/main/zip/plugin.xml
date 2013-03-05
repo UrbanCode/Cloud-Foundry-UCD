@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <header>
-    <identifier id="com.urbancode.plugin.pluginName" name="PLugin Name" version="1"/>
+    <identifier id="com.urbancode.air.plugin.pluginName" name="Plugin Name" version="1"/>
     <description>
       Description
 	  </description>
@@ -25,6 +25,8 @@
         }
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
+      <arg value="-cp"/>
+      <arg path="classes"/>
       <arg file="cmd.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
