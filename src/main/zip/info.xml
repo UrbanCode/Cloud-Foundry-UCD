@@ -10,10 +10,10 @@
   or share their use case to help grow your plugin's functionality. 
   -->
   
-  <author name="UrbanCode">
-    <organization>UrbanCode</organization>
-    <email>info@urbancode.com</email>
-    <website>http://urbancode.com</website>
+  <author name="IBM UrbanCode">
+    <organization>IBM UrbanCode</organization>
+    <email>ucplugin@us.ibm.com</email>
+    <website>https://www.ibmdw.net/urbancode/plugins/</website>
     <bio></bio>
   </author>
   
