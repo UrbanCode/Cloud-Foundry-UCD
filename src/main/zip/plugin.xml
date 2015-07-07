@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
 - Licensed Materials - Property of IBM Corp.
 - IBM UrbanCode Deploy
@@ -7,12 +7,13 @@
 - U.S. Government Users Restricted Rights - Use, duplication or disclosure restricted by
 - GSA ADP Schedule Contract with IBM Corp.
 -->
-<plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <header>
     <identifier id="com.urbancode.air.plugin.pluginName" name="Plugin Name" version="1"/>
     <description>
       Description
-	  </description>
+    </description>
     <tag>step/location</tag>
   </header>
   <step-type name="StepTypeName">
