@@ -7,7 +7,7 @@
 - U.S. Government Users Restricted Rights - Use, duplication or disclosure restricted by
 - GSA ADP Schedule Contract with IBM Corp.
 -->
-<project name="#AHP_PROJECT_NAME#" default="all" basedir="."
+<project name="cloud-foundry" default="all" basedir="."
     xmlns:codestation="antlib:com.urbancode.codestation2.client">
 
     <property environment="env"/>
