@@ -6,10 +6,27 @@
 -
 - U.S. Government Users Restricted Rights - Use, duplication or disclosure restricted by
 - GSA ADP Schedule Contract with IBM Corp.
--->
-
-<plugin-upgrade
+--><plugin-upgrade
         xmlns="http://www.urbancode.com/UpgradeXMLSchema_v1"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <migrate to-version="13">
+        <migrate-command name="Push Application"/>
+        <migrate-command name="Execute CF Script"/>
+        <migrate-command name="Execute CF bash file"/>
+        <migrate-command name="Create Service"/>
+        <migrate-command name="Bind Service"/>
+        <migrate-command name="Unbind Service"/>
+        <migrate-command name="Map Route"/>
+        <migrate-command name="Unmap Route"/>
+        <migrate-command name="Delete App"/>
+        <migrate-command name="Start App"/>
+        <migrate-command name="Stop App"/>
+        <migrate-command name="Restart App"/>
+        <migrate-command name="Create Route"/>
+        <migrate-command name="Delete Route"/>
+        <migrate-command name="Create Domain"/>
+        <migrate-command name="Delete Domain"/>
+    </migrate>
 
 </plugin-upgrade>

@@ -1,25 +1,36 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<pluginInfo>
+<?xml version="1.0" encoding="UTF-8"?><!--
+
+/**
+ * © Copyright IBM Corporation 2015.
+ * This is licensed under the following license.
+ * The Eclipse Public 1.0 License (http://www.eclipse.org/legal/epl-v10.html)
+ * U.S. Government Users Restricted Rights:  Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+
+--><pluginInfo>
   <!-- Do not change the release-version, the build process injects it. -->
   <release-version>#RELEASE_VERSION#</release-version>
 
   <release-notes>
     <!--
+      **release-note IS required**
+
+      The plugin-version name must match the plugin version found in the plugin.xml file
+
       The release-note should document the changes, improvements, or bug fixes introduced
       with the new plugin version
 
-      The release-note may contain text
+      The release-note may contain text or reference a file in the plugin zip package
 
       For example your release note could be:
       Support for was added for version 10.0 for software X
+      or
+      releaseNotes/release1.html (where release1.html contains html formatted version information)
+      -->
 
-      To add a new release note add this with a description in it of the changes:
-      <release-note plugin-version="1">....</release-note>
-    -->
-
-    <release-note plugin-version="">
-
-    </release-note>
+      <release-note plugin-version="13">
+        Official UrbanCode integration. 
+      </release-note>
 
   </release-notes>
 </pluginInfo>
