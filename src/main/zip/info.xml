@@ -29,7 +29,11 @@
       -->
 
       <release-note plugin-version="13">
-        Official UrbanCode integration. 
+        Official UrbanCode integration.
+      </release-note>
+
+      <release-note plugin-version="14">
+        Added steps for deleting services and creating/deleting subdomains.
       </release-note>
 
   </release-notes>

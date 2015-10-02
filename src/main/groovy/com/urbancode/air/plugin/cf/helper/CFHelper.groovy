@@ -63,6 +63,26 @@ class CFHelper {
         logout()
     }
 
+    void createSubdomain() throws Exception{
+        def subdomain = props['subdomain']
+        def domain = props['domain']
+
+        setupEnvironment()
+
+        // Execute create-domain
+        try {
+            def commandArgs = ["cf", "create-domain", organization, subdomain + "." + domain]
+
+            helper.runCommand("Executing CF create-domain", commandArgs)
+        } catch(Exception e){
+            println "ERROR executing create-domain : ${e.message}"
+            throw new RuntimeException(e)
+        } finally {
+            logout()
+        }
+
+    }
+
     void createRoute() {
         def domain = props['domain']
         def hostname = props['hostname']
@@ -191,6 +211,47 @@ class CFHelper {
         }
 
         logout()
+    }
+
+    void deleteService() {
+        def name = props['name']
+
+        setupEnvironment()
+
+        // Execute delete-service
+        try {
+            def commandArgs = ["cf", "delete-service", name]
+
+            commandArgs << "-f"
+
+            helper.runCommand("Executing CF delete-service", commandArgs)
+        } catch(Exception e){
+            println "ERROR executing delete-service : ${e.message}"
+            throw new RuntimeException(e)
+        } finally {
+            logout()
+        }
+    }
+
+    void deleteSubdomain() {
+        def subdomain = props['subdomain']
+        def domain = props['domain']
+
+        setupEnvironment()
+
+        // Execute delete-domain
+        try {
+            def commandArgs = ["cf", "delete-domain", subdomain + "." + domain]
+
+            commandArgs << "-f"
+
+            helper.runCommand("Executing CF delete-domain", commandArgs)
+        } catch(Exception e){
+            println "ERROR executing delete-domain : ${e.message}"
+            throw new RuntimeException(e)
+        } finally {
+            logout()
+        }
     }
 
     void executeCFScript() {
