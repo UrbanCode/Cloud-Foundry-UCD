@@ -16,3 +16,6 @@
 /ecbin
 plugin-build.xml
 /bin
+
+# ignore translation file
+i18n-scraper.groovy

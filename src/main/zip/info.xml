@@ -35,6 +35,9 @@
       <release-note plugin-version="14">
         Added steps for deleting services and creating/deleting subdomains.
       </release-note>
+      <release-note plugin-version="15">
+        Added auto-discovery of cloud foundry environment on UCD and auto-configuration
+      </release-note>
 
   </release-notes>
 </pluginInfo>

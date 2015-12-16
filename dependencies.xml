@@ -8,7 +8,7 @@
 - GSA ADP Schedule Contract with IBM Corp.
 -->
 <project xmlns="http://www.urbancode.com/schema/cs/project-dependencies/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        name="cloud-foundry" workflow="build workflow [air]">
+        name="cloud-foundry" workflow="build workflow [master]">
 
   <dependencies conflictStrategy="FAIL">
 
@@ -55,6 +55,14 @@
       <criteria status="success"/>
       <delivery artifact-set="lib">
         <directory>lib/build</directory>
+      </delivery>
+    </dependency>
+
+    <dependency>
+      <ah-project name="uDeployRestClient" workflow="build workflow [master]"/>
+      <criteria status="success"/>
+      <delivery artifact-set="Dist">
+        <directory>lib</directory>
       </delivery>
     </dependency>
 

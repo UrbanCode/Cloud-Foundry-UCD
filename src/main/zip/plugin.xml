@@ -9,38 +9,42 @@
 -->
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <header>
-    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="14"/>
+    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="15"/>
     <description>
     The CloudFoundry plugin will use the CloudFoundry command line utility to interact with applications in a target CloudFoundry system.
     </description>
     <tag>Cloud/CloudFoundry</tag>
+    <server:required-server-version>6.0.1.0</server:required-server-version>
+    <server:dependencies>
+      <server:dependency plugin-id="com.urbancode.plugin.VFS" min-version="20"/>
+    </server:dependencies>
   </header>
   <step-type name="Bind Service">
     <description>Bind a CF service instance onto a CF application.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/CF_API}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="true">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/CF_USERNAME}" description="The user name of the account that will interact with Cloud Foundry system"/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/CF_PASSWORD}" description="The password of the account that will interact with Cloud Foundry system."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
       </property>
        <property name="org">
-        <property-ui type="textBox" label="Organization" default-value="${p?:resource/CF_ORG}" description="The name of the organization where the application will be deployed."/>
+        <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/CF_SPACE}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="application" required="true">
-        <property-ui type="textBox" label="Application Name" default-value="${p:component/CF_APPNAME}" description="Name of the application to bind the service to."/>
+        <server:property-ui type="textBox" label="Application Name" default-value="${p:component/cf.appName}" description="Name of the application to bind the service to."/>
       </property>
       <property name="service" required="true">
-        <property-ui type="textBox" label="Service name" default-value="${p:component/CF_SERVICE}" description="Name of the service to be bound."/>
+        <server:property-ui type="textBox" label="Service name" default-value="${p:component/cf.service}" description="Name of the service to be bound."/>
       </property>
       <property name="selfSigned">
-        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -63,25 +67,25 @@
     <description>Create a domain in an org.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/CF_API}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="true">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/CF_USERNAME}" description="The user name of the account that will interact with Cloud Foundry system"/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/CF_PASSWORD}" description="The password of the account that will interact with Cloud Foundry system."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
       </property>
        <property name="org" required="true">
-        <property-ui type="textBox" label="Organization" default-value="${p?:resource/CF_ORG}" description="The name of the organization where the application will be deployed."/>
+        <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/CF_SPACE}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="domain" required="true">
-        <property-ui type="textBox" label="Domain" default-value="${p:resource/CF_DOMAIN}" description="Name of the domain owning the route."/>
+        <server:property-ui type="textBox" label="Domain" default-value="${p:resource/cf.domain}" description="Name of the domain owning the route."/>
       </property>
-      <property name="selfSigned" >
-        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+      <property name="selfSigned">
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -104,28 +108,28 @@
     <description>Create a url route in a space.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/CF_API}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="true">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/CF_USERNAME}" description="The user name of the account that will interact with Cloud Foundry system"/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/CF_PASSWORD}" description="The password of the account that will interact with Cloud Foundry system."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
       </property>
        <property name="org">
-        <property-ui type="textBox" label="Organization" default-value="${p?:resource/CF_ORG}" description="The name of the organization where the application will be deployed."/>
+        <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/CF_SPACE}" description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}" description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="domain" required="true">
-        <property-ui type="textBox" label="Domain" default-value="${p:resource/CF_DOMAIN}" description="Name of the domain owning the route."/>
+        <server:property-ui type="textBox" label="Domain" default-value="${p:resource/cf.domain}" description="Name of the domain owning the route."/>
       </property>
       <property name="hostname">
-        <property-ui type="textBox" label="Hostname" description="The hostname within the domain for the url route."/>
+        <server:property-ui type="textBox" label="Hostname" description="The hostname within the domain for the url route."/>
       </property>
       <property name="selfSigned" >
-        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -145,34 +149,34 @@
     </command>
   </step-type>
   <step-type name="Create Service">
-    <description>Create a new CF_SERVICE.</description>
+    <description>Create a new Cloud Foundry Service.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/CF_API}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="true">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/CF_USERNAME}" description="The user name of the account that will interact with Cloud Foundry system"/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/CF_PASSWORD}" description="The password of the account that will interact with Cloud Foundry system."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
       </property>
        <property name="org">
-        <property-ui type="textBox" label="Organization" description="The name of the organization where the application will be deployed."/>
+        <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/CF_SPACE}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
-      </property>
-      <property name="name" required="true">
-        <property-ui type="textBox" label="Service name" default-value="${p:component/cf.name}" description="Name of the service."/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="service" required="true">
-        <property-ui type="textBox" label="Service type" default-value="${p:component/cf.type}"  description="Type of service."/>
+        <server:property-ui type="textBox" label="Service name" default-value="${p:component/cf.service}" description="Name of the service."/>
+      </property>
+      <property name="serviceType" required="true">
+        <server:property-ui type="textBox" label="Service type"  description="Type of service."/>
       </property>
       <property name="plan" required="true">
-        <property-ui type="textBox" label="Service plan" default-value="${p:component/cf.plan}"  description="Service plan."/>
+        <server:property-ui type="textBox" label="Service plan"  description="Service plan."/>
       </property>
       <property name="selfSigned">
-        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -195,25 +199,25 @@
     <description>Create a subdomain in an org.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/CF_API}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="true">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/CF_USERNAME}" description="The user name of the account that will interact with Cloud Foundry system"/>
+        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/CF_PASSWORD}" description="The password of the account that will interact with Cloud Foundry system."/>
+        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
       </property>
       <property name="org" required="true">
-        <property-ui type="textBox" label="Organization" default-value="${p?:resource/CF_ORG}" description="The name of the organization where the application will be deployed."/>
+        <property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/CF_SPACE}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="subdomain" required="true">
-        <property-ui type="textBox" label="Subdomain" default-value="${p:resource/CF_SUBDOMAIN}" description="Name of the subdomain i.e. myapp of myapp.domain.org."/>
+        <property-ui type="textBox" label="Subdomain" default-value="${p:resource/cf.subdomain}" description="Name of the subdomain i.e. myapp of myapp.domain.org."/>
       </property>
       <property name="domain" required="true">
-        <property-ui type="textBox" label="Domain" default-value="${p:resource/CF_DOMAIN}" description="Name of the domain i.e. domain.org of subdomain myapp.domain.org."/>
+        <property-ui type="textBox" label="Domain" default-value="${p:resource/cf.domain}" description="Name of the domain i.e. domain.org of subdomain myapp.domain.org."/>
       </property>
       <property name="selfSigned" >
         <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
@@ -239,28 +243,28 @@
     <description>Delete an application.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/CF_API}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="true">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/CF_USERNAME}" description="The user name of the account that will interact with Cloud Foundry system"/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/CF_PASSWORD}" description="The password of the account that will interact with Cloud Foundry system."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
       </property>
        <property name="org">
-        <property-ui type="textBox" label="Organization" description="The name of the organization where the application will be deployed."/>
+        <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/CF_SPACE}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
-      <property name="app" required="true">
-        <property-ui type="textBox" label="Application name" default-value="${p:component/CF_APPNAME}" description="Name of the application."/>
+      <property name="application" required="true">
+        <server:property-ui type="textBox" label="Application name" default-value="${p:component/cf.appName}" description="Name of the application."/>
       </property>
       <property name="delete_Routes">
-        <property-ui type="checkBox" label="Delete mapped routes" description="Also delete any mapped routes."/>
+        <server:property-ui type="checkBox" label="Delete mapped routes" description="Also delete any mapped routes."/>
       </property>
       <property name="selfSigned">
-        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -283,25 +287,25 @@
     <description>Delete a domain.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/CF_API}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="true">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/CF_USERNAME}" description="The user name of the account that will interact with Cloud Foundry system"/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/CF_PASSWORD}" description="The password of the account that will interact with Cloud Foundry system."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
       </property>
        <property name="org">
-        <property-ui type="textBox" label="Organization" description="The name of the organization where the application will be deployed."/>
+        <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/CF_SPACE}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="domain">
-        <property-ui type="textBox" label="Domain" default-value="${p?:resource/CF_DOMAIN" description="Name of the domain owning the route."/>
+        <server:property-ui type="textBox" label="Domain" default-value="${p?:resource/cf.domain}" description="Name of the domain to remove."/>
       </property>
       <property name="selfSigned" >
-        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -324,28 +328,28 @@
     <description>Delete a route.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/CF_API}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="true">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/CF_USERNAME}" description="The user name of the account that will interact with Cloud Foundry system"/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/CF_PASSWORD}" description="The password of the account that will interact with Cloud Foundry system."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
       </property>
        <property name="org">
-        <property-ui type="textBox" label="Organization" description="The name of the organization where the application will be deployed."/>
+        <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/CF_SPACE}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="domain">
-        <property-ui type="textBox" label="Domain" default-value="${p?:resource/CF_DOMAIN}" description="Name of the domain owning the route."/>
+        <server:property-ui type="textBox" label="Domain" default-value="${p?:resource/cf.domain}" description="Name of the domain owning the route."/>
       </property>
       <property name="hostname">
-        <property-ui type="textBox" label="Hostname" description="The hostname within the domain for the url route."/>
+        <server:property-ui type="textBox" label="Hostname" description="The hostname within the domain for the url route."/>
       </property>
       <property name="selfSigned" >
-        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -365,25 +369,25 @@
     </command>
   </step-type>
   <step-type name="Delete Service">
-    <description>Delete a CF_SERVICE.</description>
+    <description>Delete a Cloud Foundry Service.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/CF_API}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="true">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/CF_USERNAME}" description="The user name of the account that will interact with Cloud Foundry system"/>
+        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/CF_PASSWORD}" description="The password of the account that will interact with Cloud Foundry system."/>
+        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
       </property>
       <property name="org">
-        <property-ui type="textBox" label="Organization" description="The name of the organization where the application will be deployed."/>
+        <property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/CF_SPACE}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="name" required="true">
-        <property-ui type="textBox" label="Service name" default-value="${p:component/cf.name}" description="Name of the service."/>
+        <property-ui type="textBox" label="Service name" default-value="${p:component/cf.service}" description="Name of the service."/>
       </property>
       <property name="selfSigned">
         <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
@@ -409,25 +413,25 @@
     <description>Delete a subdomain.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/CF_API}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="true">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/CF_USERNAME}" description="The user name of the account that will interact with Cloud Foundry system"/>
+        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/CF_PASSWORD}" description="The password of the account that will interact with Cloud Foundry system."/>
+        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
       </property>
       <property name="org">
-        <property-ui type="textBox" label="Organization" description="The name of the organization where the application will be deployed."/>
+        <property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/CF_SPACE}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="subdomain" required="true">
-        <property-ui type="textBox" label="Subdomain" default-value="${p?:resource/CF_SUBDOMAIN" description="Name of the subdomain i.e. myapp of myapp.domain.org."/>
+        <property-ui type="textBox" label="Subdomain" default-value="${p?:resource/cf.subdomain" description="Name of the subdomain i.e. myapp of myapp.domain.org."/>
       </property>
       <property name="domain" required="true">
-        <property-ui type="textBox" label="Domain" default-value="${p?:resource/CF_DOMAIN" description="Name of the domain i.e. domain.org of myapp.domain.org."/>
+        <property-ui type="textBox" label="Domain" default-value="${p?:resource/cf.domain}" description="Name of the domain i.e. domain.org of myapp.domain.org."/>
       </property>
       <property name="selfSigned" >
         <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
@@ -453,28 +457,28 @@
     <description>Execute a CF script. The context will be setup with the authenticated user and target space. cf.command line will be available to the script.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/CF_API}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="true">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/CF_USERNAME}" description="The user name of the account that will interact with Cloud Foundry system"/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/CF_PASSWORD}" description="The password of the account that will interact with Cloud Foundry system."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
       </property>
        <property name="org">
-        <property-ui type="textBox" label="Organization" default-value="${p?:resource/CF_ORG}" description="The name of the organization where the application will be deployed."/>
+        <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/CF_SPACE}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}" description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="script" required="true">
-        <property-ui type="textAreaBox" label="Script" default-value="${p:component/cf.script}" description="Each command needs to be on a new line."/>
+        <server:property-ui type="textAreaBox" label="Script" description="Each command needs to be on a new line."/>
       </property>
       <property name="args">
-        <property-ui type="textBox" label="Arguments" description="Arguments to be passed to the script."/>
+        <server:property-ui type="textBox" label="Arguments" description="Arguments to be passed to the script."/>
       </property>
       <property name="selfSigned" >
-        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -497,28 +501,28 @@
     <description>Execute a bash file. The context will be setup with the authenticated user and target space. CF command line will be available to the bash script.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/CF_API}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="true">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/CF_USERNAME}" description="The user name of the account that will interact with Cloud Foundry system"/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/CF_PASSWORD}" description="The password of the account that will interact with Cloud Foundry system."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
       </property>
        <property name="org">
-        <property-ui type="textBox" label="Organization" default-value="${p?:resource/CF_ORG}" description="The name of the organization where the application will be deployed."/>
+        <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/CF_SPACE}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="script" required="true">
-        <property-ui type="textBox" label="Script" description="Path to the cf.bash file."/>
+        <server:property-ui type="textBox" label="Script" description="Path to the cf.bash file."/>
       </property>
       <property name="args">
-        <property-ui type="textBox" label="Arguments" description="Arguments to be passed to the script."/>
+        <server:property-ui type="textBox" label="Arguments" description="Arguments to be passed to the script."/>
       </property>
       <property name="selfSigned" >
-        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -541,31 +545,31 @@
     <description>Add a url route to an application.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/CF_API}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="true">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/CF_USERNAME}" description="The user name of the account that will interact with Cloud Foundry system"/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/CF_PASSWORD}" description="The password of the account that will interact with Cloud Foundry system."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
       </property>
        <property name="org">
-        <property-ui type="textBox" label="Organization" default-value="${p?:resource/CF_ORG}" description="The name of the organization where the application will be deployed."/>
+        <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/CF_SPACE}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
-      <property name="app" required="true">
-        <property-ui type="textBox" label="Application name" default-value="${p:component/CF_APPNAME}" description="Name of the application."/>
+      <property name="application" required="true">
+        <server:property-ui type="textBox" label="Application name" default-value="${p:component/cf.appName}" description="Name of the application."/>
       </property>
       <property name="domain" required="true">
-        <property-ui type="textBox" label="Domain" default-value="${p:resource/CF_DOMAIN}" description="The domain to use. (e.g. example.com)."/>
+        <server:property-ui type="textBox" label="Domain" default-value="${p:resource/cf.domain}" description="The domain to use. (e.g. example.com)."/>
       </property>
       <property name="hostname">
-        <property-ui type="textBox" label="Hostname" description="The hostname within the domain for the url route."/>
+        <server:property-ui type="textBox" label="Hostname" description="The hostname within the domain for the url route."/>
       </property>
       <property name="selfSigned" >
-        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -588,70 +592,70 @@
     <description>Push application with or without a manifest file. If a manifest file is found then properties are used as overrides.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/CF_API}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="true">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/CF_USERNAME}" description="The user name of the account that will interact with Cloud Foundry system"/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/CF_PASSWORD}" description="The password of the account that will interact with Cloud Foundry system."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
       </property>
       <property name="appName">
-        <property-ui type="textBox" label="Application Name" description="The name of the application to use when deployed. Required if not using a manifest."/>
+        <server:property-ui type="textBox" label="Application Name" description="The name of the application to use when deployed. Required if not using a manifest."/>
       </property>
       <property name="path">
-        <property-ui type="textBox" label="Application Path" description="Name of zip file or other file to push. If this file isn't in your working directory you must specify a full file path. (Otherwise just the name of the file e.g. 'myApp.zip')"/>
+        <server:property-ui type="textBox" label="Application Path" description="Name of zip file or other file to push. If this file isn't in your working directory you must specify a full file path. (Otherwise just the name of the file e.g. 'myApp.zip')"/>
       </property>
        <property name="org">
-        <property-ui type="textBox" label="Organization" default-value="${p?:resource/CF_ORG}" description="The name of the organization where the application will be deployed."/>
+        <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/CF_SPACE}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="manifest">
-        <property-ui type="textBox" label="Manifest file" description="Name of the manifest file. If this file isn't in your working directory you must specify a full file path. (Otherwise just the name of the file e.g. 'manifest.xml')"/>
+        <server:property-ui type="textBox" label="Manifest file" description="Name of the manifest file. If this file isn't in your working directory you must specify a full file path. (Otherwise just the name of the file e.g. 'manifest.xml')"/>
       </property>
       <property name="domain">
-        <property-ui type="textBox" label="Domain" default-value="${p?:resource/CF_DOMAIN}" description="Set a custom domain to be used when deploying the application."/>
+        <server:property-ui type="textBox" label="Domain" default-value="${p?:resource/cf.domain}" description="Set a custom domain to be used when deploying the application."/>
       </property>
       <property name="subdomain">
-        <property-ui type="textBox" label="Sub-domain" description="Define a sub-domain for your application. This is useful to ensure that the URL route for the application is unique within the domain."/>
+        <server:property-ui type="textBox" label="Sub-domain" description="Define a sub-domain for your application. This is useful to ensure that the URL route for the application is unique within the domain."/>
       </property>
       <property name="instances">
-        <property-ui type="textBox" label="Number of instances" default-value="1" description="The number of instances of the application that will be created."/>
+        <server:property-ui type="textBox" label="Number of instances" default-value="1" description="The number of instances of the application that will be created."/>
       </property>
       <property name="memory">
-        <property-ui type="textBox" label="Memory limit" description="The memory limit (e.g., 256M, 1024M, 1G)."/>
+        <server:property-ui type="textBox" label="Memory limit" description="The memory limit (e.g., 256M, 1024M, 1G)."/>
       </property>
       <property name="disk">
-        <property-ui type="textBox" label="Disk limit" description="The disk limit (e.g. 256M, 1024M, 1G)."/>
+        <server:property-ui type="textBox" label="Disk limit" description="The disk limit (e.g. 256M, 1024M, 1G)."/>
       </property>
       <property name="buildpack">
-        <property-ui type="textBox" label="Custom buildpack" description="Custom buildpack by name (e.g. my-buildpack) or GIT URL (e.g. https://github.com/heroku/heroku-buildpack-play.git)."/>
+        <server:property-ui type="textBox" label="Custom buildpack" description="Custom buildpack by name (e.g. my-buildpack) or GIT URL (e.g. https://github.com/heroku/heroku-buildpack-play.git)."/>
       </property>
       <property name="stack">
-        <property-ui type="textBox" label="Stack" description=" Stack to use (a stack is a pre-built file system, including an operating system, that can run apps)."/>
+        <server:property-ui type="textBox" label="Stack" description=" Stack to use (a stack is a pre-built file system, including an operating system, that can run apps)."/>
       </property>
       <property name="timeout">
-        <property-ui type="textBox" label="Timeout" description="Maximum time (in seconds) to wait for application start, other server side timeouts may apply."/>
+        <server:property-ui type="textBox" label="Timeout" description="Maximum time (in seconds) to wait for application start, other server side timeouts may apply."/>
       </property>
       <property name="nostart">
-       <property-ui type="checkBox" label="No start" description="Does not start the application if selected."/>
+       <server:property-ui type="checkBox" label="No start" description="Does not start the application if selected."/>
       </property>
       <property name="noroute">
-       <property-ui type="checkBox" label="No route" description="Does not create a URL route for the application if selected. Manually create and map a route later."/>
+       <server:property-ui type="checkBox" label="No route" description="Does not create a URL route for the application if selected. Manually create and map a route later."/>
       </property>
       <property name="nomanifest">
-       <property-ui type="checkBox" label="No manifest" description="Ignore the manifest file if one exists."/>
+       <server:property-ui type="checkBox" label="No manifest" description="Ignore the manifest file if one exists."/>
       </property>
       <property name="nohostname">
-       <property-ui type="checkBox" label="No hostname" description="Map the root domain to this application."/>
+       <server:property-ui type="checkBox" label="No hostname" description="Map the root domain to this application."/>
       </property>
       <property name="randomroute">
-       <property-ui type="checkBox" label="Random route" description="Create a random route for this app."/>
+       <server:property-ui type="checkBox" label="Random route" description="Create a random route for this app."/>
       </property>
       <property name="selfSigned" >
-        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -674,25 +678,25 @@
     <description>Restart an application.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/CF_API}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="true">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/CF_USERNAME}" description="The user name of the account that will interact with Cloud Foundry system"/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/CF_PASSWORD}" description="The password of the account that will interact with Cloud Foundry system."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
       </property>
        <property name="org">
-        <property-ui type="textBox" label="Organization" default-value="${p?:resource/CF_ORG}" description="The name of the organization where the application will be deployed."/>
+        <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/CF_SPACE}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
-      <property name="appName" required="true">
-        <property-ui type="textBox" label="Application name" default-value="${p:component/CF_APPNAME}" description="Name of the application."/>
+      <property name="application" required="true">
+        <server:property-ui type="textBox" label="Application name" default-value="${p:component/cf.appName}" description="Name of the application."/>
       </property>
       <property name="selfSigned" >
-        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -715,25 +719,25 @@
     <description>Start an application.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/CF_API}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="true">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/CF_USERNAME}" description="The user name of the account that will interact with Cloud Foundry system"/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/CF_PASSWORD}" description="The password of the account that will interact with Cloud Foundry system."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
       </property>
        <property name="org">
-        <property-ui type="textBox" label="Organization" default-value="${p?:resource/CF_ORG}" description="The name of the organization where the application will be deployed."/>
+        <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/CF_SPACE}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
-      <property name="appName" required="true">
-        <property-ui type="textBox" label="Application name" default-value="${p:component/CF_APPNAME}" description="Name of the application."/>
+      <property name="application" required="true">
+        <server:property-ui type="textBox" label="Application name" default-value="${p:component/cf.appName}" description="Name of the application."/>
       </property>
       <property name="selfSigned" >
-        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -756,25 +760,25 @@
     <description>Stop an application.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/CF_API}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="true">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/CF_USERNAME}" description="The user name of the account that will interact with Cloud Foundry system"/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/CF_PASSWORD}" description="The password of the account that will interact with Cloud Foundry system."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
       </property>
        <property name="org">
-        <property-ui type="textBox" label="Organization" default-value="${p?:resource/CF_ORG}" description="The name of the organization where the application will be deployed."/>
+        <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/CF_SPACE}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
-      <property name="app" required="true">
-        <property-ui type="textBox" label="Application name" default-value="${p:component/CF_APPNAME}" description="Name of the application."/>
+      <property name="application" required="true">
+        <server:property-ui type="textBox" label="Application name" default-value="${p:component/cf.appName}" description="Name of the application."/>
       </property>
       <property name="selfSigned" >
-        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -797,28 +801,28 @@
     <description>Unbind a CF Service from a cf.application.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/CF_API}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="true">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/CF_USERNAME}" description="The user name of the account that will interact with Cloud Foundry system"/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/CF_PASSWORD}" description="The password of the account that will interact with Cloud Foundry system."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
       </property>
        <property name="org">
-        <property-ui type="textBox" label="Organization" default-value="${p?:resource/CF_ORG}" description="The name of the organization where the application will be deployed."/>
+        <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/CF_SPACE}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="application" required="true">
-        <property-ui type="textBox" label="Application name" default-value="${p:component/CF_APPNAME}" description="Name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p:component/cf.appName}" description="Name of the application."/>
       </property>
       <property name="service" required="true">
-        <property-ui type="textBox" label="Service name" default-value="${p:component/CF_SERVICE}" description="Name of the service."/>
+        <server:property-ui type="textBox" label="Service name" default-value="${p:component/cf.service}" description="Name of the service."/>
       </property>
       <property name="selfSigned" >
-        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -841,31 +845,31 @@
     <description>Remove a url route to an application.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/CF_API}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="true">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/CF_USERNAME}" description="The user name of the account that will interact with Cloud Foundry system"/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
       </property>
       <property name="password" required="true">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/CF_PASSWORD}" description="The password of the account that will interact with Cloud Foundry system."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
       </property>
        <property name="org">
-        <property-ui type="textBox" label="Organization" default-value="${p?:resource/CF_ORG}" description="The name of the organization where the application will be deployed."/>
+        <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/CF_SPACE}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
-      <property name="app" required="true">
-        <property-ui type="textBox" label="Application name" default-value="${p:component/CF_APPNAME}" description="Name of the application."/>
+      <property name="application" required="true">
+        <server:property-ui type="textBox" label="Application name" default-value="${p:component/cf.appName}" description="Name of the application."/>
       </property>
       <property name="domain" required="true">
-        <property-ui type="textBox" label="Domain" default-value="${p:resource/CF_DOMAIN}" description="The domain to use. (e.g. example.com)."/>
+        <server:property-ui type="textBox" label="Domain" default-value="${p:resource/cf.domain}" description="The domain to use. (e.g. example.com)."/>
       </property>
       <property name="hostname">
-        <property-ui type="textBox" label="Hostname" description="The hostname within the domain for the url route."/>
+        <server:property-ui type="textBox" label="Hostname" description="The hostname within the domain for the url route."/>
       </property>
       <property name="selfSigned" >
-        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -884,4 +888,145 @@
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>
   </step-type>
+  <step-type name="CF Auto-Configure">
+    <description>Discover and configure all organizations and spaces for each organization into a resource tree in Urbancode Deploy.</description>
+    <properties>
+      <property name="api">
+        <server:property-ui type="textBox" default-value="${p?:resource/cf.api}" label="Cloud Foundry API"
+          description="The url of the Cloud Foundry API endpoint."/>
+      </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
+      </property>
+      <property name="user" required="true">
+        <server:property-ui type="textBox" default-value="${p:resource/cf.username}" label="Cloud Foundry Username"
+          description="The username to authenticate with the Cloud Foundry server."/>
+      </property>
+      <property name="password" required="true">
+        <server:property-ui type="textBox" default-value="${p:resource/cf.password}" label="Cloud Foundry Password"
+          description="The password to authenticate with the Cloud Foundry server."/>
+      </property>
+      <property name="resourcePath">
+        <server:property-ui type="textBox" default-value="${p?:resource.path}" label="Resource"
+          description="The Resource being configured" hidden="true"/>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg value="-cp"/>
+      <arg path="classes:lib/uDeployRestClient.jar"/>
+      <arg file="configureCF.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+
+    <server:role>CloudFoundryController</server:role>
+    <server:type>AUTO_CONFIGURE</server:type>
+  </step-type>
+  <step-type name="CF Discovery">
+    <description>This step will discover if Cloud Foundry is on an agent by checking common installation paths.  If it is, it will assign the role to the resource and set the command path property.</description>
+    <properties>
+      <property name="resourcePath">
+        <server:property-ui type="textBox" default-value="${p:resource.path}" label="Resource"
+          description="The Resource being configured" hidden="true"/>
+      </property>
+      <property name="overrideCommandPath">
+        <server:property-ui type="textBox" default-value="${p?:agent/cf.commandPath}" label="Override CF CLI Path"
+          description="Provide the full path to the cf executable file to override the auto discovery path."/>
+      </property>
+      <property name="apiEndpoint">
+        <server:property-ui type="textBox" default-value="${p?:agent/cf.api}" label="API Endpoint"
+          description="Provide the API Endpoint if the config.json file does not exist or is not configured correctly
+            on the agent to be used during discovery."/>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg value="-cp"/>
+      <arg path="classes:lib/uDeployRestClient.jar"/>
+      <arg file="discoverCF.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+    <server:type>AUTO_DISCOVERY</server:type>
+  </step-type>
+
+        <!-- ============================================= -->
+        <!-- CF Controller Role                             -->
+        <!-- ============================================= -->
+
+  <server:property-group name="CloudFoundryController" type="ResourceRole" default-name-property="cf.api">
+    <server:description>Role for resources that represents a Cloud Controller in a Cloud Foundry instance.</server:description>
+    <server:allowed-parent-roles/>
+    <server:property name="cf.api" required="true">
+      <server:property-ui type="textBox" label="Name" description="The url of the Cloud Foundry API endpoint"/>
+    </server:property>
+    <server:property name="cf.commandPath">
+      <server:property-ui description="The path to the directory where the cf command line executable resides." label="Cloud Foundry Executable"
+        type="textBox"/>
+    </server:property>
+    <server:property name="cf.username">
+      <server:property-ui type="textBox" label="Cloud Foundry User" description="The Cloud Foundry username."/>
+    </server:property>
+    <server:property name="cf.password">
+      <server:property-ui type="secureBox" label="Cloud Foundry Password" description="The Cloud Foundry password to use."/>
+    </server:property>
+    <server:default-child-folders>
+      <server:default-child-folder>Organizations</server:default-child-folder>
+    </server:default-child-folders>
+  </server:property-group>
+
+        <!-- ============================================= -->
+        <!-- CF Organization Role                             -->
+        <!-- ============================================= -->
+
+  <server:property-group name="CloudFoundryOrganization" type="ResourceRole" default-name-property="cf.org">
+    <server:description>Role for resources that represents a Cloud Foundry organization in a Cloud Foundry instance.</server:description>
+    <server:allowed-parent-roles>
+      <server:allowed-parent-role>
+        <server:allowed-role-name>CloudFoundryController</server:allowed-role-name>
+        <server:folder-name>Organizations</server:folder-name>
+      </server:allowed-parent-role>
+    </server:allowed-parent-roles>
+    <server:allowed-parent-roles/>
+    <server:property name="cf.org" required="true">
+      <server:property-ui type="textBox" label="Name" description="The Name of the Cloud Foundry organization."/>
+    </server:property>
+    <server:default-child-folders>
+      <server:default-child-folder>Spaces</server:default-child-folder>
+    </server:default-child-folders>
+  </server:property-group>
+
+        <!-- ============================================= -->
+        <!-- CF Space Role                             -->
+        <!-- ============================================= -->
+
+  <server:property-group name="CloudFoundrySpace" type="ResourceRole" default-name-property="cf.space">
+    <server:description>Role for resources that represents a Cloud Foundry space within an organization in a Cloud Foundry instance.</server:description>
+    <server:allowed-parent-roles>
+      <server:allowed-parent-role>
+        <server:allowed-role-name>CloudFoundryOrganization</server:allowed-role-name>
+        <server:folder-name>Spaces</server:folder-name>
+      </server:allowed-parent-role>
+    </server:allowed-parent-roles>
+    <server:allowed-parent-roles/>
+    <server:property name="cf.space" required="true">
+      <server:property-ui type="textBox" label="Name" description="The Name of the Cloud Foundry space."/>
+    </server:property>
+  </server:property-group>
 </plugin>

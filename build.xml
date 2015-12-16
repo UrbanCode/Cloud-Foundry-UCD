@@ -17,8 +17,9 @@
     <defaultexcludes add="**/*.bom"/>
 
     <!-- AHP settings -->
-    <property name="ahp.branch" value="air" />
+    <property name="ahp.branch" value="master" />
     <property name="ahp.project.name" value="${ant.project.name}" />
+    <property name="ahp.workflow.name" value="build workflow [${ahp.branch}]" />
 
     <!-- =================================================== -->
     <!-- PROJECT STRUCTURE                                   -->

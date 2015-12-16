@@ -10,25 +10,299 @@
         xmlns="http://www.urbancode.com/UpgradeXMLSchema_v1"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-    <migrate to-version="13">
-        <migrate-command name="Push Application"/>
+     <migrate to-version="10">
+        <migrate-command name="Bind Service"/>
+        <migrate-command name="Create Domain"/>
+        <migrate-command name="Create Route"/>
+        <migrate-command name="Create Service"/>
+        <migrate-command name="Delete App"/>
+        <migrate-command name="Delete Domain"/>
+        <migrate-command name="Delete Route"/>
         <migrate-command name="Execute CF Script"/>
         <migrate-command name="Execute CF bash file"/>
-        <migrate-command name="Create Service"/>
-        <migrate-command name="Bind Service"/>
-        <migrate-command name="Unbind Service"/>
         <migrate-command name="Map Route"/>
-        <migrate-command name="Unmap Route"/>
-        <migrate-command name="Delete App"/>
+        <migrate-command name="Push Application"/>
+        <migrate-command name="Restart App"/>
         <migrate-command name="Start App"/>
         <migrate-command name="Stop App"/>
-        <migrate-command name="Restart App"/>
-        <migrate-command name="Create Route"/>
-        <migrate-command name="Delete Route"/>
-        <migrate-command name="Create Domain"/>
-        <migrate-command name="Delete Domain"/>
+        <migrate-command name="Unbind Service"/>
+        <migrate-command name="Unmap Route"/>
     </migrate>
 
-    <migrate to-version="14"/>
+    <migrate to-version="11">
+        <migrate-command name="Bind Service"/>
+        <migrate-command name="Create Domain"/>
+        <migrate-command name="Create Route"/>
+        <migrate-command name="Create Service"/>
+        <migrate-command name="Delete App"/>
+        <migrate-command name="Delete Domain"/>
+        <migrate-command name="Delete Route"/>
+        <migrate-command name="Execute CF Script"/>
+        <migrate-command name="Execute CF bash file"/>
+        <migrate-command name="Map Route"/>
+        <migrate-command name="Push Application"/>
+        <migrate-command name="Restart App"/>
+        <migrate-command name="Start App"/>
+        <migrate-command name="Stop App"/>
+        <migrate-command name="Unbind Service"/>
+        <migrate-command name="Unmap Route"/>
+    </migrate>
 
+    <migrate to-version="12">
+        <migrate-command name="Bind Service"/>
+        <migrate-command name="Create Domain"/>
+        <migrate-command name="Create Route"/>
+        <migrate-command name="Create Service"/>
+        <migrate-command name="Delete App"/>
+        <migrate-command name="Delete Domain"/>
+        <migrate-command name="Delete Route"/>
+        <migrate-command name="Execute CF Script"/>
+        <migrate-command name="Execute CF bash file"/>
+        <migrate-command name="Map Route"/>
+        <migrate-command name="Push Application"/>
+        <migrate-command name="Restart App"/>
+        <migrate-command name="Start App"/>
+        <migrate-command name="Stop App"/>
+        <migrate-command name="Unbind Service"/>
+        <migrate-command name="Unmap Route"/>
+    </migrate>
+
+    <migrate to-version="13">
+        <migrate-command name="Bind Service"/>
+        <migrate-command name="Create Domain"/>
+        <migrate-command name="Create Route"/>
+        <migrate-command name="Create Service"/>
+        <migrate-command name="Delete App"/>
+        <migrate-command name="Delete Domain"/>
+        <migrate-command name="Delete Route"/>
+        <migrate-command name="Execute CF Script"/>
+        <migrate-command name="Execute CF bash file"/>
+        <migrate-command name="Map Route"/>
+        <migrate-command name="Push Application"/>
+        <migrate-command name="Restart App"/>
+        <migrate-command name="Start App"/>
+        <migrate-command name="Stop App"/>
+        <migrate-command name="Unbind Service"/>
+        <migrate-command name="Unmap Route"/>
+    </migrate>
+
+    <migrate to-version="14">
+        <migrate-command name="Bind Service"/>
+        <migrate-command name="Create Domain"/>
+        <migrate-command name="Create Route"/>
+        <migrate-command name="Create Service"/>
+        <migrate-command name="Create Subdomain"/>
+        <migrate-command name="Delete App"/>
+        <migrate-command name="Delete Domain"/>
+        <migrate-command name="Delete Route"/>
+        <migrate-command name="Delete Service"/>
+        <migrate-command name="Delete Subdomain"/>
+        <migrate-command name="Execute CF Script"/>
+        <migrate-command name="Execute CF bash file"/>
+        <migrate-command name="Map Route"/>
+        <migrate-command name="Push Application"/>
+        <migrate-command name="Restart App"/>
+        <migrate-command name="Start App"/>
+        <migrate-command name="Stop App"/>
+        <migrate-command name="Unbind Service"/>
+        <migrate-command name="Unmap Route"/>
+    </migrate>
+
+    <migrate to-version="15">
+        <migrate-command name="Bind Service">
+          <migrate-properties>
+            <migrate-property name="api" default="${p:resource/cf.api}"/>
+            <migrate-property name="user" default="${p:resource/cf.username}"/>
+            <migrate-property name="password" default="${p:resource/cf.password}"/>
+            <migrate-property name="org" default="${p:resource/cf.org}"/>
+            <migrate-property name="space" default="${p?:resource/cf.space}"/>
+            <migrate-property name="application" default="${p:component/cf.appName}"/>
+            <migrate-property name="service" default="${p:component/cf.service}"/>
+          </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Create Domain">
+          <migrate-properties>
+            <migrate-property name="api" default="${p:resource/cf.api}"/>
+            <migrate-property name="user" default="${p:resource/cf.username}"/>
+            <migrate-property name="password" default="${p:resource/cf.password}"/>
+            <migrate-property name="org" default="${p?:resource/cf.org}"/>
+            <migrate-property name="space" default="${p?:resource/cf.space}"/>
+            <migrate-property name="domain" default="${p:resource/cf.domain}"/>
+          </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Create Route">
+          <migrate-properties>
+            <migrate-property name="api" default="${p:resource/cf.api}"/>
+            <migrate-property name="user" default="${p:resource/cf.username}"/>
+            <migrate-property name="password" default="${p:resource/cf.password}"/>
+            <migrate-property name="org" default="${p?:resource/cf.org}"/>
+            <migrate-property name="space" default="${p?:resource/cf.space}"/>
+            <migrate-property name="domain" default="${p:resource/cf.domain}"/>
+          </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Create Service">
+            <migrate-properties>
+            <migrate-property name="api" default="${p:resource/cf.api}"/>
+            <migrate-property name="user" default="${p:resource/cf.username}"/>
+            <migrate-property name="password" default="${p:resource/cf.password}"/>
+            <migrate-property name="org" default="${p?:resource/cf.org}"/>
+            <migrate-property name="space" default="${p?:resource/cf.space}"/>
+            <migrate-property name="domain" default="${p?:resource/cf.domain}"/>
+            <migrate-property name="service" default="${p:component/cf.service}"/>
+          </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Delete App">
+          <migrate-properties>
+            <migrate-property name="api" default="${p:resource/cf.api}"/>
+            <migrate-property name="user" default="${p:resource/cf.username}"/>
+            <migrate-property name="password" default="${p:resource/cf.password}"/>
+            <migrate-property name="org" default="${p?:resource/cf.org}"/>
+            <migrate-property name="space" default="${p?:resource/cf.space}"/>
+            <migrate-property old="app" name="application" default="${p:component/cf.appName}"/>
+          </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Delete Domain">
+          <migrate-properties>
+            <migrate-property name="api" default="${p:resource/cf.api}"/>
+            <migrate-property name="user" default="${p:resource/cf.username}"/>
+            <migrate-property name="password" default="${p:resource/cf.password}"/>
+            <migrate-property name="org" default="${p?:resource/cf.org}"/>
+            <migrate-property name="space" default="${p?:resource/cf.space}"/>
+            <migrate-property name="domain" default="${p?:resource/cf.domain}"/>
+          </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Delete Route">
+          <migrate-properties>
+            <migrate-property name="api" default="${p:resource/cf.api}"/>
+            <migrate-property name="user" default="${p:resource/cf.username}"/>
+            <migrate-property name="password" default="${p:resource/cf.password}"/>
+            <migrate-property name="org" default="${p?:resource/cf.org}"/>
+            <migrate-property name="space" default="${p?:resource/cf.space}"/>
+            <migrate-property name="domain" default="${p?:resource/cf.domain}"/>
+          </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Execute CF Script">
+          <migrate-properties>
+            <migrate-property name="api" default="${p:resource/cf.api}"/>
+            <migrate-property name="user" default="${p:resource/cf.username}"/>
+            <migrate-property name="password" default="${p:resource/cf.password}"/>
+            <migrate-property name="org" default="${p?:resource/cf.org}"/>
+            <migrate-property name="space" default="${p?:resource/cf.space}"/>
+            <migrate-property name="script" default="" />
+          </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Execute CF bash file">
+          <migrate-properties>
+            <migrate-property name="api" default="${p:resource/cf.api}"/>
+            <migrate-property name="user" default="${p:resource/cf.username}"/>
+            <migrate-property name="password" default="${p:resource/cf.password}"/>
+            <migrate-property name="org" default="${p?:resource/cf.org}"/>
+            <migrate-property name="space" default="${p?:resource/cf.space}"/>
+            <migrate-property old="app" name="application" default="${p:component/cf.appName}"/>
+          </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Map Route">
+          <migrate-properties>
+            <migrate-property name="api" default="${p:resource/cf.api}"/>
+            <migrate-property name="user" default="${p:resource/cf.username}"/>
+            <migrate-property name="password" default="${p:resource/cf.password}"/>
+            <migrate-property name="org" default="${p?:resource/cf.org}"/>
+            <migrate-property name="space" default="${p?:resource/cf.space}"/>
+            <migrate-property old="app" name="application" default="${p:component/cf.appName}"/>
+            <migrate-property name="domain" default="${p:resource/cf.domain}"/>
+          </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Push Application">
+          <migrate-properties>
+            <migrate-property name="api" default="${p:resource/cf.api}"/>
+            <migrate-property name="user" default="${p:resource/cf.username}"/>
+            <migrate-property name="password" default="${p:resource/cf.password}"/>
+            <migrate-property name="org" default="${p?:resource/cf.org}"/>
+            <migrate-property name="space" default="${p?:resource/cf.space}"/>
+            <migrate-property name="domain" default="${p?:resource/cf.domain}"/>
+          </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Restart App">
+           <migrate-properties>
+             <migrate-property name="api" default="${p:resource/cf.api}"/>
+             <migrate-property name="user" default="${p:resource/cf.username}"/>
+             <migrate-property name="password" default="${p:resource/cf.password}"/>
+             <migrate-property name="org" default="${p?:resource/cf.org}"/>
+             <migrate-property name="space" default="${p?:resource/cf.space}"/>
+             <migrate-property old="appName" name="application" default="${p:component/cf.appName}"/>
+           </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Start App">
+           <migrate-properties>
+             <migrate-property name="api" default="${p:resource/cf.api}"/>
+             <migrate-property name="user" default="${p:resource/cf.username}"/>
+             <migrate-property name="password" default="${p:resource/cf.password}"/>
+             <migrate-property name="org" default="${p?:resource/cf.org}"/>
+             <migrate-property name="space" default="${p?:resource/cf.space}"/>
+             <migrate-property old="appName" name="application" default="${p:component/cf.appName}"/>
+           </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Stop App">
+           <migrate-properties>
+             <migrate-property name="api" default="${p:resource/cf.api}"/>
+             <migrate-property name="user" default="${p:resource/cf.username}"/>
+             <migrate-property name="password" default="${p:resource/cf.password}"/>
+             <migrate-property name="org" default="${p?:resource/cf.org}"/>
+             <migrate-property name="space" default="${p?:resource/cf.space}"/>
+             <migrate-property old="appName" name="application" default="${p:component/cf.appName}"/>
+           </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Unbind Service">
+           <migrate-properties>
+             <migrate-property name="api" default="${p:resource/cf.api}"/>
+             <migrate-property name="user" default="${p:resource/cf.username}"/>
+             <migrate-property name="password" default="${p:resource/cf.password}"/>
+             <migrate-property name="org" default="${p?:resource/cf.org}"/>
+             <migrate-property name="space" default="${p?:resource/cf.space}"/>
+             <migrate-property old="appName" name="application" default="${p:component/cf.appName}"/>
+           </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Unmap Route">
+           <migrate-properties>
+             <migrate-property name="api" default="${p:resource/cf.api}"/>
+             <migrate-property name="user" default="${p:resource/cf.username}"/>
+             <migrate-property name="password" default="${p:resource/cf.password}"/>
+             <migrate-property name="org" default="${p?:resource/cf.org}"/>
+             <migrate-property name="space" default="${p?:resource/cf.space}"/>
+             <migrate-property old="app" name="application" default="${p:component/cf.appName}"/>
+             <migrate-property name="domain" default="${p:resource/cf.domain}"/>
+           </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Delete Service">
+           <migrate-properties>
+             <migrate-property name="api" default="${p:resource/cf.api}"/>
+             <migrate-property name="user" default="${p:resource/cf.username}"/>
+             <migrate-property name="password" default="${p:resource/cf.password}"/>
+             <migrate-property name="org" default="${p?:resource/cf.org}"/>
+             <migrate-property name="space" default="${p?:resource/cf.space}"/>
+           </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Create Subdomain">
+           <migrate-properties>
+             <migrate-property name="api" default="${p:resource/cf.api}"/>
+             <migrate-property name="user" default="${p:resource/cf.username}"/>
+             <migrate-property name="password" default="${p:resource/cf.password}"/>
+             <migrate-property name="org" default="${p?:resource/cf.org}"/>
+             <migrate-property name="space" default="${p?:resource/cf.space}"/>
+             <migrate-property name="domain" default="${p:resource/cf.domain}"/>
+             <migrate-property name="subdomain" default="${p:resource/cf.subdomain}"/>
+           </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Delete Subdomain">
+           <migrate-properties>
+             <migrate-property name="api" default="${p:resource/cf.api}"/>
+             <migrate-property name="user" default="${p:resource/cf.username}"/>
+             <migrate-property name="password" default="${p:resource/cf.password}"/>
+             <migrate-property name="org" default="${p?:resource/cf.org}"/>
+             <migrate-property name="space" default="${p?:resource/cf.space}"/>
+             <migrate-property name="domain" default="${p:resource/cf.domain}"/>
+             <migrate-property name="subdomain" default="${p:resource/cf.subdomain}"/>
+           </migrate-properties>
+        </migrate-command>
+    </migrate>
 </plugin-upgrade>
