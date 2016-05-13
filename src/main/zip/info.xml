@@ -38,6 +38,8 @@
       <release-note plugin-version="15">
         Added auto-discovery of cloud foundry environment on UCD and auto-configuration
       </release-note>
-
+      <release-note plugin-version="16">
+        Fixes APAR PI57417. Plug-in now checks the agent settings for acceptance of self signed certificates.
+      </release-note>
   </release-notes>
 </pluginInfo>
