@@ -32,8 +32,10 @@ if (overridePath && overridePath != '${p?:agent/cf.commandPath}') {
 }
 
 if (isWindows) {
-    standardInstallPaths << "C:" + File.separator + "Program Files" + File.separator + "CloudFoundry" + File.separator + "cf"
-    standardInstallPaths << "C:" + File.separator + "Program Files (x86)" + File.separator + "CloudFoundry" + File.separator + "cf"
+    standardInstallPaths << "C:" + File.separator + "Program Files" + File.separator + "CloudFoundry"
+        + File.separator + "cf.exe"
+    standardInstallPaths << "C:" + File.separator + "Program Files (x86)" + File.separator + "CloudFoundry"
+        + File.separator + "cf.exe"
 }
 else {
     standardInstallPaths << "/opt/CloudFoundry/cf"

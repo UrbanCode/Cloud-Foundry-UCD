@@ -9,7 +9,7 @@
 -->
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <header>
-    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="16"/>
+    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="17"/>
     <description>
     The CloudFoundry plugin will use the CloudFoundry command line utility to interact with applications in a target CloudFoundry system.
     </description>
@@ -45,6 +45,10 @@
       </property>
       <property name="selfSigned">
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped."/>
+      </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -86,6 +90,10 @@
       </property>
       <property name="selfSigned">
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+      </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -130,6 +138,10 @@
       </property>
       <property name="selfSigned" >
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped."/>
+      </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -178,6 +190,10 @@
       <property name="selfSigned">
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
+      </property>
     </properties>
     <post-processing><![CDATA[
         if (properties.get("exitCode") != 0) {
@@ -221,6 +237,10 @@
       </property>
       <property name="selfSigned" >
         <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+      </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -266,6 +286,10 @@
       <property name="selfSigned">
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
+      </property>
     </properties>
     <post-processing><![CDATA[
         if (properties.get("exitCode") != 0) {
@@ -306,6 +330,10 @@
       </property>
       <property name="selfSigned" >
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+      </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -351,6 +379,10 @@
       <property name="selfSigned" >
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
+      </property>
     </properties>
     <post-processing><![CDATA[
         if (properties.get("exitCode") != 0) {
@@ -391,6 +423,10 @@
       </property>
       <property name="selfSigned">
         <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+      </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -436,6 +472,10 @@
       <property name="selfSigned" >
         <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
+      </property>
     </properties>
     <post-processing><![CDATA[
         if (properties.get("exitCode") != 0) {
@@ -480,6 +520,10 @@
       <property name="selfSigned" >
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
+      </property>
     </properties>
     <post-processing><![CDATA[
         if (properties.get("exitCode") != 0) {
@@ -521,8 +565,12 @@
       <property name="args">
         <server:property-ui type="textBox" label="Arguments" description="Arguments to be passed to the script."/>
       </property>
-      <property name="selfSigned" >
+      <property name="selfSigned">
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+      </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -570,6 +618,10 @@
       </property>
       <property name="selfSigned" >
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+      </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -657,6 +709,10 @@
       <property name="selfSigned" >
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
+      </property>
     </properties>
     <post-processing><![CDATA[
         if (properties.get("exitCode") != 0) {
@@ -697,6 +753,10 @@
       </property>
       <property name="selfSigned" >
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+      </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -739,6 +799,10 @@
       <property name="selfSigned" >
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
+      </property>
     </properties>
     <post-processing><![CDATA[
         if (properties.get("exitCode") != 0) {
@@ -779,6 +843,10 @@
       </property>
       <property name="selfSigned" >
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+      </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -823,6 +891,10 @@
       </property>
       <property name="selfSigned" >
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+      </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -871,6 +943,10 @@
       <property name="selfSigned" >
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
+      </property>
     </properties>
     <post-processing><![CDATA[
         if (properties.get("exitCode") != 0) {
@@ -892,11 +968,11 @@
     <description>Discover and configure all organizations and spaces for each organization into a resource tree in Urbancode Deploy.</description>
     <properties>
       <property name="api">
-        <server:property-ui type="textBox" default-value="${p?:resource/cf.api}" label="Cloud Foundry API"
+        <server:property-ui type="textBox" default-value="${p?:resource/cf.api}" label="Cloud Foundry API" 
           description="The url of the Cloud Foundry API endpoint."/>
       </property>
       <property name="commandPath">
-        <server:property-ui type="textBox" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+        <server:property-ui type="textBox" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path" 
           description="The path to the cf command line script."/>
       </property>
       <property name="user" required="true">
@@ -944,7 +1020,7 @@
       </property>
       <property name="apiEndpoint">
         <server:property-ui type="textBox" default-value="${p?:agent/cf.api}" label="API Endpoint"
-          description="Provide the API Endpoint if the config.json file does not exist or is not configured correctly
+          description="Provide the API Endpoint if the config.json file does not exist or is not configured correctly 
             on the agent to be used during discovery."/>
       </property>
     </properties>
@@ -977,7 +1053,7 @@
       <server:property-ui type="textBox" label="Name" description="The url of the Cloud Foundry API endpoint"/>
     </server:property>
     <server:property name="cf.commandPath">
-      <server:property-ui description="The path to the directory where the cf command line executable resides." label="Cloud Foundry Executable"
+      <server:property-ui description="The path to the directory where the cf command line executable resides." label="Cloud Foundry Executable" 
         type="textBox"/>
     </server:property>
     <server:property name="cf.username">
@@ -992,7 +1068,7 @@
   </server:property-group>
 
         <!-- ============================================= -->
-        <!-- CF Organization Role                             -->
+        <!-- CF Organization Role                          -->
         <!-- ============================================= -->
 
   <server:property-group name="CloudFoundryOrganization" type="ResourceRole" default-name-property="cf.org">

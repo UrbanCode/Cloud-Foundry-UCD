@@ -41,5 +41,8 @@
       <release-note plugin-version="16">
         Fixes APAR PI57417. Plug-in now checks the agent settings for acceptance of self signed certificates.
       </release-note>
+      <release-note plugin-version="17">
+        Adds ability to specify an explicit CF_HOME for each step.
+      </release-note>
   </release-notes>
 </pluginInfo>

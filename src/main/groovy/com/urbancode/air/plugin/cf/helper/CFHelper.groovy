@@ -23,17 +23,19 @@ class CFHelper {
     def selfSigned
     def organization
     def space
+    def cfHome
 
     CFHelper(def props) {
         this.props = props
         helper = new CommandHelper(workDir)
-        cfFile = props['commandPath'] ?: "cf"
-        api = props['api']
-        username = props['user']
+        cfFile = props['commandPath']?.trim() ?: "cf"
+        api = props['api']?.trim()
+        username = props['user']?.trim()
         password = props['password']
         selfSigned = props['selfSigned'] ? props['selfSigned'].toBoolean() : ""
-        organization = props['org']
-        space = props['space']
+        organization = props['org']?.trim()
+        space = props['space']?.trim()
+        cfHome = props['cfHome']?.trim()
     }
 
     void bindService() {
@@ -185,7 +187,7 @@ class CFHelper {
     void deleteService() {
         def name = props['name']
 
-        setupEnvironment()
+        setupEnvironment(api, organization, space)
 
         // Execute delete-service
         def commandArgs = ["cf", "delete-service", name]
@@ -199,7 +201,7 @@ class CFHelper {
         def subdomain = props['subdomain']
         def domain = props['domain']
 
-        setupEnvironment()
+        setupEnvironment(api, organization, space)
 
         // Execute delete-domain
         def commandArgs = [
@@ -380,7 +382,6 @@ class CFHelper {
         }
 
         runHelperCommand("Deploying CloudFoundry application", commandArgs)
-
     }
 
     void restartApp() {
@@ -465,9 +466,20 @@ class CFHelper {
         helper.addEnvironmentVariable("PATH", newPath)
 
         // change location of config.json file
-        def cfHome = new File(props['PLUGIN_INPUT_PROPS']).parentFile
-        println ("Setting CF_HOME to: " + cfHome)
-        helper.addEnvironmentVariable("CF_HOME", cfHome.toString())
+        def cfHomeDir
+        if(cfHome) {
+            cfHomeDir = new File(cfHome)
+        }
+        else {
+            cfHomeDir = new File(props['PLUGIN_INPUT_PROPS']).parentFile
+        }
+
+        if (!cfHomeDir.exists() && !cfHomeDir.isDirectory()) {
+            throw new ExitCodeException("The CF_HOME directory '${cfHomeDir.toString()}' does not exist.")
+        }
+
+        println ("Setting CF_HOME to '${cfHomeDir}'")
+        helper.addEnvironmentVariable("CF_HOME", cfHomeDir.absolutePath)
 
         // Set cf api
         def commandArgs = [cfFile, "api", api]
@@ -626,7 +638,7 @@ class CFHelper {
             output = outputStream.toString()
         }
 
-        int exitVal = helper.runCommand("Running command: ${cmdArgs.join(' ')}", cmdArgs, setOutput)
+        helper.runCommand("Running command: ${cmdArgs.join(' ')}", cmdArgs, setOutput)
 
         return output
     }
@@ -641,8 +653,8 @@ class CFHelper {
         try {
             helper.runCommand(message, command)
         } catch(ExitCodeException e){
-            def errorMessage = "ERROR running command: ${commandArgs.join(' ')}"
-            throw new ExitCodeException(errorMessage, ex)
+            def errorMessage = "ERROR running command: ${command}"
+            throw new ExitCodeException(errorMessage, e)
         }
     }
 }
