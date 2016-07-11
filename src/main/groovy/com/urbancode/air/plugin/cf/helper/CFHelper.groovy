@@ -113,8 +113,8 @@ class CFHelper {
     }
 
     void createService() {
-        def name = props['name']
-        def service = props['service']
+        def serviceName = props['service']
+        def serviceType = props['serviceType']
         def plan = props['plan']
 
         setupEnvironment(api, organization, space)
@@ -123,9 +123,9 @@ class CFHelper {
         def commandArgs = [
             cfFile,
             "create-service",
-            service,
+            serviceType,
             plan,
-            name
+            serviceName
         ]
 
         runHelperCommand("[Action] Executing CF create-service", commandArgs)
