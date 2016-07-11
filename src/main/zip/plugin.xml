@@ -515,7 +515,7 @@
         <server:property-ui type="textAreaBox" label="Script" description="Each command needs to be on a new line."/>
       </property>
       <property name="args">
-        <server:property-ui type="textBox" label="Arguments" description="Arguments to be passed to the script."/>
+        <server:property-ui type="textBox" label="Arguments" description="Arguments to be passed to the script, separated by spaces."/>
       </property>
       <property name="selfSigned" >
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
@@ -542,7 +542,7 @@
     </command>
   </step-type>
   <step-type name="Execute CF bash file">
-    <description>Execute a bash file. The context will be setup with the authenticated user and target space. CF command line will be available to the bash script.</description>
+    <description>Execute a bash file. The context will be setup with the authenticated user and target space. CF command line will be available to the bash script. The sh command must be available from the command line.</description>
     <properties>
       <property name="api" required="true">
         <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
@@ -563,7 +563,7 @@
         <server:property-ui type="textBox" label="Script" description="Path to the cf.bash file."/>
       </property>
       <property name="args">
-        <server:property-ui type="textBox" label="Arguments" description="Arguments to be passed to the script."/>
+        <server:property-ui type="textBox" label="Arguments" description="Arguments to be passed to the script, separated by spaces."/>
       </property>
       <property name="selfSigned">
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />

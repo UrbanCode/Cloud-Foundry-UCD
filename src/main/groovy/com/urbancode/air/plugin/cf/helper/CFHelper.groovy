@@ -25,6 +25,8 @@ class CFHelper {
     def space
     def cfHome
 
+    final def isWindows = System.getProperty('os.name').contains("Windows")
+
     CFHelper(def props) {
         this.props = props
         helper = new CommandHelper(workDir)
@@ -52,7 +54,7 @@ class CFHelper {
             service
         ]
 
-        runHelperCommand("Executing CF bind-service", commandArgs)
+        runHelperCommand("[Action] Executing CF bind-service", commandArgs)
     }
 
     void createDomain() {
@@ -68,7 +70,7 @@ class CFHelper {
             domain
         ]
 
-        runHelperCommand("Executing CF create-domain", commandArgs)
+        runHelperCommand("[Action] Executing CF create-domain", commandArgs)
     }
 
     void createSubdomain() throws Exception{
@@ -85,7 +87,7 @@ class CFHelper {
             subdomain + "." + domain
         ]
 
-        runHelperCommand("Executing CF create-domain", commandArgs)
+        runHelperCommand("[Action] Executing CF create-domain", commandArgs)
     }
 
     void createRoute() {
@@ -107,7 +109,7 @@ class CFHelper {
             commandArgs << hostname
         }
 
-        runHelperCommand("Executing CF create-route", commandArgs)
+        runHelperCommand("[Action] Executing CF create-route", commandArgs)
     }
 
     void createService() {
@@ -126,7 +128,7 @@ class CFHelper {
             name
         ]
 
-        runHelperCommand("Executing CF create-service", commandArgs)
+        runHelperCommand("[Action] Executing CF create-service", commandArgs)
     }
 
     void deleteApp() {
@@ -142,7 +144,7 @@ class CFHelper {
             commandArgs << "-r"
         }
 
-        runHelperCommand("Executing CF delete-app", commandArgs)
+        runHelperCommand("[Action] Executing CF delete-app", commandArgs)
     }
 
     void deleteDomain() {
@@ -158,7 +160,7 @@ class CFHelper {
             "-f"
         ]
 
-        runHelperCommand("Executing CF delete-domain", commandArgs)
+        runHelperCommand("[Action] Executing CF delete-domain", commandArgs)
     }
 
     void deleteRoute() {
@@ -181,7 +183,7 @@ class CFHelper {
 
         commandArgs << "-f"
 
-        runHelperCommand("Executing CF delete-route", commandArgs)
+        runHelperCommand("[Action] Executing CF delete-route", commandArgs)
     }
 
     void deleteService() {
@@ -194,7 +196,7 @@ class CFHelper {
 
         commandArgs << "-f"
 
-        runHelperCommand("Executing CF delete-service", commandArgs)
+        runHelperCommand("[Action] Executing CF delete-service", commandArgs)
     }
 
     void deleteSubdomain() {
@@ -212,7 +214,7 @@ class CFHelper {
 
         commandArgs << "-f"
 
-        runHelperCommand("Executing CF delete-domain", commandArgs)
+        runHelperCommand("[Action] Executing CF delete-domain", commandArgs)
     }
 
     void executeCFScript() {
@@ -221,18 +223,29 @@ class CFHelper {
 
         setupEnvironment(api, organization, space)
 
-        // Execute script
-        String eol = System.getProperty("line.separator")
-
-        script.splitEachLine(eol) {
-            def commandArgs = [it]
-
-            if (args) {
-                commandArgs << args
-            }
-
-            runHelperCommand("Executing CF commands", commandArgs)
+        def scriptName = ""
+        def commandArgs = []
+        if (isWindows) {
+            scriptName = "cfScript.bat"
+            commandArgs = ["cmd", "/C", scriptName]
         }
+        else {
+            scriptName = "cfScript.sh"
+            commandArgs = ["sh", "-c", "bash " + scriptName]
+        }
+        File cfScript = new File(scriptName)
+        cfScript.deleteOnExit()
+        cfScript << script
+
+        for (arg in args.split("\\s+")) {
+            commandArgs << arg
+        }
+
+        if (!isWindows) {
+            def chmod = ['chmod', '+x', scriptName]
+            runHelperCommand('[Action] Making the runtime script executable...', chmod)
+        }
+        runHelperCommand("[Action] Executing CF commands", commandArgs)
     }
 
     void executeBashScript() {
@@ -242,13 +255,15 @@ class CFHelper {
         setupEnvironment(api, organization, space)
 
         // Execute script
-        def commandArgs = [script]
+        def commandArgs = []
+        commandArgs = ["sh", "-c"]
+        commandArgs << "bash " + script
 
-        if (args) {
-            commandArgs << args
+        for (arg in args.split("\\s+")) {
+            commandArgs << arg
         }
 
-        runHelperCommand("Executing CF script", commandArgs, null, true)
+        runHelperCommand("[Action] Executing CF script", commandArgs)
     }
 
     void mapRoute() {
@@ -271,7 +286,7 @@ class CFHelper {
             commandArgs << hostname
         }
 
-        runHelperCommand("Executing CF map-route", commandArgs)
+        runHelperCommand("[Action] Executing CF map-route", commandArgs)
     }
 
     void pushApplication() {
@@ -381,7 +396,7 @@ class CFHelper {
             commandArgs << "--random-route"
         }
 
-        runHelperCommand("Deploying CloudFoundry application", commandArgs)
+        runHelperCommand("[Action] Deploying CloudFoundry application", commandArgs)
     }
 
     void restartApp() {
@@ -391,7 +406,7 @@ class CFHelper {
 
         // Execute restart application
         def commandArgs = [cfFile, "restart", app]
-        runHelperCommand("Executing CF restart APP", commandArgs)
+        runHelperCommand("[Action] Executing CF restart APP", commandArgs)
     }
 
     void startApp() {
@@ -401,7 +416,7 @@ class CFHelper {
 
         // Execute start application
         def commandArgs = [cfFile, "start", app]
-        runHelperCommand("Executing CF start APP", commandArgs)
+        runHelperCommand("[Action] Executing CF start APP", commandArgs)
     }
 
     void stopApp() {
@@ -412,7 +427,7 @@ class CFHelper {
         // Execute stop application
         def commandArgs = [cfFile, "stop", app]
 
-        runHelperCommand("Executing CF stop APP", commandArgs)
+        runHelperCommand("[Action] Executing CF stop APP", commandArgs)
     }
 
     void unbindService() {
@@ -429,7 +444,7 @@ class CFHelper {
             service
         ]
 
-        runHelperCommand("Executing CF unbind-service", commandArgs)
+        runHelperCommand("[Action] Executing CF unbind-service", commandArgs)
     }
 
     void unmapRoute() {
@@ -451,7 +466,7 @@ class CFHelper {
             commandArgs << hostname
         }
 
-        runHelperCommand("Executing CF unmap-route", commandArgs)
+        runHelperCommand("[Action] Executing CF unmap-route", commandArgs)
     }
 
     // set the api, organization, and space targets for the cf executable
@@ -460,7 +475,7 @@ class CFHelper {
         def curPath = System.getenv("PATH")
         def pluginHome = new File(System.getenv("PLUGIN_HOME"))
 
-        println "Setup of path using plugin home: " + pluginHome
+        println "[Action] Setup of path using plugin home: " + pluginHome
         def binDir = new File(pluginHome, "bin")
         def newPath = curPath+":"+binDir.absolutePath
         helper.addEnvironmentVariable("PATH", newPath)
@@ -475,7 +490,7 @@ class CFHelper {
         }
 
         if (!cfHomeDir.exists() && !cfHomeDir.isDirectory()) {
-            throw new ExitCodeException("The CF_HOME directory '${cfHomeDir.toString()}' does not exist.")
+            throw new ExitCodeException("[Error] The CF_HOME directory '${cfHomeDir.toString()}' does not exist.")
         }
 
         println ("Setting CF_HOME to '${cfHomeDir}'")
@@ -488,7 +503,7 @@ class CFHelper {
             commandArgs << "--skip-ssl-validation"
         }
 
-        runHelperCommand("Setting cf target api", commandArgs)
+        runHelperCommand("[Action] Setting cf target api", commandArgs)
 
         // Authenticate with username and password
         if (!isAuthenticated) {
@@ -500,7 +515,7 @@ class CFHelper {
                     password
                 ]
 
-                runHelperCommand("Authenticating with CloudFoundry", commandArgs)
+                runHelperCommand("[Action] Authenticating with CloudFoundry", commandArgs)
                 isAuthenticated = true
             }
 
@@ -514,7 +529,7 @@ class CFHelper {
                     password
                 ]
 
-                runHelperCommand("Logging into CloudFoundry", commandArgs)
+                runHelperCommand("[Action] Logging into CloudFoundry", commandArgs)
                 isAuthenticated = true
             }
         }
@@ -527,7 +542,7 @@ class CFHelper {
                 "-o",
                 organization
             ]
-            runHelperCommand("Setting CloudFoundry target organization", commandArgs)
+            runHelperCommand("[Action] Setting CloudFoundry target organization", commandArgs)
         }
 
         if (space) {
@@ -538,7 +553,7 @@ class CFHelper {
                 space
             ]
 
-            runHelperCommand("Creating CloudFoundry space", commandArgs)
+            runHelperCommand("[Action] Creating CloudFoundry space", commandArgs)
 
             // Set target space
             commandArgs = [
@@ -548,7 +563,7 @@ class CFHelper {
                 space
             ]
 
-            runHelperCommand("Setting CloudFoundry target space", commandArgs)
+            runHelperCommand("[Action] Setting CloudFoundry target space", commandArgs)
         }
     }
 
@@ -638,7 +653,7 @@ class CFHelper {
             output = outputStream.toString()
         }
 
-        helper.runCommand("Running command: ${cmdArgs.join(' ')}", cmdArgs, setOutput)
+        helper.runCommand("[Action] Running command: ${cmdArgs.join(' ')}", cmdArgs, setOutput)
 
         return output
     }
@@ -646,14 +661,14 @@ class CFHelper {
     // logout of the Cloud Foundry Controller
     void logout() {
         def commandArgs = [cfFile, "logout"]
-        runHelperCommand("Logout from CloudFoundry system", commandArgs)
+        runHelperCommand("[Action] Logout from CloudFoundry system", commandArgs)
     }
 
     def runHelperCommand(def message, def command) {
         try {
             helper.runCommand(message, command)
         } catch(ExitCodeException e){
-            def errorMessage = "ERROR running command: ${command}"
+            def errorMessage = "[Error] An error occurred while running the following command: ${command}"
             throw new ExitCodeException(errorMessage, e)
         }
     }
