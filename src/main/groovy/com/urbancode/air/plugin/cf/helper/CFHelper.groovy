@@ -312,7 +312,12 @@ class CFHelper {
         setupEnvironment(api, organization, space)
 
         // Push the application
-        def commandArgs = [cfFile, "push", appName]
+        def commandArgs = [cfFile, "push"]
+
+        if (appName) {
+            commandArgs << appName
+        }
+
 
         if (buildpack) {
             commandArgs << "-b"
