@@ -347,4 +347,103 @@
         <migrate-command name="Create Subdomain"/>
         <migrate-command name="Delete Subdomain"/>
     </migrate>
+    <migrate to-version="18">
+        <migrate-command name="Push Application">
+            <migrate-properties>
+                <migrate-property name="interpreter" default="${p&#63;:cf.interpreter}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Execute CF Script">
+            <migrate-properties>
+                <migrate-property name="interpreter" default="${p&#63;:cf.interpreter}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Execute CF bash file">
+            <migrate-properties>
+                <migrate-property name="interpreter" default="${p&#63;:cf.interpreter}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Create Service">
+            <migrate-properties>
+                <migrate-property name="interpreter" default="${p&#63;:cf.interpreter}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Delete Service">
+            <migrate-properties>
+                <migrate-property name="interpreter" default="${p&#63;:cf.interpreter}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Bind Service">
+            <migrate-properties>
+                <migrate-property name="interpreter" default="${p&#63;:cf.interpreter}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Unbind Service">
+            <migrate-properties>
+                <migrate-property name="interpreter" default="${p&#63;:cf.interpreter}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Map Route">
+            <migrate-properties>
+                <migrate-property name="interpreter" default="${p&#63;:cf.interpreter}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Unmap Route">
+            <migrate-properties>
+                <migrate-property name="interpreter" default="${p&#63;:cf.interpreter}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Delete App">
+            <migrate-properties>
+                <migrate-property name="interpreter" default="${p&#63;:cf.interpreter}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Start App">
+            <migrate-properties>
+                <migrate-property name="interpreter" default="${p&#63;:cf.interpreter}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Stop App">
+            <migrate-properties>
+                <migrate-property name="interpreter" default="${p&#63;:cf.interpreter}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Restart App">
+            <migrate-properties>
+                <migrate-property name="interpreter" default="${p&#63;:cf.interpreter}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Create Route">
+            <migrate-properties>
+                <migrate-property name="interpreter" default="${p&#63;:cf.interpreter}" />
+            </migrate-properties>
+            </migrate-command>
+        <migrate-command name="Delete Route">
+            <migrate-properties>
+                <migrate-property name="interpreter" default="${p&#63;:cf.interpreter}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Create Domain">
+            <migrate-properties>
+                <migrate-property name="interpreter" default="${p&#63;:cf.interpreter}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Delete Domain">
+            <migrate-properties>
+                <migrate-property name="interpreter" default="${p&#63;:cf.interpreter}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Create Subdomain">
+            <migrate-properties>
+                <migrate-property name="interpreter" default="${p&#63;:cf.interpreter}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Delete Subdomain">
+            <migrate-properties>
+                <migrate-property name="interpreter" default="${p&#63;:cf.interpreter}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="CF Auto-Configure" />
+        <migrate-command name="CF Discovery" />
+    </migrate>
 </plugin-upgrade>

@@ -44,5 +44,8 @@
       <release-note plugin-version="17">
         Adds ability to specify an explicit CF_HOME for each step.
       </release-note>
+      <release-note plugin-version="18">
+        Add ability to specify shell interpreter for cf commands.
+      </release-note>
   </release-notes>
 </pluginInfo>

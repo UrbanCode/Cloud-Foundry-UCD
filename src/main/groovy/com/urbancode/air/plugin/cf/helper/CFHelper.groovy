@@ -24,6 +24,7 @@ class CFHelper {
     def organization
     def space
     def cfHome
+    def interpreter
 
     final def isWindows = System.getProperty('os.name').contains("Windows")
 
@@ -38,6 +39,7 @@ class CFHelper {
         organization = props['org']?.trim()
         space = props['space']?.trim()
         cfHome = props['cfHome']?.trim()
+        interpreter = props['interpreter']
     }
 
     void bindService() {
@@ -515,7 +517,7 @@ class CFHelper {
                     password
                 ]
 
-                runHelperCommand("[Action] Authenticating with CloudFoundry", commandArgs)
+                runHelperCommand("[Action] Authenticating with CloudFoundry", commandArgs, false)
                 isAuthenticated = true
             }
 
@@ -529,7 +531,7 @@ class CFHelper {
                     password
                 ]
 
-                runHelperCommand("[Action] Logging into CloudFoundry", commandArgs)
+                runHelperCommand("[Action] Logging into CloudFoundry", commandArgs, false)
                 isAuthenticated = true
             }
         }
@@ -661,14 +663,27 @@ class CFHelper {
     // logout of the Cloud Foundry Controller
     void logout() {
         def commandArgs = [cfFile, "logout"]
-        runHelperCommand("[Action] Logout from CloudFoundry system", commandArgs)
+        runHelperCommand("[Action] Logging out of CloudFoundry", commandArgs, false)
     }
 
-    def runHelperCommand(def message, def command) {
+    def runHelperCommand(def message, def baseArgs) {
+        runHelperCommand(message, baseArgs, true)
+    }
+
+    def runHelperCommand(def message, def baseArgs, Boolean usePrefix) {
+        def commandArgs = []
+        if (interpreter && usePrefix) {
+            commandArgs = ["sh", "-c"]
+            commandArgs << baseArgs.join(" ")
+        }
+        else {
+            commandArgs = baseArgs
+        }
+
         try {
-            helper.runCommand(message, command)
+            helper.runCommand(message, commandArgs)
         } catch(ExitCodeException e){
-            def errorMessage = "[Error] An error occurred while running the following command: ${command}"
+            def errorMessage = "[Error] An error occurred while running the following command: ${commandArgs}"
             throw new ExitCodeException(errorMessage, e)
         }
     }
