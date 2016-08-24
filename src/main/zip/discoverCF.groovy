@@ -1,7 +1,7 @@
 /*
  * Licensed Materials - Property of IBM Corp.
  * IBM UrbanCode Deploy
- * (c) Copyright IBM Corporation 2015. All Rights Reserved.
+ * (c) Copyright IBM Corporation 2015, 2016. All Rights Reserved.
  *
  * U.S. Government Users Restricted Rights - Use, duplication or disclosure restricted by
  * GSA ADP Schedule Contract with IBM Corp.
@@ -27,7 +27,7 @@ def api = props['apiEndpoint']
 def roleName = "CloudFoundryController"
 
 // override path must be checked first if it exists
-if (overridePath && overridePath != '${p?:agent/cf.commandPath}') {
+if (overridePath) {
     standardInstallPaths << overridePath
 }
 
@@ -81,7 +81,7 @@ def apiSet = {
     apiEndpoint = outputStream.toString()
 }
 
-if (api && api != "{p?:agent/cf.api}") {
+if (api) {
     apiEndpoint = api
 }
 else {

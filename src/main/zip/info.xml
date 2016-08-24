@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!--
 
 /**
- * © Copyright IBM Corporation 2015.
+ * © Copyright IBM Corporation 2015, 2016.
  * This is licensed under the following license.
  * The Eclipse Public 1.0 License (http://www.eclipse.org/legal/epl-v10.html)
  * U.S. Government Users Restricted Rights:  Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
@@ -46,6 +46,10 @@
       </release-note>
       <release-note plugin-version="18">
         Add ability to specify shell interpreter for cf commands.
+      </release-note>
+      <release-note plugin-version="19">
+        Username and Password properties are now optional. Allows possible authentication outside of the plugin.
+        Added an optional default value resource property to CF_HOME.
       </release-note>
   </release-notes>
 </pluginInfo>

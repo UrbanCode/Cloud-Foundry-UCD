@@ -1,7 +1,7 @@
 /*
  * Licensed Materials - Property of IBM Corp.
  * IBM UrbanCode Deploy
- * (c) Copyright IBM Corporation 2015. All Rights Reserved.
+ * (c) Copyright IBM Corporation 2015, 2016. All Rights Reserved.
  *
  * U.S. Government Users Restricted Rights - Use, duplication or disclosure restricted by
  * GSA ADP Schedule Contract with IBM Corp.
@@ -513,7 +513,7 @@ class CFHelper {
         runHelperCommand("[Action] Setting cf target api", commandArgs)
 
         // Authenticate with username and password
-        if (!isAuthenticated) {
+        if (!isAuthenticated && (username && password)) {
             if (organization && space) {
                 commandArgs = [
                     cfFile,
@@ -523,9 +523,7 @@ class CFHelper {
                 ]
 
                 runHelperCommand("[Action] Authenticating with CloudFoundry", commandArgs, false)
-                isAuthenticated = true
             }
-
             else {
                 commandArgs = [
                     cfFile,
@@ -537,8 +535,11 @@ class CFHelper {
                 ]
 
                 runHelperCommand("[Action] Logging into CloudFoundry", commandArgs, false)
-                isAuthenticated = true
             }
+            isAuthenticated = true
+        }
+        else {
+            println "[Ok] Skipping Cloud Foundry authentication because the Username and/or Password properties are empty or authentication already occurred."
         }
 
         if (organization) {
@@ -559,7 +560,6 @@ class CFHelper {
                 "create-space",
                 space
             ]
-
             runHelperCommand("[Action] Creating CloudFoundry space", commandArgs)
 
             // Set target space
@@ -569,7 +569,6 @@ class CFHelper {
                 "-s",
                 space
             ]
-
             runHelperCommand("[Action] Setting CloudFoundry target space", commandArgs)
         }
     }
@@ -667,8 +666,14 @@ class CFHelper {
 
     // logout of the Cloud Foundry Controller
     void logout() {
-        def commandArgs = [cfFile, "logout"]
-        runHelperCommand("[Action] Logging out of CloudFoundry", commandArgs, false)
+        if (isAuthenticated) {
+            def commandArgs = [cfFile, "logout"]
+            runHelperCommand("[Action] Logout from CloudFoundry system", commandArgs)
+            isAuthenticated = false
+        }
+        else {
+            println "[Warning] The user is still authenticated with Cloud Foundry."
+        }
     }
 
     def runHelperCommand(def message, def baseArgs) {

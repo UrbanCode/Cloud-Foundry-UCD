@@ -207,7 +207,7 @@
                             "org": "${p?:resource\/cf.org}",
                             "space": "${p?:resource\/cf.space}",
                             "manifest": "${p?:component\/cf.manifest}",
-                            "domain": "${p?:component\/cf.domain}",
+                            "domain": "${p?:cf.domain}",
                             "subdomain": "",
                             "instances": "1",
                             "memory": "",
@@ -370,7 +370,7 @@
                             "org": "${p?:resource\/cf.org}",
                             "space": "${p?:resource\/cf.space}",
                             "manifest": "",
-                            "domain": "${p?:component\/cf.domain}",
+                            "domain": "${p?:cf.domain}",
                             "subdomain": "",
                             "instances": "1",
                             "memory": "",
@@ -454,7 +454,7 @@
                             "org": "${p?:resource\/cf.org}",
                             "space": "${p?:resource\/cf.space}",
                             "application": "${p:component\/cf.existingApp}",
-                            "domain": "${p:component\/cf.domain}",
+                            "domain": "${p?:cf.domain}",
                             "hostname": "${p?:component\/cf.hostnameToMap}",
                             "selfSigned": "false"
                         },
@@ -540,7 +540,7 @@
                             "org": "${p?:resource\/cf.org}",
                             "space": "${p?:resource\/cf.space}",
                             "application": "${p:component\/cf..existingApp}",
-                            "domain": "${p:component\/cf.domain}",
+                            "domain": "${p?:cf.domain}",
                             "hostname": "${p?:component\/cf.currentHostname}",
                             "selfSigned": "false"
                         },
@@ -563,7 +563,7 @@
                             "org": "${p?:resource\/cf.org}",
                             "space": "${p?:resource\/cf.space}",
                             "application": "${p:component\/cf.existingApp}",
-                            "domain": "${p:component\/cf.domain}",
+                            "domain": "${p?:cf.domain}",
                             "hostname": "${p?:component\/cf.hostnameToMap}",
                             "selfSigned": "false"
                         },
@@ -778,7 +778,7 @@
                             "org": "${p?:resource\/cf.org}",
                             "space": "${p?:resource\/cf.space}",
                             "application": "${p:component\/cf.existingApp}",
-                            "domain": "${p:component\/cf.domain}",
+                            "domain": "${p?:cf.domain}",
                             "hostname": "${p?:component\/cf.currentHostname}",
                             "selfSigned": "false"
                         },
