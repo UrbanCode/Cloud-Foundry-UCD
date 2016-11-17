@@ -51,5 +51,8 @@
         Username and Password properties are now optional. Allows possible authentication outside of the plugin.
         Added an optional default value resource property to CF_HOME.
       </release-note>
+    <release-note plugin-version="20">
+Support property file encryption.
+    </release-note>
   </release-notes>
 </pluginInfo>
