@@ -9,7 +9,7 @@
 -->
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <header>
-    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="20"/>
+    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="21"/>
     <description>
     The CloudFoundry plugin will use the CloudFoundry command line utility to interact with applications in a target CloudFoundry system.
     </description>
@@ -177,6 +177,67 @@
       <arg value="-cp"/>
       <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
       <arg file="createRoute.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+  <step-type name="Create or Update User-Provided Service">
+    <description>Create or update a user-provided service instance.</description>
+    <properties>
+      <property name="api" required="true">
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+      </property>
+      <property name="user" required="true">
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
+      </property>
+      <property name="password" required="true">
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
+      </property>
+       <property name="org" required="true">
+        <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
+      </property>
+      <property name="space" required="true">
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+      </property>
+      <property name="service" required="true">
+        <server:property-ui type="textBox" label="User-Provided Service" default-value="${p:resource/cf.service}"  description="The name of the user-provided service"/>
+      </property>
+      <property name="credentials" required="true">
+        <server:property-ui type="textAreaBox" label="Credentials" default-value="${p:resource/cf.credentials}"  description='Credentials, in JSON format, to be exposed in the VCAP_SERVICES environment variable for bound applications. A full file path may also be specified. Example: {"username":"admin", "password":"pa55woRD"} Windows users must escape each double quote with a backslash.'/>
+      </property>
+      <property name="logDrainURL">
+        <server:property-ui type="textBox" label="Log Drain URL" default-value="${p?:resource/cf.logDrainURL}"  description="URL to which logs for bound applications will be streamed."/>
+      </property>
+      <property name="routeServiceURL">
+        <server:property-ui type="textBox" label="Route Service URL" default-value="${p?:resource/cf.routeSerivceURL}"  description="URL to which requests for bound routes will be forwarded. Scheme for this URL must be https. Note: This feature was added in Cloud Foundry CLI v6.16.0."/>
+      </property>
+      <property name="selfSigned">
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+      </property>
+      <property name="cfHome">
+        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+            for each step if not specified."/>
+      </property>
+      <property name="interpreter">
+        <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
+                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+        <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
+        <value label="True">true</value>
+        <value label="False">false</value>
+      </property>
+    </properties>
+    <post-processing><![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]></post-processing>
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg value="-cp"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg file="createOrUpdateUPS.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>

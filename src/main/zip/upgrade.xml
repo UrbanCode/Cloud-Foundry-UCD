@@ -453,4 +453,9 @@
            </migrate-properties>
         </migrate-command>
     </migrate>
+    <migrate to-version="20">
+    </migrate>
+    <migrate to-version="21">
+        <migrate-command name="Create or Update User-Provided Service"/>
+    </migrate>
 </plugin-upgrade>

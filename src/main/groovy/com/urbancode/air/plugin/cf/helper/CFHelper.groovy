@@ -75,6 +75,47 @@ class CFHelper {
         runHelperCommand("[Action] Executing CF create-domain", commandArgs)
     }
 
+    void createOrUpdateUserProvidedService() {
+        def service         = props['service'].trim()
+        def credentials     = props['credentials'].trim()
+        def logDrainURL     = props['logDrainURL'].trim()
+        def routeServiceURL = props['routeServiceURL'].trim()
+
+        setupEnvironment(api, organization, space)
+
+        def services = getServices()
+        def command = ""
+        if (!services.contains(service)) {
+            println "[Ok] Service not found. Creating the user-provided service..."
+            command = "create-user-provided-service"
+        }
+        else {
+            println "[Ok] Service found. Updating the user-provided service..."
+            command = "update-user-provided-service"
+        }
+
+        // Execute create-user-provided-service or update-user-provided service
+        def commandArgs = [
+            cfFile,
+            command,
+            service,
+            "-p",
+            credentials
+        ]
+
+        if (logDrainURL) {
+            commandArgs << "-l"
+            commandArgs << logDrainURL
+        }
+
+        if (routeServiceURL) {
+            commandArgs << "-r"
+            commandArgs << routeServiceURL
+        }
+
+        runHelperCommand("[Action] Executing CF ${command}", commandArgs)
+    }
+
     void createSubdomain() throws Exception{
         def subdomain = props['subdomain']
         def domain = props['domain']
@@ -573,6 +614,14 @@ class CFHelper {
         }
     }
 
+    // return a list of all services. api, org, and space must be initialized elsewhere
+    def getServices() {
+        def commandArgs = [cfFile, "services"]
+        def services = getServiceOutput(commandArgs)
+
+        return services
+    }
+
     /* methods used only during auto-discovery.. logout occurs after discovery is finished */
 
     // return a list of all organizations in the specified api endpoint
@@ -652,6 +701,16 @@ class CFHelper {
             try {
                 it.waitForProcessOutput(outputStream, out)
             }
+            catch (IOException ex) {
+                println "[Error] I/O Error found when retrieving the command output. Please review the output log."
+                ex.printStackTrace()
+                System.exit(1)
+            }
+            catch (Exception ex) {
+                println "[Error] Unknown error found when retrieving the command output. Please review the output log."
+                ex.printStackTrace()
+                System.exit(1)
+            }
             finally {
                 out.flush();
             }
@@ -659,8 +718,51 @@ class CFHelper {
             output = outputStream.toString()
         }
 
+        println "----------------------------------------------"
         helper.runCommand("[Action] Running command: ${cmdArgs.join(' ')}", cmdArgs, setOutput)
+        println "----------------------------------------------"
 
+        return output
+    }
+
+    // run command and return service output (Get's element 0 on each line of the output)
+    def getServiceOutput(def cmdArgs) {
+        def output = []
+
+        def setOutput = {
+            it.out.close() // close stdin
+            try {
+                // Look at each line, get the first word which is the service's name
+                it.in.eachLine { line ->
+                    println line
+                    output << line.split("\\s+")[0]
+                }
+            }
+            catch (IOException ex) {
+                println "[Error] I/O Error found when retrieving the Service list. Please review the output log."
+                ex.printStackTrace()
+                System.exit(1)
+            }
+            catch (Exception ex) {
+                println "[Error] Unknown found when retrieving the Service list. Please review the output log."
+                ex.printStackTrace()
+                System.exit(1)
+            }
+            finally {
+                it.waitFor()
+                // Remove all output that is not a service name
+                output.remove(3) // Getting services in org <org> / space <space> as <username>...
+                output.remove(2) // OK
+                output.remove(1) // <new line>
+                output.remove(0) // No service found || name    service     plan    bound apps  last operation
+                println "Service Output: ${output}"
+            }
+        }
+
+        println "----------------------------------------------"
+        helper.runCommand("[Action] Running command: ${cmdArgs.join(' ')}", cmdArgs, setOutput)
+        println "----------------------------------------------"
+        println "[Ok] Service Names Found: ${output}"
         return output
     }
 
@@ -691,7 +793,9 @@ class CFHelper {
         }
 
         try {
+            println "----------------------------------------------"
             helper.runCommand(message, commandArgs)
+            println "----------------------------------------------"
         } catch(ExitCodeException e){
             def errorMessage = "[Error] An error occurred while running the following command: ${commandArgs}"
             throw new ExitCodeException(errorMessage, e)

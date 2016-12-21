@@ -52,7 +52,10 @@
         Added an optional default value resource property to CF_HOME.
       </release-note>
     <release-note plugin-version="20">
-Support property file encryption.
+        Support property file encryption.
+    </release-note>
+    <release-note plugin-version="21">
+        Add create-user-provided-service and update-user-provided-service functionality.
     </release-note>
   </release-notes>
 </pluginInfo>
