@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!--
 
 /**
- * © Copyright IBM Corporation 2015, 2016.
+ * © Copyright IBM Corporation 2015, 2017.
  * This is licensed under the following license.
  * The Eclipse Public 1.0 License (http://www.eclipse.org/legal/epl-v10.html)
  * U.S. Government Users Restricted Rights:  Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
@@ -56,6 +56,11 @@
     </release-note>
     <release-note plugin-version="21">
         Add create-user-provided-service and update-user-provided-service functionality.
+    </release-note>
+    <release-note plugin-version="22">
+        Added a hidden Environment Variables property to all steps.
+        CUPS and UUPS step now has optional username and password fields.
+        CUPS and UUPS step's CF_HOME property now has a default value.
     </release-note>
   </release-notes>
 </pluginInfo>

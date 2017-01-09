@@ -2,14 +2,14 @@
 <!--
 - Licensed Materials - Property of IBM Corp.
 - IBM UrbanCode Deploy
-- (c) Copyright IBM Corporation 2015, 2016. All Rights Reserved.
+- (c) Copyright IBM Corporation 2015, 2017. All Rights Reserved.
 -
 - U.S. Government Users Restricted Rights - Use, duplication or disclosure restricted by
 - GSA ADP Schedule Contract with IBM Corp.
 -->
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <header>
-    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="21"/>
+    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="22"/>
     <description>
     The CloudFoundry plugin will use the CloudFoundry command line utility to interact with applications in a target CloudFoundry system.
     </description>
@@ -56,6 +56,10 @@
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
+      </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -108,6 +112,10 @@
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
+      </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -164,6 +172,10 @@
         <value label="True">true</value>
         <value label="False">false</value>
       </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
+      </property>
     </properties>
     <post-processing><![CDATA[
         if (properties.get("exitCode") != 0) {
@@ -187,11 +199,11 @@
       <property name="api" required="true">
         <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
       </property>
-      <property name="user" required="true">
-        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system"/>
+      <property name="user" required="false">
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
       </property>
-      <property name="password" required="true">
-        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system."/>
+      <property name="password" required="false">
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
       </property>
        <property name="org" required="true">
         <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
@@ -215,7 +227,7 @@
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
       </property>
       <property name="cfHome">
-        <property-ui type="textBox" label="CF_HOME" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
+        <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
       </property>
       <property name="interpreter">
@@ -224,6 +236,10 @@
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
+      </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -283,6 +299,10 @@
         <value label="True">true</value>
         <value label="False">false</value>
       </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
+      </property>
     </properties>
     <post-processing><![CDATA[
         if (properties.get("exitCode") != 0) {
@@ -337,6 +357,10 @@
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
+      </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -393,6 +417,10 @@
         <value label="True">true</value>
         <value label="False">false</value>
       </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
+      </property>
     </properties>
     <post-processing><![CDATA[
         if (properties.get("exitCode") != 0) {
@@ -444,6 +472,10 @@
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
+      </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -500,6 +532,10 @@
         <value label="True">true</value>
         <value label="False">false</value>
       </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
+      </property>
     </properties>
     <post-processing><![CDATA[
         if (properties.get("exitCode") != 0) {
@@ -551,6 +587,10 @@
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
+      </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -607,6 +647,10 @@
         <value label="True">true</value>
         <value label="False">false</value>
       </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
+      </property>
     </properties>
     <post-processing><![CDATA[
         if (properties.get("exitCode") != 0) {
@@ -662,6 +706,10 @@
         <value label="True">true</value>
         <value label="False">false</value>
       </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
+      </property>
     </properties>
     <post-processing><![CDATA[
         if (properties.get("exitCode") != 0) {
@@ -716,6 +764,10 @@
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
+      </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -774,6 +826,10 @@
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
+      </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -872,6 +928,10 @@
         <value label="True">true</value>
         <value label="False">false</value>
       </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
+      </property>
     </properties>
     <post-processing><![CDATA[
         if (properties.get("exitCode") != 0) {
@@ -923,6 +983,10 @@
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
+      </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -976,6 +1040,10 @@
         <value label="True">true</value>
         <value label="False">false</value>
       </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
+      </property>
     </properties>
     <post-processing><![CDATA[
         if (properties.get("exitCode") != 0) {
@@ -1027,6 +1095,10 @@
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
+      </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -1082,6 +1154,10 @@
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
+      </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -1140,6 +1216,10 @@
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
+      </property>
+      <property name="envVars">
+        <property-ui type="textAreaBox" hidden="true" label="Environment Variables" default-value="${p?:resource/cf.envVars}"
+            description="Set environment variables using the following syntax: name=value. Separate each pair with a new line or comma."/>
       </property>
     </properties>
     <post-processing><![CDATA[

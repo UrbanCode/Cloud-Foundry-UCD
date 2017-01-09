@@ -1,7 +1,7 @@
 /*
  * Licensed Materials - Property of IBM Corp.
  * IBM UrbanCode Deploy
- * (c) Copyright IBM Corporation 2015, 2016. All Rights Reserved.
+ * (c) Copyright IBM Corporation 2015, 2017. All Rights Reserved.
  *
  * U.S. Government Users Restricted Rights - Use, duplication or disclosure restricted by
  * GSA ADP Schedule Contract with IBM Corp.
@@ -25,6 +25,7 @@ class CFHelper {
     def space
     def cfHome
     def interpreter
+    def envVars
 
     final def isWindows = System.getProperty('os.name').contains("Windows")
 
@@ -40,6 +41,10 @@ class CFHelper {
         space = props['space']?.trim()
         cfHome = props['cfHome']?.trim()
         interpreter = props['interpreter']
+        envVars = gatherEnvironmentVariables(props['envVars'])
+        envVars.each {
+            helper.addEnvironmentVariable(it.key, it.value)
+        }
     }
 
     void bindService() {
@@ -565,6 +570,7 @@ class CFHelper {
 
                 runHelperCommand("[Action] Authenticating with CloudFoundry", commandArgs, false)
             }
+
             else {
                 commandArgs = [
                     cfFile,
@@ -601,6 +607,7 @@ class CFHelper {
                 "create-space",
                 space
             ]
+
             runHelperCommand("[Action] Creating CloudFoundry space", commandArgs)
 
             // Set target space
@@ -610,6 +617,7 @@ class CFHelper {
                 "-s",
                 space
             ]
+
             runHelperCommand("[Action] Setting CloudFoundry target space", commandArgs)
         }
     }
@@ -800,5 +808,26 @@ class CFHelper {
             def errorMessage = "[Error] An error occurred while running the following command: ${commandArgs}"
             throw new ExitCodeException(errorMessage, e)
         }
+    }
+
+    def gatherEnvironmentVariables(String input) {
+        def result = []
+        def list = input.split("\n|,")*.trim() - ""
+        for (int i = 0; i < list.size(); i++) {
+            def temp = list[i].split("=", 2)
+            if (temp.size() != 2) {
+                throw new Exception("[Error] Invalid environment variables given: '${temp.toString()}'\n" +
+                "Separate each the name and value with an equal sign. Separate each pair with a new line or comma.")
+            }
+            String key   = temp[0]
+            String value = temp[1]
+
+            if (!isWindows && value.contains(" ")) {
+                value = '"'+ value + '"'
+            }
+            result << ["key": key, "value": value]
+        }
+
+        return result
     }
 }
