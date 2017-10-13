@@ -61,7 +61,10 @@
         CUPS and UUPS step's CF_HOME property now has a default value.
     </release-note>
     <release-note plugin-version="23">
-        Fixes NullPointException when using the CF Auto-Configure step.
+        Fixes NullPointerException when using the CF Auto-Configure step.
+    </release-note>
+    <release-note plugin-version="24">
+        Added Cloud Foundry CLI Path property as a hidden variable to all automation steps.
     </release-note>
   </release-notes>
 </pluginInfo>

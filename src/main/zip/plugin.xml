@@ -7,7 +7,7 @@
 -->
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <header>
-    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="23"/>
+    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="24"/>
     <description>
     The CloudFoundry plugin will use the CloudFoundry command line utility to interact with applications in a target CloudFoundry system.
     </description>
@@ -47,6 +47,10 @@
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
+      </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
@@ -103,6 +107,10 @@
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
+      </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
@@ -162,6 +170,10 @@
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
+      </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
@@ -228,6 +240,10 @@
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
       </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
+      </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
                      description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
@@ -290,6 +306,10 @@
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
       </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
+      </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
                      description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
@@ -348,6 +368,10 @@
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
+      </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
@@ -408,6 +432,10 @@
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
       </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
+      </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
                      description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
@@ -463,6 +491,10 @@
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
+      </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
@@ -523,6 +555,10 @@
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
       </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
+      </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
                      description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
@@ -578,6 +614,10 @@
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
+      </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
@@ -638,6 +678,10 @@
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
       </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
+      </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
                      description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
@@ -697,6 +741,10 @@
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
       </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
+      </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
                      description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
@@ -755,6 +803,10 @@
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
+      </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
@@ -817,6 +869,10 @@
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
+      </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
@@ -919,6 +975,10 @@
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
       </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
+      </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
                      description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
@@ -974,6 +1034,10 @@
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
+      </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
@@ -1031,6 +1095,10 @@
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
       </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
+      </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
                      description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
@@ -1086,6 +1154,10 @@
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
+      </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
@@ -1145,6 +1217,10 @@
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
+      </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter" default-value="${p&#63;:cf.interpreter}"
@@ -1207,6 +1283,10 @@
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step if not specified."/>
+      </property>
+      <property name="commandPath">
+        <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
+          description="The path to the cf command line script."/>
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter" default-value="${p&#63;:cf.interpreter}"
