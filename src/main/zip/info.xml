@@ -60,5 +60,8 @@
         CUPS and UUPS step now has optional username and password fields.
         CUPS and UUPS step's CF_HOME property now has a default value.
     </release-note>
+    <release-note plugin-version="23">
+        Fixes NullPointException when using the CF Auto-Configure step.
+    </release-note>
   </release-notes>
 </pluginInfo>

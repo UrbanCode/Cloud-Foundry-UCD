@@ -39,7 +39,7 @@ class CFHelper {
         space = props['space']?.trim()
         cfHome = props['cfHome']?.trim()
         interpreter = props['interpreter']
-        envVars = gatherEnvironmentVariables(props['envVars'])
+        envVars = gatherEnvironmentVariables(props['envVars']?:"")
         envVars.each {
             helper.addEnvironmentVariable(it.key, it.value)
         }
