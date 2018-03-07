@@ -14,7 +14,7 @@
     <tag>Cloud/CloudFoundry</tag>
     <server:required-server-version>6.0.1.0</server:required-server-version>
     <server:dependencies>
-      <server:dependency plugin-id="com.urbancode.plugin.VFS" min-version="20"/>
+      <server:dependency plugin-id="com.urbancode.plugin.VFS" min-version="30"/>
     </server:dependencies>
   </header>
   <step-type name="Bind Service">
