@@ -7,14 +7,14 @@
 -->
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <header>
-    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="24"/>
+    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="25"/>
     <description>
     The CloudFoundry plugin will use the CloudFoundry command line utility to interact with applications in a target CloudFoundry system.
     </description>
     <tag>Cloud/CloudFoundry</tag>
     <server:required-server-version>6.0.1.0</server:required-server-version>
     <server:dependencies>
-      <server:dependency plugin-id="com.urbancode.plugin.VFS" min-version="20"/>
+      <server:dependency plugin-id="com.urbancode.plugin.VFS" min-version="30"/>
     </server:dependencies>
   </header>
   <step-type name="Bind Service">
