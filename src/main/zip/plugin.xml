@@ -8,15 +8,12 @@
 -->
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <header>
-    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="25"/>
+    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="26"/>
     <description>
     The CloudFoundry plugin will use the CloudFoundry command line utility to interact with applications in a target CloudFoundry system.
     </description>
     <tag>Cloud/CloudFoundry</tag>
     <server:required-server-version>6.0.1.0</server:required-server-version>
-    <server:dependencies>
-      <server:dependency plugin-id="com.urbancode.plugin.VFS" min-version="30"/>
-    </server:dependencies>
   </header>
   <step-type name="Bind Service">
     <description>Bind a CF service instance onto a CF application.</description>
@@ -1374,6 +1371,11 @@
         <server:property-ui type="textBox" default-value="${p?:agent/cf.commandPath}" label="Override CF CLI Path"
           description="Provide the full path to the cf executable file to override the auto discovery path."/>
       </property>
+      <property name="cfHome">
+        <server:property-ui type="textBox" default-value="${p?:agent/cf.home}" label="CF_HOME Directory"
+          description="Full path to your CF_HOME directory for installation verification.
+            Not required if the property is a system environment variable."/>
+      </property>
       <property name="apiEndpoint">
         <server:property-ui type="textBox" default-value="${p?:agent/cf.api}" label="API Endpoint"
           description="Provide the API Endpoint if the config.json file does not exist or is not configured correctly
@@ -1390,7 +1392,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/uDeployRestClient.jar:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/uDeployRestClient.jar:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="discoverCF.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -1405,8 +1407,8 @@
   <server:property-group name="CloudFoundryController" type="ResourceRole" default-name-property="cf.api">
     <server:description>Role for resources that represents a Cloud Controller in a Cloud Foundry instance.</server:description>
     <server:allowed-parent-roles/>
-    <server:property name="cf.api" required="true">
-      <server:property-ui type="textBox" label="Name" description="The url of the Cloud Foundry API endpoint."/>
+    <server:property name="cf.api">
+      <server:property-ui type="textBox" label="Cloud Foundry API Endpoint" description="The url of the Cloud Foundry API endpoint."/>
     </server:property>
     <server:property name="cf.commandPath">
       <server:property-ui description="The path to the directory where the cf command line executable resides." label="Cloud Foundry Executable"
@@ -1459,6 +1461,24 @@
     <server:allowed-parent-roles/>
     <server:property name="cf.space" required="true">
       <server:property-ui type="textBox" label="Name" description="The Name of the Cloud Foundry space."/>
+    </server:property>
+  </server:property-group>
+
+        <!-- ============================================= -->
+        <!-- CF Application Role                             -->
+        <!-- ============================================= -->
+
+  <server:property-group name="CloudFoundryApp" type="ResourceRole" default-name-property="cf.app">
+    <server:description>Role for resources that represents a Cloud Foundry application within an organization and space in a Cloud Foundry instance.</server:description>
+    <server:allowed-parent-roles>
+      <server:allowed-parent-role>
+        <server:allowed-role-name>CloudFoundrySpace</server:allowed-role-name>
+        <server:folder-name>Applications</server:folder-name>
+      </server:allowed-parent-role>
+    </server:allowed-parent-roles>
+    <server:allowed-parent-roles/>
+    <server:property name="cf.app" required="true">
+      <server:property-ui type="textBox" label="Name" description="The Name of the Cloud Foundry application."/>
     </server:property>
   </server:property-group>
 </plugin>

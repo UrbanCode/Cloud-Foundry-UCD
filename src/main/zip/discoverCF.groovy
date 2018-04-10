@@ -8,6 +8,9 @@
 import com.urbancode.air.AirPluginTool
 import com.urbancode.air.CommandHelper
 import com.urbancode.air.plugin.cf.helper.ResourceHelper
+import org.apache.commons.io.FileUtils
+import org.apache.commons.io.filefilter.RegexFileFilter
+import org.apache.commons.io.filefilter.DirectoryFileFilter
 
 def apTool = new AirPluginTool(args[0], args[1])
 def isWindows = apTool.isWindows
@@ -20,32 +23,58 @@ def ucdPass = apTool.getAuthToken()
 def ucdUri = new URI(System.getenv("AH_WEB_URL"))
 def ucdHelper = new ResourceHelper(ucdUri, ucdUser, ucdPass)
 
-def standardInstallPaths = []
+def cfHome = props['cfHome']?.trim()
+if(!cfHome) {
+    cfHome = System.getenv("CF_HOME")?.trim()
+    if (cfHome) {
+        println("[OK] Found environment variable 'CF_HOME=${cfHome}'.")
+    }
+}
+
+def installPaths = []
 def overridePath = props['overrideCommandPath']
 def api = props['apiEndpoint']
 def roleName = "CloudFoundryController"
 
+/* API Endpoint must not include protocol */
+api = api.replaceAll("^(http://|https://)", "")
+
 // override path must be checked first if it exists
 if (overridePath) {
-    standardInstallPaths << overridePath
+    installPaths << overridePath
 }
-
-if (isWindows) {
-    standardInstallPaths << "C:" + File.separator + "Program Files" + File.separator + "CloudFoundry" + File.separator + "cf.exe"
-    standardInstallPaths << "C:" + File.separator + "Program Files (x86)" + File.separator + "CloudFoundry" + File.separator + "cf.exe"
+else if (cfHome) {
+    installPaths << cfHome
 }
 else {
-    standardInstallPaths << "/opt/CloudFoundry/cf"
-    standardInstallPaths << "/usr/share/CloudFoundry/cf"
+    if (isWindows) {
+        installPaths << "C:" + File.separator + "Program Files" + File.separator + "CloudFoundry" + File.separator + "cf.exe"
+        installPaths << "C:" + File.separator + "Program Files (x86)" + File.separator + "CloudFoundry" + File.separator + "cf.exe"
+    }
+    else {
+        installPaths << "/opt/CloudFoundry/cf"
+        installPaths << "/usr/share/CloudFoundry/cf"
+    }
 }
 
+/* Search through all files and directories in installPaths */
 def foundPath = ""
-for (def path : standardInstallPaths) {
+for (def path : installPaths) {
     File cfPath = new File(path)
 
-    if (cfPath.exists() && cfPath.isFile()) {
-        foundPath = cfPath.getAbsolutePath()
-        break
+    if (cfPath.exists()) {
+        if (cfPath.isFile()) {
+            foundPath = cfPath.getAbsolutePath()
+            break
+        }
+        else if (cfPath.isDirectory()) {
+            def files = FileUtils.listFiles(cfPath, new RegexFileFilter("cf|cf.exe"), DirectoryFileFilter.DIRECTORY)
+
+            if (files) {
+                foundPath = files[0].getAbsolutePath()
+                break
+            }
+        }
     }
 }
 
@@ -71,13 +100,16 @@ def apiSet = {
         out.flush();
     }
 
-    // parse out url from output
-    int beginIndex = outputStream.indexOf(':') + 2
-    outputStream.delete(0, beginIndex)
-    int endIndex = outputStream.indexOf(' ')
-    outputStream.delete(endIndex, outputStream.length())
+    // parse out api endpoint from output
+    def output = outputStream.toString()
+    output = output.split("\r?\n")[0] // Get first line of output
+    output = output.split(":")
+    apiEndpoint = output[output.length - 1] // Isolate endpoint
 
-    apiEndpoint = outputStream.toString()
+    /* Remove beginning slashes */
+    while (apiEndpoint.charAt(0) == '/') {
+        apiEndpoint = apiEndpoint.substring(1, apiEndpoint.length())
+    }
 }
 
 if (api) {
@@ -100,6 +132,7 @@ def subResourceDescription = "Cloud Foundry Controller with API endpoint " + api
 def subResourceName = subResourcePath.substring(subResourcePath.lastIndexOf("/CloudFoundryController") + 1)
 def subResource = ucdHelper.getOrCreateSubResource(subResourcePath, rootResourcePath, subResourceName, subResourceDescription)
 
+println("API IS " + apiEndpoint)
 // create properties for the role
 def roleProperties = new HashMap<String, String>()
 roleProperties.put("cf.commandPath", foundPath)
