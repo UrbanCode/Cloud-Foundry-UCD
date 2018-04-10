@@ -44,6 +44,9 @@ class CFHelper {
         envVars.each {
             helper.addEnvironmentVariable(it.key, it.value)
         }
+
+        /* Colorized output treated as ASCII control characters */
+        helper.addEnvironmentVariable("CF_COLOR", "false")
     }
 
     void bindService() {

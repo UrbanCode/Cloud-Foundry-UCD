@@ -30,7 +30,6 @@
       <release-note plugin-version="13">
         Official UrbanCode integration.
       </release-note>
-
       <release-note plugin-version="14">
         Added steps for deleting services and creating/deleting subdomains.
       </release-note>
@@ -69,6 +68,12 @@
     </release-note>
     <release-note plugin-version="25">
         Updated copyright.
+    </release-note>
+    <release-note plugin-version="26">
+        Fixed APAR PI96390 Added CF_COLOR environment property to not colorize CF output.
+        Fixed APAR PI96391 Removed component template modifications and created applications as resources.
+        Fixed API Endpoint discovery to correctly parse the output of the cf api command.
+        Added check to confirm CloudFoundryController role and provided error output upon failure.
     </release-note>
   </release-notes>
 </pluginInfo>
