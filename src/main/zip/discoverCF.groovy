@@ -104,7 +104,7 @@ def apiSet = {
     def output = outputStream.toString()
     output = output.split("\r?\n")[0] // Get first line of output
     output = output.split(":")
-    apiEndpoint = output[output.length - 1] // Isolate endpoint
+    apiEndpoint = output[-1] // Isolate endpoint
 
     /* Remove beginning slashes */
     while (apiEndpoint.charAt(0) == '/') {
@@ -132,7 +132,6 @@ def subResourceDescription = "Cloud Foundry Controller with API endpoint " + api
 def subResourceName = subResourcePath.substring(subResourcePath.lastIndexOf("/CloudFoundryController") + 1)
 def subResource = ucdHelper.getOrCreateSubResource(subResourcePath, rootResourcePath, subResourceName, subResourceDescription)
 
-println("API IS " + apiEndpoint)
 // create properties for the role
 def roleProperties = new HashMap<String, String>()
 roleProperties.put("cf.commandPath", foundPath)
