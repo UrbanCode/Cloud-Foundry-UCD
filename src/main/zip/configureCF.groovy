@@ -9,7 +9,6 @@ import com.urbancode.air.AirPluginTool
 import com.urbancode.air.CommandHelper
 import com.urbancode.air.plugin.cf.helper.CFHelper
 import com.urbancode.air.plugin.cf.helper.ResourceHelper
-import com.urbancode.air.plugin.cf.helper.TemplateHelper
 
 def apTool = new AirPluginTool(this.args[0], this.args[1])
 def props = apTool.getStepProperties()
@@ -18,10 +17,21 @@ def ucdUser = apTool.getAuthTokenUsername()
 def ucdPass = apTool.getAuthToken()
 def ucdUri = new URI(System.getenv("AH_WEB_URL"))
 def resourceHelper = new ResourceHelper(ucdUri, ucdUser, ucdPass)
-def templateHelper = new TemplateHelper(ucdUri, ucdUser, ucdPass)
 def cfHelper = new CFHelper(props)
 
 def rootPath = props['resourcePath']
+
+/* Determine if Auto-Discovery has been run before allowing Auto-Configure */
+if (!resourceHelper.containsRole(rootPath, 'CloudFoundryController')) {
+    println("[Error] The resource to be configured at '${rootPath}' does not have the required resource role of"
+        + " 'CloudFoundryController'.")
+    println("This role exists on the CloudFoundryController resource generated from auto-discovery.")
+    println("[Solution] Run the auto-discovery process to create the CloudFoundryController resource.")
+    println("You may then execute auto-configure on the CloudFoundryController resource created from auto-discovery.")
+    println("Please see the plugin documentation for more details.")
+
+    System.exit(1)
+}
 
 def orgFolderPath = rootPath + "/Organizations"
 def orgFolderDescription = "All existing organizations in the Cloud Foundry Controller's API Endpoint."
@@ -56,21 +66,25 @@ for (def org : organizations) {
 
         resourceHelper.addRoleToResource(spaceResource, "CloudFoundrySpace", spaceProperties)
 
+        def appFolderPath = spacePath + "/Applications"
+        def appFolderDescription = "All existing applications in the ${space} space."
+        def appFolder = resourceHelper.getOrCreateSubResource(appFolderPath, spacePath, "Applications", appFolderDescription)
         // acquire applications per space
         def apps = cfHelper.getApplications(org, space)
 
         for (def app : apps) {
             app = app.trim()
-            def appEntry = ["label": "${org}/${space}/${app}", "value": app]
-            applications << appEntry
+            def appPath = appFolderPath + "/${app}"
+            def appDescription = "Cloud Foundry application within organization: " + org + " and space: " + space
+            def appResource = resourceHelper.getOrCreateSubResource(appPath, appFolderPath, app, appDescription)
+
+            def appProperties = new HashMap<String, String>()
+            appProperties.put("cf.app", app)
+
+            resourceHelper.addRoleToResource(appResource, "CloudFoundryApp", appProperties)
         }
     }
 }
-
-// create the property on the Cloud Foundry template
-def propDescription = "The existing application on the Cloud Foundry server to manipulate."
-templateHelper.createTemplateProp("Cloud Foundry", "cf.existingApp", "Existing Application",
-    "SELECT", propDescription, applications)
 
 println("Auto-Configuration completed successfully. ")
 System.exit(0)

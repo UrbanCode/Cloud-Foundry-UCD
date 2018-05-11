@@ -9,6 +9,9 @@ package com.urbancode.air.plugin.cf.helper
 
 import com.urbancode.ud.client.ResourceClient
 
+import org.codehaus.jettison.json.JSONArray
+import org.codehaus.jettison.json.JSONObject
+
 class ResourceHelper {
     final def MAX_RETRIES = 3
     def udClient
@@ -21,35 +24,41 @@ class ResourceHelper {
         def resource = null
         def tries = 0
         def done = false
-        while (!done && tries < MAX_RETRIES) {
+
+        def parentResource = udClient.getResourceByPath(parentPath)
+        def parentResourceIdString = parentResource.getString("id")
+        def parentResourceId = UUID.fromString(parentResourceIdString)
+
+        try {
+            resource = udClient.getResourceByPath(resourcePath)
+        }
+        catch (IOException e) {
+            // Resource doesn't exist, create it
+            def nodeId = udClient.createSubResource(parentResourceId, resourceName, description)
+        }
+
+        /* Poll for resource until it's created */
+        while (!done) {
             try {
-                try {
-                    resource = udClient.getResourceByPath(resourcePath)
-                }
-                catch (IOException e) {
-                    // resource does not exist
-                    resource = null
-                }
-                if (resource == null) {
-                    def parentResource = udClient.getResourceByPath(parentPath)
-                    def parentResourceIdString = parentResource.getString("id")
-                    def parentResourceId = UUID.fromString(parentResourceIdString)
-                    def nodeId = udClient.createSubResource(parentResourceId, resourceName, description)
-                    resource = udClient.getResourceByPath(resourcePath)
-                }
-                println("Resource created successfully: " + resourcePath)
-                done = true
-            }
-            catch (IOException e) {
                 tries++;
                 done = false
-                println("Got IOException in getOrCreateSubResource for ${resourcePath}")
+                resource = udClient.getResourceByPath(resourcePath)
+            }
+            catch (IOException e) {
+                // resource does not exist
+                resource = null
+
                 if (tries < MAX_RETRIES) {
-                    println ("Retrying...")
+                    Thread.sleep(3000)
                 }
                 else {
                     throw e
                 }
+            }
+
+            if (resource != null) {
+                println("Resource created successfully: " + resourcePath)
+                done = true
             }
         }
 
@@ -74,6 +83,19 @@ class ResourceHelper {
                 }
             }
         }
+    }
+
+    boolean containsRole(String resourcePath, String resourceRole) {
+        JSONArray roles = udClient.getResourceRoles(resourcePath)
+
+        for (int i = 0; i < roles.length(); i++) {
+            JSONObject role = roles.getJSONObject(i)
+            if (role.getString("name").equals("CloudFoundryController")) {
+                return true
+            }
+        }
+
+        return false
     }
 
     def getResource(def resourcePath) {

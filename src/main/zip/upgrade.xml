@@ -667,4 +667,11 @@
     </migrate>
     <migrate to-version="25">
     </migrate>
+    <migrate to-version="26">
+        <migrate-command name="CF Discovery">
+            <migrate-properties>
+                <migrate-property name="cfHome" default="${p?:agent/cf.cfHome}" />
+            </migrate-properties>
+        </migrate-command>
+    </migrate>
 </plugin-upgrade>

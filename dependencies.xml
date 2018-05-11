@@ -14,6 +14,13 @@
     <!-- ############################################################ -->
     <!-- RUNTIME                                                      -->
     <!-- ############################################################ -->
+   <dependency>
+      <cs-project name="Jakarta Commons IO" />
+      <criteria status="success" />
+      <delivery artifact-set="Default">
+        <directory>lib</directory>
+      </delivery>
+    </dependency>
 
 
     <!-- ############################################################ -->
@@ -82,15 +89,6 @@
       <criteria status="success" />
       <delivery artifact-set="Default">
         <directory>lib/test</directory>
-      </delivery>
-    </dependency>
-
-   <dependency>
-      <cs-project name="Jakarta Commons IO" />
-      <criteria stamp="1.4" />
-      <delivery artifact-set="Default">
-        <directory>lib/test</directory>
-        <directory>lib/validate</directory>
       </delivery>
     </dependency>
 
