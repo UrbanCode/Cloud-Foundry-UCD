@@ -75,5 +75,8 @@
         Fixed API Endpoint discovery to correctly parse the output of the cf api command.
         Added check to confirm CloudFoundryController role and provided error output upon failure.
     </release-note>
+    <release-note plugin-version="27">
+        Updated all default application values to reference the auto-configured application resources.
+    </release-note>
   </release-notes>
 </pluginInfo>

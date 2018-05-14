@@ -8,7 +8,7 @@
 -->
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <header>
-    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="26"/>
+    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="27"/>
     <description>
     The CloudFoundry plugin will use the CloudFoundry command line utility to interact with applications in a target CloudFoundry system.
     </description>
@@ -34,7 +34,7 @@
         <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application Name" default-value="${p:component/cf.appName}" description="Name of the application to bind the service to."/>
+        <server:property-ui type="textBox" label="Application Name" default-value="${p:resource/cf.app}" description="Name of the application to bind the service to."/>
       </property>
       <property name="service" required="true">
         <server:property-ui type="textBox" label="Service name" default-value="${p:component/cf.service}" description="Name of the service to be bound."/>
@@ -72,7 +72,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="bindService.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -132,7 +132,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="createDomain.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -195,7 +195,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="createRoute.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -264,7 +264,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="createOrUpdateUPS.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -330,7 +330,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="createService.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -393,7 +393,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="createSubdomain.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -418,7 +418,7 @@
         <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:component/cf.appName}" description="Name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="Name of the application."/>
       </property>
       <property name="delete_Routes">
         <server:property-ui type="checkBox" label="Delete mapped routes" description="Also delete any mapped routes."/>
@@ -456,7 +456,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="deleteApp.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -516,7 +516,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="deleteDomain.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -579,7 +579,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="deleteRoute.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -639,7 +639,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="deleteService.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -702,7 +702,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="deleteSubdomain.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -765,7 +765,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="executeCFScript.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -828,7 +828,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="executeBashScript.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -853,7 +853,7 @@
         <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:component/cf.appName}" description="Name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="Name of the application."/>
       </property>
       <property name="domain" required="true">
         <server:property-ui type="textBox" label="Domain" default-value="${p?:cf.domain}" description="The domain to use. (e.g. example.com)."/>
@@ -894,7 +894,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="mapRoute.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -999,7 +999,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="pushApplication.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -1024,7 +1024,7 @@
         <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:component/cf.appName}" description="Name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="Name of the application."/>
       </property>
       <property name="selfSigned" >
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
@@ -1059,7 +1059,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="restartApp.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -1084,7 +1084,7 @@
         <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
         </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:component/cf.appName}" description="Name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="Name of the application."/>
       </property>
       <property name="selfSigned" >
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
@@ -1119,7 +1119,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="startApp.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -1144,7 +1144,7 @@
         <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:component/cf.appName}" description="Name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="Name of the application."/>
       </property>
       <property name="selfSigned" >
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
@@ -1179,7 +1179,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="stopApp.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -1204,7 +1204,7 @@
         <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:component/cf.appName}" description="Name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="Name of the application."/>
       </property>
       <property name="service" required="true">
         <server:property-ui type="textBox" label="Service name" default-value="${p:component/cf.service}" description="Name of the service."/>
@@ -1242,7 +1242,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="unbindService.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -1267,7 +1267,7 @@
         <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:component/cf.appName}" description="Name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="Name of the application."/>
       </property>
       <property name="domain" required="true">
         <server:property-ui type="textBox" label="Domain" default-value="${p?:cf.domain}" description="The domain to use. (e.g. example.com)."/>
@@ -1308,7 +1308,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="unmapRoute.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -1351,7 +1351,7 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/uDeployRestClient.jar:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar"/>
+      <arg path="classes:lib/uDeployRestClient.jar:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
       <arg file="configureCF.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -1408,17 +1408,23 @@
     <server:description>Role for resources that represents a Cloud Controller in a Cloud Foundry instance.</server:description>
     <server:allowed-parent-roles/>
     <server:property name="cf.api">
-      <server:property-ui type="textBox" label="Cloud Foundry API Endpoint" description="The url of the Cloud Foundry API endpoint."/>
+      <server:property-ui 
+        type="textBox" 
+        label="cf.api"
+        description="The url of the Cloud Foundry API endpoint."/>
     </server:property>
     <server:property name="cf.commandPath">
-      <server:property-ui description="The path to the directory where the cf command line executable resides." label="Cloud Foundry Executable"
-        type="textBox"/>
+      <server:property-ui
+        type="textBox"
+        label="cf.commandPath"
+        description="The path to the directory where the cf command line executable resides. 
+            You may reference this property as 'cf.commandPath'."/>
     </server:property>
     <server:property name="cf.username">
-      <server:property-ui type="textBox" label="Cloud Foundry User" description="The Cloud Foundry username."/>
+      <server:property-ui type="textBox" label="cf.username" description="The Cloud Foundry username."/>
     </server:property>
     <server:property name="cf.password">
-      <server:property-ui type="secureBox" label="Cloud Foundry Password" description="The Cloud Foundry password to use."/>
+      <server:property-ui type="secureBox" label="cf.password" description="The Cloud Foundry password to use."/>
     </server:property>
     <server:default-child-folders>
       <server:default-child-folder>Organizations</server:default-child-folder>
@@ -1439,7 +1445,7 @@
     </server:allowed-parent-roles>
     <server:allowed-parent-roles/>
     <server:property name="cf.org" required="true">
-      <server:property-ui type="textBox" label="Name" description="The Name of the Cloud Foundry organization."/>
+      <server:property-ui type="textBox" label="cf.org" description="The Name of the Cloud Foundry organization."/>
     </server:property>
     <server:default-child-folders>
       <server:default-child-folder>Spaces</server:default-child-folder>
@@ -1460,7 +1466,7 @@
     </server:allowed-parent-roles>
     <server:allowed-parent-roles/>
     <server:property name="cf.space" required="true">
-      <server:property-ui type="textBox" label="Name" description="The Name of the Cloud Foundry space."/>
+      <server:property-ui type="textBox" label="cf.space" description="The Name of the Cloud Foundry space."/>
     </server:property>
   </server:property-group>
 
@@ -1478,7 +1484,7 @@
     </server:allowed-parent-roles>
     <server:allowed-parent-roles/>
     <server:property name="cf.app" required="true">
-      <server:property-ui type="textBox" label="Name" description="The Name of the Cloud Foundry application."/>
+      <server:property-ui type="textBox" label="cf.app" description="The Name of the Cloud Foundry application."/>
     </server:property>
   </server:property-group>
 </plugin>
