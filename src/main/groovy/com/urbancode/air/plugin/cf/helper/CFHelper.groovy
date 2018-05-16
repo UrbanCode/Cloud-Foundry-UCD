@@ -10,6 +10,8 @@ package com.urbancode.air.plugin.cf.helper
 import com.urbancode.air.CommandHelper
 import com.urbancode.air.ExitCodeException
 
+import org.apache.commons.io.FileUtils
+
 class CFHelper {
     CommandHelper helper
     final def workDir = new File('.').canonicalFile
@@ -537,11 +539,15 @@ class CFHelper {
 
         // change location of config.json file
         def cfHomeDir
-        if(cfHome) {
+        def tempHome = false
+
+        if (cfHome) {
             cfHomeDir = new File(cfHome)
         }
         else {
-            cfHomeDir = new File(props['PLUGIN_INPUT_PROPS']).parentFile
+            cfHomeDir = new File(workDir, "cf-" + new Random().nextInt())
+            cfHomeDir.mkdir()
+            tempHome = true
         }
 
         if (!cfHomeDir.exists() && !cfHomeDir.isDirectory()) {
@@ -621,6 +627,11 @@ class CFHelper {
             ]
 
             runHelperCommand("[Action] Setting CloudFoundry target space", commandArgs)
+        }
+
+        // Set dir to be recursively deleted after all inner files are created
+        if (tempHome) {
+            FileUtils.forceDeleteOnExit(cfHomeDir)
         }
     }
 

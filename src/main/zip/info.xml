@@ -75,5 +75,9 @@
         Fixed API Endpoint discovery to correctly parse the output of the cf api command.
         Added check to confirm CloudFoundryController role and provided error output upon failure.
     </release-note>
+    <release-note plugin-version="27">
+        Fixed APAR PI97459 default CF_HOME is now created as a new temporary child of the working directory.
+        Updated all default application values to reference the auto-configured application resources.
+    </release-note>
   </release-notes>
 </pluginInfo>
