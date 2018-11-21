@@ -11,6 +11,7 @@ import com.urbancode.air.CommandHelper
 import com.urbancode.air.ExitCodeException
 
 import org.apache.commons.io.FileUtils
+import groovy.json.JsonSlurper
 
 class CFHelper {
     CommandHelper helper
@@ -58,12 +59,7 @@ class CFHelper {
         setupEnvironment(api, organization, space)
 
         // Execute bind-service
-        def commandArgs = [
-            cfFile,
-            "bind-service",
-            application,
-            service
-        ]
+        def commandArgs = [cfFile, "bind-service", application, service]
 
         runHelperCommand("[Action] Executing CF bind-service", commandArgs)
     }
@@ -74,12 +70,7 @@ class CFHelper {
         setupEnvironment(api, organization, space)
 
         // Execute create-domain
-        def commandArgs = [
-            cfFile,
-            "create-domain",
-            organization,
-            domain
-        ]
+        def commandArgs = [cfFile, "create-domain", organization, domain]
 
         runHelperCommand("[Action] Executing CF create-domain", commandArgs)
     }
@@ -92,7 +83,8 @@ class CFHelper {
 
         setupEnvironment(api, organization, space)
 
-        def services = getServices()
+        //def services = getServices()
+        def services = getServicesList()
         def command = ""
         if (!services.contains(service)) {
             println "[Ok] Service not found. Creating the user-provided service..."
@@ -104,13 +96,7 @@ class CFHelper {
         }
 
         // Execute create-user-provided-service or update-user-provided service
-        def commandArgs = [
-            cfFile,
-            command,
-            service,
-            "-p",
-            credentials
-        ]
+        def commandArgs = [cfFile, command, service, "-p", credentials]
 
         if (logDrainURL) {
             commandArgs << "-l"
@@ -132,12 +118,7 @@ class CFHelper {
         setupEnvironment(api, organization, space)
 
         // Execute create-domain
-        def commandArgs = [
-            cfFile,
-            "create-domain",
-            organization,
-            subdomain + "." + domain
-        ]
+        def commandArgs = [cfFile, "create-domain", organization, subdomain + "." + domain]
 
         runHelperCommand("[Action] Executing CF create-domain", commandArgs)
     }
@@ -149,12 +130,7 @@ class CFHelper {
         setupEnvironment(api, organization, space)
 
         // Execute create-route
-        def commandArgs = [
-            cfFile,
-            "create-route",
-            space,
-            domain
-        ]
+        def commandArgs = [cfFile, "create-route", space, domain]
 
         if (hostname) {
             commandArgs << "-n"
@@ -172,13 +148,7 @@ class CFHelper {
         setupEnvironment(api, organization, space)
 
         // Execute create-service
-        def commandArgs = [
-            cfFile,
-            "create-service",
-            serviceType,
-            plan,
-            serviceName
-        ]
+        def commandArgs = [cfFile, "create-service", serviceType, plan, serviceName]
 
         runHelperCommand("[Action] Executing CF create-service", commandArgs)
     }
@@ -205,12 +175,7 @@ class CFHelper {
         setupEnvironment(api, organization, space)
 
         // Execute delete-domain
-        def commandArgs = [
-            cfFile,
-            "delete-domain",
-            domain,
-            "-f"
-        ]
+        def commandArgs = [cfFile, "delete-domain", domain, "-f"]
 
         runHelperCommand("[Action] Executing CF delete-domain", commandArgs)
     }
@@ -222,11 +187,7 @@ class CFHelper {
         setupEnvironment(api, organization, space)
 
         // Execute delete-route
-        def commandArgs = [
-            cfFile,
-            "delete-route",
-            domain
-        ]
+        def commandArgs = [cfFile, "delete-route", domain]
 
         if (hostname) {
             commandArgs << "-n"
@@ -258,11 +219,7 @@ class CFHelper {
         setupEnvironment(api, organization, space)
 
         // Execute delete-domain
-        def commandArgs = [
-            "cf",
-            "delete-domain",
-            subdomain + "." + domain
-        ]
+        def commandArgs = ["cf", "delete-domain", subdomain + "." + domain]
 
         commandArgs << "-f"
 
@@ -326,12 +283,7 @@ class CFHelper {
         setupEnvironment(api, organization, space)
 
         // Execute map-route
-        def commandArgs = [
-            cfFile,
-            "map-route",
-            app,
-            domain
-        ]
+        def commandArgs = [cfFile, "map-route", app, domain]
 
         if (hostname) {
             commandArgs << "-n"
@@ -494,12 +446,7 @@ class CFHelper {
         setupEnvironment(api, organization, space)
 
         // Execute unbind-service
-        def commandArgs = [
-            cfFile,
-            "unbind-service",
-            app,
-            service
-        ]
+        def commandArgs = [cfFile, "unbind-service", app, service]
 
         runHelperCommand("[Action] Executing CF unbind-service", commandArgs)
     }
@@ -530,6 +477,7 @@ class CFHelper {
     void setupEnvironment(def api, def organization, def space) {
         // Setup path
         def curPath = System.getenv("PATH")
+
         def pluginHome = new File(System.getenv("PLUGIN_HOME"))
 
         println "[Action] Setup of path using plugin home: " + pluginHome
@@ -569,25 +517,13 @@ class CFHelper {
         // Authenticate with username and password
         if (!isAuthenticated && (username && password)) {
             if (organization && space) {
-                commandArgs = [
-                    cfFile,
-                    "auth",
-                    username,
-                    password
-                ]
+                commandArgs = [cfFile, "auth", username, password]
 
                 runHelperCommand("[Action] Authenticating with CloudFoundry", commandArgs, false)
             }
 
             else {
-                commandArgs = [
-                    cfFile,
-                    "login",
-                    "-u",
-                    username,
-                    "-p",
-                    password
-                ]
+                commandArgs = [cfFile, "login", "-u", username, "-p", password]
 
                 runHelperCommand("[Action] Logging into CloudFoundry", commandArgs, false)
             }
@@ -599,32 +535,18 @@ class CFHelper {
 
         if (organization) {
             // Set target org
-            commandArgs = [
-                cfFile,
-                "target",
-                "-o",
-                organization
-            ]
+            commandArgs = [cfFile, "target", "-o", organization]
             runHelperCommand("[Action] Setting CloudFoundry target organization", commandArgs)
         }
 
         if (space) {
             // Ensure space exists. create-space does nothing if space exists
-            commandArgs = [
-                cfFile,
-                "create-space",
-                space
-            ]
+            commandArgs = [cfFile, "create-space", space]
 
             runHelperCommand("[Action] Creating CloudFoundry space", commandArgs)
 
             // Set target space
-            commandArgs = [
-                cfFile,
-                "target",
-                "-s",
-                space
-            ]
+            commandArgs = [cfFile, "target", "-s", space]
 
             runHelperCommand("[Action] Setting CloudFoundry target space", commandArgs)
         }
@@ -639,7 +561,6 @@ class CFHelper {
     def getServices() {
         def commandArgs = [cfFile, "services"]
         def services = getServiceOutput(commandArgs)
-
         return services
     }
 
@@ -745,6 +666,79 @@ class CFHelper {
 
         return output
     }
+
+    // Get the list of service instances
+    def getServicesList() {
+        def services = []
+        String oauthToken
+
+        def setOauthToken = {
+            it.out.close() // close stdin
+
+            try {
+                // get Oauth token
+                oauthToken = new String(it.in.getBytes())
+            }
+            catch (IOException ex) {
+                println "[Error] I/O Error found when retrieving the oauthToken. Please review the output log."
+                ex.printStackTrace()
+                System.exit(1)
+            }
+            catch (Exception ex) {
+                println "[Error] Unknown found when retrieving the oauthToken. Please review the output log."
+                ex.printStackTrace()
+                System.exit(1)
+            }
+        }
+
+        def commandArgs = [cfFile, "oauth-token"]
+        println "----------------------------------------------"
+        helper.runCommand("[Action] Running command: ${commandArgs.join(' ')}", commandArgs, setOauthToken)
+        println "----------------------------------------------"
+        try {
+            def baseUrl = new URL(api + '/v3/service_instances')
+            HttpURLConnection connection = (HttpURLConnection) baseUrl.openConnection();
+            connection.addRequestProperty("Accept", "application/json")
+            connection.addRequestProperty("Authorization", oauthToken.trim())
+            connection.setRequestMethod('GET')
+            connection.setDoInput(true)
+            if(!connection.getResponseCode().equals(200)) {
+
+                println ("[Error] Bad response code of ${connection.getResponseCode()}.")
+                println ('Response:\n' + connection.getResponseMessage())
+                System.exit(1)
+
+            }
+
+            def servicesJson = connection.getInputStream().getText().toString()
+
+            def slurper = new JsonSlurper()
+            def ServiceInstances = slurper.parseText(servicesJson)
+
+            ServiceInstances.resources.each { serviceInstance ->
+
+                services << serviceInstance.name
+
+            }
+
+            println "[Ok] Service Names Found: ${services}"
+
+        }
+        catch (IOException ex) {
+            println "[Error] I/O Error found when retrieving the Service list. Please review the output log."
+            ex.printStackTrace()
+            System.exit(1)
+        }
+        catch (Exception ex) {
+            println "[Error] Unknown found when retrieving the Service list. Please review the output log."
+            ex.printStackTrace()
+            System.exit(1)
+        }
+
+        return services
+    }
+
+
 
     // run command and return service output (Get's element 0 on each line of the output)
     def getServiceOutput(def cmdArgs) {
