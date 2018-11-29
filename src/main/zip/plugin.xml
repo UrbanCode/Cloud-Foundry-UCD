@@ -8,7 +8,7 @@
 -->
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <header>
-    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="27"/>
+    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="28"/>
     <description>
     The CloudFoundry plugin will use the CloudFoundry command line utility to interact with applications in a target CloudFoundry system.
     </description>

@@ -11,6 +11,7 @@ import com.urbancode.air.CommandHelper
 import com.urbancode.air.ExitCodeException
 
 import org.apache.commons.io.FileUtils
+import groovy.json.JsonSlurper
 
 class CFHelper {
     CommandHelper helper
@@ -92,7 +93,8 @@ class CFHelper {
 
         setupEnvironment(api, organization, space)
 
-        def services = getServices()
+        //def services = getServices()
+        def services = getServicesList()
         def command = ""
         if (!services.contains(service)) {
             println "[Ok] Service not found. Creating the user-provided service..."
@@ -746,6 +748,78 @@ class CFHelper {
         return output
     }
 
+    // Get the list of service instances
+    def getServicesList() {
+        def services = []
+        String oauthToken
+
+        def setOauthToken = {
+            it.out.close() // close stdin
+
+            try {
+                // get Oauth token
+                oauthToken = new String(it.in.getBytes())
+            }
+            catch (IOException ex) {
+                println "[Error] I/O Error found when retrieving the oauthToken. Please review the output log."
+                ex.printStackTrace()
+                System.exit(1)
+            }
+            catch (Exception ex) {
+                println "[Error] Unknown found when retrieving the oauthToken. Please review the output log."
+                ex.printStackTrace()
+                System.exit(1)
+            }
+        }
+
+        def commandArgs = [cfFile, "oauth-token"]
+        println "----------------------------------------------"
+        helper.runCommand("[Action] Running command: ${commandArgs.join(' ')}", commandArgs, setOauthToken)
+        println "----------------------------------------------"
+        try {
+            def baseUrl = new URL(api + '/v3/service_instances')
+            HttpURLConnection connection = (HttpURLConnection) baseUrl.openConnection();
+            connection.addRequestProperty("Accept", "application/json")
+            connection.addRequestProperty("Authorization", oauthToken.trim())
+            connection.setRequestMethod('GET')
+            connection.setDoInput(true)
+            if(!connection.getResponseCode().equals(200)) {
+
+                println ("[Error] Bad response code of ${connection.getResponseCode()}.")
+                println ('Response:\n' + connection.getResponseMessage())
+                System.exit(1)
+
+            }
+
+            def servicesJson = connection.getInputStream().getText().toString()
+
+            def slurper = new JsonSlurper()
+            def ServiceInstances = slurper.parseText(servicesJson)
+
+            ServiceInstances.resources.each { serviceInstance ->
+
+                services << serviceInstance.name
+
+            }
+
+            println "[Ok] Service Names Found: ${services}"
+
+        }
+        catch (IOException ex) {
+            println "[Error] I/O Error found when retrieving the Service list. Please review the output log."
+            ex.printStackTrace()
+            System.exit(1)
+        }
+        catch (Exception ex) {
+            println "[Error] Unknown found when retrieving the Service list. Please review the output log."
+            ex.printStackTrace()
+            System.exit(1)
+        }
+
+        return services
+    }
+
+    
     // run command and return service output (Get's element 0 on each line of the output)
     def getServiceOutput(def cmdArgs) {
         def output = []

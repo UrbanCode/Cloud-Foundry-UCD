@@ -79,5 +79,8 @@
         Fixed APAR PI97459 default CF_HOME is now created as a new temporary child of the working directory.
         Updated all default application values to reference the auto-configured application resources.
     </release-note>
+    <release-note plugin-version="28">
+        Fixed APAR PH05332 Cloud Foundry Plugin v23 or v27 Create or Update Service step is failing. Using CF rest api to fetch services now.
+    </release-note>
   </release-notes>
 </pluginInfo>
