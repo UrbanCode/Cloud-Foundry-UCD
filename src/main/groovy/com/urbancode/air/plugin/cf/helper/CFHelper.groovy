@@ -738,8 +738,6 @@ class CFHelper {
         return services
     }
 
-
-
     // run command and return service output (Get's element 0 on each line of the output)
     def getServiceOutput(def cmdArgs) {
         def output = []
