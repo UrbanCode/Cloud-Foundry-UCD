@@ -670,6 +670,8 @@ class CFHelper {
     // Get the list of service instances
     def getServicesList() {
         def services = []
+        def orgId
+        def spaces = []
         String oauthToken
 
         def setOauthToken = {
@@ -695,9 +697,92 @@ class CFHelper {
         println "----------------------------------------------"
         helper.runCommand("[Action] Running command: ${commandArgs.join(' ')}", commandArgs, setOauthToken)
         println "----------------------------------------------"
+        
+        
+        //Get organizations
         try {
-            def baseUrl = new URL(api + '/v3/service_instances')
-            HttpURLConnection connection = (HttpURLConnection) baseUrl.openConnection();
+            def organizationsUrl = new URL(api + '/v2/organizations')
+            HttpURLConnection connection = (HttpURLConnection) organizationsUrl.openConnection();
+            connection.addRequestProperty("Accept", "application/json")
+            connection.addRequestProperty("Authorization", oauthToken.trim())
+            connection.setRequestMethod('GET')
+            connection.setDoInput(true)
+            if(!connection.getResponseCode().equals(200)) {
+
+                println ("[Error] Bad response code of ${connection.getResponseCode()}.")
+                println ('Response:\n' + connection.getResponseMessage())
+                System.exit(1)
+
+            }
+
+            def organizationsJson = connection.getInputStream().getText().toString()
+
+            def organizationsSlurper = new JsonSlurper()
+            def organizations = organizationsSlurper.parseText(organizationsJson)
+
+            organizations.resources.each { org ->
+                if(org.entity.name.equals(organization)) {
+                    orgId = org.metadata.guid
+                }
+
+            }
+            
+        }
+        catch (IOException ex) {
+            println "[Error] I/O Error found when retrieving the organizations list. Please review the output log."
+            ex.printStackTrace()
+            System.exit(1)
+        }
+        catch (Exception ex) {
+            println "[Error] Unknown found when retrieving the organizations list. Please review the output log."
+            ex.printStackTrace()
+            System.exit(1)
+        }
+
+        //Get spaces
+        try {
+            def spacesUrl = new URL(api + '/v2/spaces')
+            HttpURLConnection connection = (HttpURLConnection) spacesUrl.openConnection();
+            connection.addRequestProperty("Accept", "application/json")
+            connection.addRequestProperty("Authorization", oauthToken.trim())
+            connection.setRequestMethod('GET')
+            connection.setDoInput(true)
+            if(!connection.getResponseCode().equals(200)) {
+
+                println ("[Error] Bad response code of ${connection.getResponseCode()}.")
+                println ('Response:\n' + connection.getResponseMessage())
+                System.exit(1)
+
+            }
+
+            def spacesJson = connection.getInputStream().getText().toString()
+
+            def spacesSlurper = new JsonSlurper()
+            def space = spacesSlurper.parseText(spacesJson)
+
+            space.resources.each { sp ->
+                if(sp.entity.organization_guid.equals(orgId)) {
+                    spaces << sp.metadata.guid
+                }
+
+            }
+            
+        }
+        catch (IOException ex) {
+            println "[Error] I/O Error found when retrieving the spaces under specified organizations. Please review the output log."
+            ex.printStackTrace()
+            System.exit(1)
+        }
+        catch (Exception ex) {
+            println "[Error] Unknown found when retrieving the spaces under specified organizations. Please review the output log."
+            ex.printStackTrace()
+            System.exit(1)
+        }
+        
+        //Get services
+        try {
+            def serviceInstancesUrl = new URL(api + '/v2/service_instances')
+            HttpURLConnection connection = (HttpURLConnection) serviceInstancesUrl.openConnection();
             connection.addRequestProperty("Accept", "application/json")
             connection.addRequestProperty("Authorization", oauthToken.trim())
             connection.setRequestMethod('GET')
@@ -716,12 +801,10 @@ class CFHelper {
             def ServiceInstances = slurper.parseText(servicesJson)
 
             ServiceInstances.resources.each { serviceInstance ->
-
-                services << serviceInstance.name
-
+                if(spaces.contains(serviceInstance.entity.space_guid)) {
+                    services << serviceInstance.entity.name
+                }              
             }
-
-            println "[Ok] Service Names Found: ${services}"
 
         }
         catch (IOException ex) {
@@ -735,6 +818,46 @@ class CFHelper {
             System.exit(1)
         }
 
+        //Get user provided services
+        try {
+            def userProvidedservicesUrl = new URL(api + '/v2/user_provided_service_instances')
+            HttpURLConnection connection = (HttpURLConnection) userProvidedservicesUrl.openConnection();
+            connection.addRequestProperty("Accept", "application/json")
+            connection.addRequestProperty("Authorization", oauthToken.trim())
+            connection.setRequestMethod('GET')
+            connection.setDoInput(true)
+            if(!connection.getResponseCode().equals(200)) {
+
+                println ("[Error] Bad response code of ${connection.getResponseCode()}.")
+                println ('Response:\n' + connection.getResponseMessage())
+                System.exit(1)
+
+            }
+
+            def userProvidedservicesJson = connection.getInputStream().getText().toString()
+
+            def userProvidedservicesSlurper = new JsonSlurper()
+            def userProvidedservices = userProvidedservicesSlurper.parseText(userProvidedservicesJson)
+
+            userProvidedservices.resources.each { service ->
+                if(spaces.contains(service.entity.space_guid)) {
+                    services << service.entity.name
+                }
+            }
+
+        }
+        catch (IOException ex) {
+            println "[Error] I/O Error found when retrieving the user provided Service list. Please review the output log."
+            ex.printStackTrace()
+            System.exit(1)
+        }
+        catch (Exception ex) {
+            println "[Error] Unknown found when retrieving the user provided Service list. Please review the output log."
+            ex.printStackTrace()
+            System.exit(1)
+        }
+
+        println "Services under ${organization} are : ${services}"
         return services
     }
 
