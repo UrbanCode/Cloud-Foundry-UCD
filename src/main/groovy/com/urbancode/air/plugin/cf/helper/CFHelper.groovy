@@ -83,8 +83,7 @@ class CFHelper {
 
         setupEnvironment(api, organization, space)
 
-        //def services = getServices()
-        def services = getServicesList()
+        def services = getServices()
         def command = ""
         if (!services.contains(service)) {
             println "[Ok] Service not found. Creating the user-provided service..."
@@ -557,13 +556,6 @@ class CFHelper {
         }
     }
 
-    // return a list of all services. api, org, and space must be initialized elsewhere
-    def getServices() {
-        def commandArgs = [cfFile, "services"]
-        def services = getServiceOutput(commandArgs)
-        return services
-    }
-
     /* methods used only during auto-discovery.. logout occurs after discovery is finished */
 
     // return a list of all organizations in the specified api endpoint
@@ -667,8 +659,8 @@ class CFHelper {
         return output
     }
 
-    // Get the list of service instances
-    def getServicesList() {
+    // Get the list of service instances under specified org
+    def getServices() {
         def services = []
         def orgId
         def spaces = []
@@ -859,47 +851,6 @@ class CFHelper {
 
         println "Services under ${organization} are : ${services}"
         return services
-    }
-
-    // run command and return service output (Get's element 0 on each line of the output)
-    def getServiceOutput(def cmdArgs) {
-        def output = []
-
-        def setOutput = {
-            it.out.close() // close stdin
-            try {
-                // Look at each line, get the first word which is the service's name
-                it.in.eachLine { line ->
-                    println line
-                    output << line.split("\\s+")[0]
-                }
-            }
-            catch (IOException ex) {
-                println "[Error] I/O Error found when retrieving the Service list. Please review the output log."
-                ex.printStackTrace()
-                System.exit(1)
-            }
-            catch (Exception ex) {
-                println "[Error] Unknown found when retrieving the Service list. Please review the output log."
-                ex.printStackTrace()
-                System.exit(1)
-            }
-            finally {
-                it.waitFor()
-                // Remove all output that is not a service name
-                output.remove(3) // Getting services in org <org> / space <space> as <username>...
-                output.remove(2) // OK
-                output.remove(1) // <new line>
-                output.remove(0) // No service found || name    service     plan    bound apps  last operation
-                println "Service Output: ${output}"
-            }
-        }
-
-        println "----------------------------------------------"
-        helper.runCommand("[Action] Running command: ${cmdArgs.join(' ')}", cmdArgs, setOutput)
-        println "----------------------------------------------"
-        println "[Ok] Service Names Found: ${output}"
-        return output
     }
 
     // logout of the Cloud Foundry Controller
