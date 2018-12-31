@@ -10,8 +10,13 @@ package com.urbancode.air.plugin.cf.helper
 import com.urbancode.air.CommandHelper
 import com.urbancode.air.ExitCodeException
 
+import java.nio.charset.Charset
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 import org.apache.commons.io.FileUtils
 import groovy.json.JsonSlurper
+import sun.awt.CharsetString
+import org.apache.commons.io.IOUtils
 
 class CFHelper {
     CommandHelper helper
@@ -26,6 +31,7 @@ class CFHelper {
     def organization
     def space
     def cfHome
+    def cfVersion
     def interpreter
     def envVars
 
@@ -82,8 +88,16 @@ class CFHelper {
         def routeServiceURL = props['routeServiceURL'].trim()
 
         setupEnvironment(api, organization, space)
-
-        def services = getServices()
+        def services
+        getCfVersion()
+        //Cloudfoundary version 6.35.0 onwards cli format has changed
+        if(cfVersion >= 6350) {
+            //for cf version greater than and equal to 6.35.0
+            services = getServicesViaApi()
+        }else {
+            //for cf version older than 6.35.0
+            services = getServicesViaCmd()
+        }
         def command = ""
         if (!services.contains(service)) {
             println "[Ok] Service not found. Creating the user-provided service..."
@@ -95,6 +109,7 @@ class CFHelper {
         }
 
         // Execute create-user-provided-service or update-user-provided service
+        println "[Ok] Credentials : ${credentials}"
         def commandArgs = [cfFile, command, service, "-p", credentials]
 
         if (logDrainURL) {
@@ -108,6 +123,56 @@ class CFHelper {
         }
 
         runHelperCommand("[Action] Executing CF ${command}", commandArgs)
+    }
+
+    // run command and return service output (Get's element 0 on each line of the output)
+    def getServiceOutput(def cmdArgs) {
+        def output = []
+
+        def setOutput = {
+            it.out.close() // close stdin
+            try {
+                // Look at each line, get the first word which is the service's name
+                it.in.eachLine { line ->
+                    println line
+                    output << line.split("\\s+")[0]
+                }
+            }
+            catch (IOException ex) {
+                println "[Error] I/O Error found when retrieving the Service list. Please review the output log."
+                ex.printStackTrace()
+                System.exit(1)
+            }
+            catch (Exception ex) {
+                println "[Error] Unknown found when retrieving the Service list. Please review the output log."
+                ex.printStackTrace()
+                System.exit(1)
+            }
+            finally {
+                it.waitFor()
+                // Remove all output that is not a service name
+                output.remove(3) // Getting services in org <org> / space <space> as <username>...
+                output.remove(2) // OK
+                output.remove(1) // <new line>
+                output.remove(0) // No service found || name    service     plan    bound apps  last operation
+                println "Service Output: ${output}"
+            }
+        }
+
+        println "----------------------------------------------"
+        helper.runCommand("[Action] Running command: ${cmdArgs.join(' ')}", cmdArgs, setOutput)
+        println "----------------------------------------------"
+        println "[Ok] Service Names Found: ${output}"
+        return output
+    }
+
+
+    // return a list of all services. api, org, and space must be initialized elsewhere
+    def getServicesViaCmd() {
+        def commandArgs = [cfFile, "services"]
+        def services = getServiceOutput(commandArgs)
+
+        return services
     }
 
     void createSubdomain() throws Exception{
@@ -578,6 +643,45 @@ class CFHelper {
         return spaces
     }
 
+    def getCfVersion() {
+        def setVersion = {
+            it.out.close() // close stdin
+
+            try {
+                //set cf Version
+                cfVersion = IOUtils.toString(it.in, "UTF-8")
+            }
+            catch (IOException ex) {
+                println "[Error] I/O Error found when retrieving the cf client version. Please review the output log."
+                ex.printStackTrace()
+                System.exit(1)
+            }
+            catch (Exception ex) {
+                println "[Error] Unknown found when retrieving the cf client version. Please review the output log."
+                ex.printStackTrace()
+                System.exit(1)
+            }
+        }
+
+        def commandArgs = [cfFile, "-v"]
+        println "----------------------------------------------"
+        helper.runCommand("[Action] Running command: ${commandArgs.join(' ')}", commandArgs, setVersion)
+        println "----------------------------------------------"
+        println "CloudFoundary client version in string format : ${cfVersion}"
+        String VERSION_PATTERN = "(6\\.[0-9]{1,2}\\.[0-9]{1,2})"
+        Pattern pattern = Pattern.compile(VERSION_PATTERN)
+        Matcher matcher = pattern.matcher(cfVersion)
+        if (matcher.find()) {
+            cfVersion =  matcher.group()
+        } else{
+            cfVersion = "0"
+        }
+        cfVersion = cfVersion.toString().split("\\.").join('').toInteger()
+
+        println "CloudFoundary client version in mumber format : ${cfVersion}"
+
+    }
+
     // return all applications in the specified org and space
     def getApplications(def org, def space) {
         setupEnvironment(api, org, space)
@@ -660,7 +764,8 @@ class CFHelper {
     }
 
     // Get the list of service instances under specified org
-    def getServices() {
+    def getServicesViaApi() {
+
         def services = []
         def orgId
         def spaces = []
@@ -689,8 +794,8 @@ class CFHelper {
         println "----------------------------------------------"
         helper.runCommand("[Action] Running command: ${commandArgs.join(' ')}", commandArgs, setOauthToken)
         println "----------------------------------------------"
-        
-        
+
+
         //Get organizations
         try {
             def organizationsUrl = new URL(api + '/v2/organizations')
@@ -718,7 +823,7 @@ class CFHelper {
                 }
 
             }
-            
+
         }
         catch (IOException ex) {
             println "[Error] I/O Error found when retrieving the organizations list. Please review the output log."
@@ -758,7 +863,7 @@ class CFHelper {
                 }
 
             }
-            
+
         }
         catch (IOException ex) {
             println "[Error] I/O Error found when retrieving the spaces under specified organizations. Please review the output log."
@@ -770,7 +875,7 @@ class CFHelper {
             ex.printStackTrace()
             System.exit(1)
         }
-        
+
         //Get services
         try {
             def serviceInstancesUrl = new URL(api + '/v2/service_instances')
@@ -795,7 +900,7 @@ class CFHelper {
             ServiceInstances.resources.each { serviceInstance ->
                 if(spaces.contains(serviceInstance.entity.space_guid)) {
                     services << serviceInstance.entity.name
-                }              
+                }
             }
 
         }
