@@ -144,7 +144,7 @@ class CFHelper {
                 System.exit(1)
             }
             catch (Exception ex) {
-                println "[Error] Unknown found when retrieving the Service list. Please review the output log."
+                println "[Error] Unknown Error found when retrieving the Service list. Please review the output log."
                 ex.printStackTrace()
                 System.exit(1)
             }
