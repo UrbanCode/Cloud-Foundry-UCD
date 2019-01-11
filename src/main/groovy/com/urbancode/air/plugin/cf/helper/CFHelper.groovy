@@ -10,7 +10,6 @@ package com.urbancode.air.plugin.cf.helper
 import com.urbancode.air.CommandHelper
 import com.urbancode.air.ExitCodeException
 
-import java.nio.charset.Charset
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import org.apache.commons.io.FileUtils
