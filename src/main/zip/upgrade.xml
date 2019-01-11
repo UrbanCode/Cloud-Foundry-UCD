@@ -718,4 +718,8 @@
     </migrate>
     <migrate to-version="28">
     </migrate>
+    <migrate to-version="29">
+    </migrate>
+    <migrate to-version="30">
+    </migrate>    
 </plugin-upgrade>
