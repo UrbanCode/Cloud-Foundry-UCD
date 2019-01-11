@@ -90,14 +90,8 @@ class CFHelper {
         setupEnvironment(api, organization, space)
         def services
         getCfVersion()
-        //Cloudfoundary version 6.35.0 onwards cli format has changed
-        if(cfVersion >= 6350) {
-            //for cf version greater than and equal to 6.35.0
-            services = getServicesViaApi()
-        }else {
-            //for cf version older than 6.35.0
-            services = getServicesViaCmd()
-        }
+        services = getServices()
+
         def command = ""
         if (!services.contains(service)) {
             println "[Ok] Service not found. Creating the user-provided service..."
@@ -128,14 +122,24 @@ class CFHelper {
     // run command and return service output (Get's element 0 on each line of the output)
     def getServiceOutput(def cmdArgs) {
         def output = []
-
+        def serviceRowStartFlag = false
         def setOutput = {
             it.out.close() // close stdin
             try {
                 // Look at each line, get the first word which is the service's name
                 it.in.eachLine { line ->
                     println line
-                    output << line.split("\\s+")[0]
+                    def lineContent = line.split("\\s+")
+                    //Picking services after we cross service columns
+                    if(serviceRowStartFlag==false) {
+                        lineContent.each {
+                            if(it.toString()=="name" || it.toString()=="service" || it.toString()=="plan" || it.toString()=="bound apps" || it.toString()=="last operation") {
+                                serviceRowStartFlag = true
+                            }
+                        }
+                    }else {
+                        output << lineContent[0]
+                    }
                 }
             }
             catch (IOException ex) {
@@ -144,17 +148,12 @@ class CFHelper {
                 System.exit(1)
             }
             catch (Exception ex) {
-                println "[Error] Unknown Error found when retrieving the Service list. Please review the output log."
+                println "[Error] Unknown found when retrieving the Service list. Please review the output log."
                 ex.printStackTrace()
                 System.exit(1)
             }
             finally {
                 it.waitFor()
-                // Remove all output that is not a service name
-                output.remove(3) // Getting services in org <org> / space <space> as <username>...
-                output.remove(2) // OK
-                output.remove(1) // <new line>
-                output.remove(0) // No service found || name    service     plan    bound apps  last operation
                 println "Service Output: ${output}"
             }
         }
@@ -168,7 +167,7 @@ class CFHelper {
 
 
     // return a list of all services. api, org, and space must be initialized elsewhere
-    def getServicesViaCmd() {
+    def getServices() {
         def commandArgs = [cfFile, "services"]
         def services = getServiceOutput(commandArgs)
 
@@ -667,7 +666,7 @@ class CFHelper {
         println "----------------------------------------------"
         helper.runCommand("[Action] Running command: ${commandArgs.join(' ')}", commandArgs, setVersion)
         println "----------------------------------------------"
-        println "CloudFoundary client version in string format : ${cfVersion}"
+        println "CloudFoundary client version : ${cfVersion}"
         String VERSION_PATTERN = "(6\\.[0-9]{1,2}\\.[0-9]{1,2})"
         Pattern pattern = Pattern.compile(VERSION_PATTERN)
         Matcher matcher = pattern.matcher(cfVersion)
@@ -677,9 +676,6 @@ class CFHelper {
             cfVersion = "0"
         }
         cfVersion = cfVersion.toString().split("\\.").join('').toInteger()
-
-        println "CloudFoundary client version in mumber format : ${cfVersion}"
-
     }
 
     // return all applications in the specified org and space
@@ -761,201 +757,6 @@ class CFHelper {
         println "----------------------------------------------"
 
         return output
-    }
-
-    // Get the list of service instances under specified org
-    def getServicesViaApi() {
-
-        def services = []
-        def orgId
-        def spaces = []
-        String oauthToken
-
-        def setOauthToken = {
-            it.out.close() // close stdin
-
-            try {
-                // get Oauth token
-                oauthToken = new String(it.in.getBytes())
-            }
-            catch (IOException ex) {
-                println "[Error] I/O Error found when retrieving the oauthToken. Please review the output log."
-                ex.printStackTrace()
-                System.exit(1)
-            }
-            catch (Exception ex) {
-                println "[Error] Unknown found when retrieving the oauthToken. Please review the output log."
-                ex.printStackTrace()
-                System.exit(1)
-            }
-        }
-
-        def commandArgs = [cfFile, "oauth-token"]
-        println "----------------------------------------------"
-        helper.runCommand("[Action] Running command: ${commandArgs.join(' ')}", commandArgs, setOauthToken)
-        println "----------------------------------------------"
-
-
-        //Get organizations
-        try {
-            def organizationsUrl = new URL(api + '/v2/organizations')
-            HttpURLConnection connection = (HttpURLConnection) organizationsUrl.openConnection();
-            connection.addRequestProperty("Accept", "application/json")
-            connection.addRequestProperty("Authorization", oauthToken.trim())
-            connection.setRequestMethod('GET')
-            connection.setDoInput(true)
-            if(!connection.getResponseCode().equals(200)) {
-
-                println ("[Error] Bad response code of ${connection.getResponseCode()}.")
-                println ('Response:\n' + connection.getResponseMessage())
-                System.exit(1)
-
-            }
-
-            def organizationsJson = connection.getInputStream().getText().toString()
-
-            def organizationsSlurper = new JsonSlurper()
-            def organizations = organizationsSlurper.parseText(organizationsJson)
-
-            organizations.resources.each { org ->
-                if(org.entity.name.equals(organization)) {
-                    orgId = org.metadata.guid
-                }
-
-            }
-
-        }
-        catch (IOException ex) {
-            println "[Error] I/O Error found when retrieving the organizations list. Please review the output log."
-            ex.printStackTrace()
-            System.exit(1)
-        }
-        catch (Exception ex) {
-            println "[Error] Unknown found when retrieving the organizations list. Please review the output log."
-            ex.printStackTrace()
-            System.exit(1)
-        }
-
-        //Get spaces
-        try {
-            def spacesUrl = new URL(api + '/v2/spaces')
-            HttpURLConnection connection = (HttpURLConnection) spacesUrl.openConnection();
-            connection.addRequestProperty("Accept", "application/json")
-            connection.addRequestProperty("Authorization", oauthToken.trim())
-            connection.setRequestMethod('GET')
-            connection.setDoInput(true)
-            if(!connection.getResponseCode().equals(200)) {
-
-                println ("[Error] Bad response code of ${connection.getResponseCode()}.")
-                println ('Response:\n' + connection.getResponseMessage())
-                System.exit(1)
-
-            }
-
-            def spacesJson = connection.getInputStream().getText().toString()
-
-            def spacesSlurper = new JsonSlurper()
-            def space = spacesSlurper.parseText(spacesJson)
-
-            space.resources.each { sp ->
-                if(sp.entity.organization_guid.equals(orgId)) {
-                    spaces << sp.metadata.guid
-                }
-
-            }
-
-        }
-        catch (IOException ex) {
-            println "[Error] I/O Error found when retrieving the spaces under specified organizations. Please review the output log."
-            ex.printStackTrace()
-            System.exit(1)
-        }
-        catch (Exception ex) {
-            println "[Error] Unknown found when retrieving the spaces under specified organizations. Please review the output log."
-            ex.printStackTrace()
-            System.exit(1)
-        }
-
-        //Get services
-        try {
-            def serviceInstancesUrl = new URL(api + '/v2/service_instances')
-            HttpURLConnection connection = (HttpURLConnection) serviceInstancesUrl.openConnection();
-            connection.addRequestProperty("Accept", "application/json")
-            connection.addRequestProperty("Authorization", oauthToken.trim())
-            connection.setRequestMethod('GET')
-            connection.setDoInput(true)
-            if(!connection.getResponseCode().equals(200)) {
-
-                println ("[Error] Bad response code of ${connection.getResponseCode()}.")
-                println ('Response:\n' + connection.getResponseMessage())
-                System.exit(1)
-
-            }
-
-            def servicesJson = connection.getInputStream().getText().toString()
-
-            def slurper = new JsonSlurper()
-            def ServiceInstances = slurper.parseText(servicesJson)
-
-            ServiceInstances.resources.each { serviceInstance ->
-                if(spaces.contains(serviceInstance.entity.space_guid)) {
-                    services << serviceInstance.entity.name
-                }
-            }
-
-        }
-        catch (IOException ex) {
-            println "[Error] I/O Error found when retrieving the Service list. Please review the output log."
-            ex.printStackTrace()
-            System.exit(1)
-        }
-        catch (Exception ex) {
-            println "[Error] Unknown found when retrieving the Service list. Please review the output log."
-            ex.printStackTrace()
-            System.exit(1)
-        }
-
-        //Get user provided services
-        try {
-            def userProvidedservicesUrl = new URL(api + '/v2/user_provided_service_instances')
-            HttpURLConnection connection = (HttpURLConnection) userProvidedservicesUrl.openConnection();
-            connection.addRequestProperty("Accept", "application/json")
-            connection.addRequestProperty("Authorization", oauthToken.trim())
-            connection.setRequestMethod('GET')
-            connection.setDoInput(true)
-            if(!connection.getResponseCode().equals(200)) {
-
-                println ("[Error] Bad response code of ${connection.getResponseCode()}.")
-                println ('Response:\n' + connection.getResponseMessage())
-                System.exit(1)
-
-            }
-
-            def userProvidedservicesJson = connection.getInputStream().getText().toString()
-
-            def userProvidedservicesSlurper = new JsonSlurper()
-            def userProvidedservices = userProvidedservicesSlurper.parseText(userProvidedservicesJson)
-
-            userProvidedservices.resources.each { service ->
-                if(spaces.contains(service.entity.space_guid)) {
-                    services << service.entity.name
-                }
-            }
-
-        }
-        catch (IOException ex) {
-            println "[Error] I/O Error found when retrieving the user provided Service list. Please review the output log."
-            ex.printStackTrace()
-            System.exit(1)
-        }
-        catch (Exception ex) {
-            println "[Error] Unknown found when retrieving the user provided Service list. Please review the output log."
-            ex.printStackTrace()
-            System.exit(1)
-        }
-
-        println "Services under ${organization} are : ${services}"
-        return services
     }
 
     // logout of the Cloud Foundry Controller
