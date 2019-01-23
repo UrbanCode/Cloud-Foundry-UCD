@@ -362,7 +362,7 @@ class CFHelper {
         setupEnvironment(api, organization, space)
 
         // Push the application
-        def commandArgs = [cfFile, "push"]
+        def commandArgs = [cfFile, "-v", "push"]
 
         if (appName) {
             commandArgs << appName
