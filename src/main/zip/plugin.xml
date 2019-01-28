@@ -8,43 +8,43 @@
 -->
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <header>
-    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="27"/>
+    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="30"/>
     <description>
-    The CloudFoundry plugin will use the CloudFoundry command line utility to interact with applications in a target CloudFoundry system.
+    The Cloud Foundry plug-in uses the Cloud Foundry command line (cf) utility to interact with applications in a target Cloud Foundry system.
     </description>
     <tag>Cloud/CloudFoundry</tag>
     <server:required-server-version>6.0.1.0</server:required-server-version>
   </header>
   <step-type name="Bind Service">
-    <description>Bind a CF service instance onto a CF application.</description>
+    <description>This step binds a Cloud Foundry service instance onto a Cloud Foundry application.</description>
     <properties>
       <property name="api" required="true">
-        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A URL of the target Cloud Foundry system, for example,  http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
        <property name="org">
         <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization where the application will be deployed, for example: some-space"/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application Name" default-value="${p:resource/cf.app}" description="Name of the application to bind the service to."/>
+        <server:property-ui type="textBox" label="Application Name" default-value="${p:resource/cf.app}" description="The name of the application to bind to the service."/>
       </property>
       <property name="service" required="true">
-        <server:property-ui type="textBox" label="Service name" default-value="${p:component/cf.service}" description="Name of the service to be bound."/>
+        <server:property-ui type="textBox" label="Service name" default-value="${p:component/cf.service}" description="The name of the service to be bound."/>
       </property>
       <property name="selfSigned">
-        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped."/>
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed."/>
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -52,7 +52,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plug-in, but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -79,32 +79,32 @@
     </command>
   </step-type>
   <step-type name="Create Domain">
-    <description>Create a domain in an org.</description>
+    <description>This step creates a domain in an organization.</description>
     <properties>
       <property name="api" required="true">
-        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A URL of the target Cloud Foundry system, for example,  http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
        <property name="org" required="true">
         <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <server:property-ui type="textBox" label="Space" default-value="${p:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space"/>
       </property>
       <property name="domain" required="true">
         <server:property-ui type="textBox" label="Domain" default-value="${p?:cf.domain}" description="Name of the domain owning the route."/>
       </property>
       <property name="selfSigned">
-        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -112,7 +112,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plug-in, but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -139,35 +139,35 @@
     </command>
   </step-type>
   <step-type name="Create Route">
-    <description>Create a url route in a space.</description>
+    <description>This step creates a URL route in a space.</description>
     <properties>
       <property name="api" required="true">
-        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A URL of the target Cloud Foundry system, for example,  http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
        <property name="org">
         <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}" description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}" description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="domain" required="true">
         <server:property-ui type="textBox" label="Domain" default-value="${p?:cf.domain}" description="Name of the domain owning the route."/>
       </property>
       <property name="hostname">
-        <server:property-ui type="textBox" label="Hostname" description="The hostname within the domain for the url route."/>
+        <server:property-ui type="textBox" label="Hostname" description="The hostname within the domain for the URL route."/>
       </property>
       <property name="selfSigned" >
-        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped."/>
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed."/>
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -175,7 +175,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plug-in, but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -202,41 +202,41 @@
     </command>
   </step-type>
   <step-type name="Create or Update User-Provided Service">
-    <description>Create or update a user-provided service instance.</description>
+    <description>This step creates or updates a user-provided service instance.</description>
     <properties>
       <property name="api" required="true">
-        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A URL of the target Cloud Foundry system, for example,  http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
        <property name="org" required="true">
         <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space" required="true">
-        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="service" required="true">
-        <server:property-ui type="textBox" label="User-Provided Service" default-value="${p:resource/cf.service}"  description="The name of the user-provided service"/>
+        <server:property-ui type="textBox" label="User-Provided Service" default-value="${p:resource/cf.service}"  description="The name of the user-provided service."/>
       </property>
       <property name="credentials" required="true">
         <server:property-ui type="textAreaBox" label="Credentials" default-value="${p:resource/cf.credentials}"  description='Credentials, in JSON format, to be exposed in the VCAP_SERVICES environment variable for bound applications. A full file path may also be specified. Example: {"username":"admin", "password":"pa55woRD"} Windows users must escape each double quote with a backslash.'/>
       </property>
       <property name="logDrainURL">
-        <server:property-ui type="textBox" label="Log Drain URL" default-value="${p?:resource/cf.logDrainURL}"  description="URL to which logs for bound applications will be streamed."/>
+        <server:property-ui type="textBox" label="Log Drain URL" default-value="${p?:resource/cf.logDrainURL}"  description="The URL to which logs for bound applications will be streamed."/>
       </property>
       <property name="routeServiceURL">
-        <server:property-ui type="textBox" label="Route Service URL" default-value="${p?:resource/cf.routeSerivceURL}"  description="URL to which requests for bound routes will be forwarded. Scheme for this URL must be https. Note: This feature was added in Cloud Foundry CLI v6.16.0."/>
+        <server:property-ui type="textBox" label="Route Service URL" default-value="${p?:resource/cf.routeSerivceURL}"  description="The URL to which requests for bound routes will be forwarded. Scheme for this URL must be https. Note: This feature was added in Cloud Foundry CLI v6.16.0."/>
       </property>
       <property name="selfSigned">
-        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -244,7 +244,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plug-in, but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -271,38 +271,38 @@
     </command>
   </step-type>
   <step-type name="Create Service">
-    <description>Create a new Cloud Foundry Service.</description>
+    <description>This setp creates a new Cloud Foundry Service.</description>
     <properties>
       <property name="api" required="true">
-        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A URL of the target Cloud Foundry system, for example: http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
        <property name="org">
         <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="service" required="true">
-        <server:property-ui type="textBox" label="Service name" default-value="${p:component/cf.service}" description="Name of the service."/>
+        <server:property-ui type="textBox" label="Service name" default-value="${p:component/cf.service}" description="The name of the service."/>
       </property>
       <property name="serviceType" required="true">
-        <server:property-ui type="textBox" label="Service type"  description="Type of service."/>
+        <server:property-ui type="textBox" label="Service type"  description="The type of service."/>
       </property>
       <property name="plan" required="true">
-        <server:property-ui type="textBox" label="Service plan"  description="Service plan."/>
+        <server:property-ui type="textBox" label="Service plan"  description="The service plan."/>
       </property>
       <property name="selfSigned">
-        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -310,7 +310,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plug-in, but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -337,35 +337,35 @@
     </command>
   </step-type>
   <step-type name="Create Subdomain">
-    <description>Create a subdomain in an org.</description>
+    <description>This step creates a subdomain in an organization.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A URL of the target Cloud Foundry system, for example: http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="org" required="true">
         <property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="subdomain" required="true">
-        <property-ui type="textBox" label="Subdomain" default-value="${p:resource/cf.subdomain}" description="Name of the subdomain i.e. myapp of myapp.domain.org."/>
+        <property-ui type="textBox" label="Subdomain" default-value="${p:resource/cf.subdomain}" description="The name of the subdomain, as in: myapp of myapp.domain.org."/>
       </property>
       <property name="domain" required="true">
-        <property-ui type="textBox" label="Domain" default-value="${p?:cf.domain}" description="Name of the domain i.e. domain.org of subdomain myapp.domain.org."/>
+        <property-ui type="textBox" label="Domain" default-value="${p?:cf.domain}" description="The name of the domain, as in: domain.org of subdomain myapp.domain.org."/>
       </property>
       <property name="selfSigned" >
-        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -373,7 +373,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plug-in, but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -400,35 +400,36 @@
     </command>
   </step-type>
   <step-type name="Delete App">
-    <description>Delete an application.</description>
+    <description>This step deletes an application.</description>
     <properties>
       <property name="api" required="true">
-        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, for example:
+		http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
        <property name="org">
         <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="Name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="The name of the application."/>
       </property>
       <property name="delete_Routes">
         <server:property-ui type="checkBox" label="Delete mapped routes" description="Also delete any mapped routes."/>
       </property>
       <property name="selfSigned">
-        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -436,7 +437,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plug-in, but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -466,29 +467,29 @@
     <description>Delete a domain.</description>
     <properties>
       <property name="api" required="true">
-        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A URL of the target Cloud Foundry system, for example: http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
        <property name="org">
         <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="domain">
-        <server:property-ui type="textBox" label="Domain" default-value="${p?:cf.domain}" description="Name of the domain to remove."/>
+        <server:property-ui type="textBox" label="Domain" default-value="${p?:cf.domain}" description="The name of the domain to remove."/>
       </property>
       <property name="selfSigned" >
-        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -496,7 +497,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plug-in, but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -523,35 +524,35 @@
     </command>
   </step-type>
   <step-type name="Delete Route">
-    <description>Delete a route.</description>
+    <description>This step deletes a route.</description>
     <properties>
       <property name="api" required="true">
-        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A URL of the target Cloud Foundry system, for example: http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
        <property name="org">
         <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="domain">
         <server:property-ui type="textBox" label="Domain" default-value="${p?:cf.domain}" description="Name of the domain owning the route."/>
       </property>
       <property name="hostname">
-        <server:property-ui type="textBox" label="Hostname" description="The hostname within the domain for the url route."/>
+        <server:property-ui type="textBox" label="Hostname" description="The hostname within the domain for the URL route."/>
       </property>
       <property name="selfSigned" >
-        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not ne performed" />
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -559,7 +560,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plug-in, but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -586,32 +587,32 @@
     </command>
   </step-type>
   <step-type name="Delete Service">
-    <description>Delete a Cloud Foundry Service.</description>
+    <description>This step deletes a Cloud Foundry Service.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A URL of the target Cloud Foundry system, for example: http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="org">
         <property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="name" required="true">
-        <property-ui type="textBox" label="Service name" default-value="${p:component/cf.service}" description="Name of the service."/>
+        <property-ui type="textBox" label="Service name" default-value="${p:component/cf.service}" description="The name of the service."/>
       </property>
       <property name="selfSigned">
-        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -619,7 +620,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plug-in, but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -646,35 +647,35 @@
     </command>
   </step-type>
   <step-type name="Delete Subdomain">
-    <description>Delete a subdomain.</description>
+    <description>This step deletes a subdomain.</description>
     <properties>
       <property name="api" required="true">
-        <property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A URL of the target Cloud Foundry system, for example: http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="org">
         <property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="subdomain" required="true">
-        <property-ui type="textBox" label="Subdomain" default-value="${p?:resource/cf.subdomain" description="Name of the subdomain i.e. myapp of myapp.domain.org."/>
+        <property-ui type="textBox" label="Subdomain" default-value="${p?:resource/cf.subdomain" description="The name of the subdomain, as in: myapp of myapp.domain.org."/>
       </property>
       <property name="domain" required="true">
-        <property-ui type="textBox" label="Domain" default-value="${p?:cf.domain}" description="Name of the domain i.e. domain.org of myapp.domain.org."/>
+        <property-ui type="textBox" label="Domain" default-value="${p?:cf.domain}" description="The name of the domain, as in: domain.org of myapp.domain.org."/>
       </property>
       <property name="selfSigned" >
-        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -682,7 +683,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plug-in, but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -709,35 +710,35 @@
     </command>
   </step-type>
   <step-type name="Execute CF Script">
-    <description>Execute a CF script. The context will be setup with the authenticated user and target space. cf.command line will be available to the script.</description>
+    <description>This step executes a cf script. The context will be set up with the authenticated user and target space.</description>
     <properties>
       <property name="api" required="true">
-        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A URL of the target Cloud Foundry system, for example: http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
        <property name="org">
         <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}" description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}" description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="script" required="true">
         <server:property-ui type="textAreaBox" label="Script" description="Each command needs to be on a new line."/>
       </property>
       <property name="args">
-        <server:property-ui type="textBox" label="Arguments" description="Arguments to be passed to the script, separated by spaces."/>
+        <server:property-ui type="textBox" label="Arguments" description="These are the arguments to be passed to the script, separated by spaces."/>
       </property>
       <property name="selfSigned" >
-        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -745,7 +746,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plug-in, but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -772,35 +773,35 @@
     </command>
   </step-type>
   <step-type name="Execute CF bash file">
-    <description>Execute a bash file. The context will be setup with the authenticated user and target space. CF command line will be available to the bash script. The sh command must be available from the command line.</description>
+    <description>This step executes a bash file. The context will be set up with the authenticated user and target space. The sh command must be available from the command line.</description>
     <properties>
       <property name="api" required="true">
-        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A URL of the target Cloud Foundry system, for example: http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
        <property name="org">
         <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="script" required="true">
-        <server:property-ui type="textBox" label="Script" description="Path to the cf.bash file."/>
+        <server:property-ui type="textBox" label="Script" description="The path to the cf.bash file."/>
       </property>
       <property name="args">
-        <server:property-ui type="textBox" label="Arguments" description="Arguments to be passed to the script, separated by spaces."/>
+        <server:property-ui type="textBox" label="Arguments" description="These are the arguments to be passed to the script, separated by spaces."/>
       </property>
       <property name="selfSigned">
-        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -808,7 +809,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plug-in, but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -835,38 +836,38 @@
     </command>
   </step-type>
   <step-type name="Map Route">
-    <description>Add a url route to an application.</description>
+    <description>This step adds a URL route to an application.</description>
     <properties>
       <property name="api" required="true">
-        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A URL of the target Cloud Foundry system, for example:  http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
        <property name="org">
         <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="Name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="The name of the application."/>
       </property>
       <property name="domain" required="true">
-        <server:property-ui type="textBox" label="Domain" default-value="${p?:cf.domain}" description="The domain to use. (e.g. example.com)."/>
+        <server:property-ui type="textBox" label="Domain" default-value="${p?:cf.domain}" description="The domain to use, as in: example.com."/>
       </property>
       <property name="hostname">
         <server:property-ui type="textBox" label="Hostname" description="The hostname within the domain for the url route."/>
       </property>
       <property name="selfSigned" >
-        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -874,7 +875,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plug-in, but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -901,77 +902,77 @@
     </command>
   </step-type>
   <step-type name="Push Application">
-    <description>Push application with or without a manifest file. If a manifest file is found then properties are used as overrides.</description>
+    <description>This step pushes the application with or without a manifest file. If a manifest file is found, then properties are used as overrides.</description>
     <properties>
       <property name="api" required="true">
-        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A URL of the target Cloud Foundry system, for example:  http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="appName">
-        <server:property-ui type="textBox" label="Application Name" description="The name of the application to use when deployed. Required if not using a manifest."/>
+        <server:property-ui type="textBox" label="Application Name" description="The name of the application to use when deployed. Application Name is required, if not using a manifest."/>
       </property>
       <property name="path">
-        <server:property-ui type="textBox" label="Application Path" description="Name of zip file or other file to push. If this file isn't in your working directory you must specify a full file path. (Otherwise just the name of the file e.g. 'myApp.zip')"/>
+        <server:property-ui type="textBox" label="Application Path" description="The name of zip file or other file to push. If this file isn't in your working directory, you must specify a full file path. (Otherwise just the name of the file e.g. 'myApp.zip')"/>
       </property>
        <property name="org">
         <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="manifest">
-        <server:property-ui type="textBox" label="Manifest file" description="Name of the manifest file. If this file isn't in your working directory you must specify a full file path. (Otherwise just the name of the file e.g. 'manifest.xml')"/>
+        <server:property-ui type="textBox" label="Manifest file" description="The name of the manifest file. If this file isn't in your working directory, you must specify a full file path. (Otherwise, just specify the name of the file, for example: 'manifest.xml')"/>
       </property>
       <property name="domain">
         <server:property-ui type="textBox" label="Domain" default-value="${p?:cf.domain}" description="Set a custom domain to be used when deploying the application."/>
       </property>
       <property name="subdomain">
-        <server:property-ui type="textBox" label="Sub-domain" description="Define a sub-domain for your application. This is useful to ensure that the URL route for the application is unique within the domain."/>
+        <server:property-ui type="textBox" label="Sub-domain" description="Define a subdomain for your application. This is useful to ensure that the URL route for the application is unique within the domain."/>
       </property>
       <property name="instances">
         <server:property-ui type="textBox" label="Number of instances" default-value="1" description="The number of instances of the application that will be created."/>
       </property>
       <property name="memory">
-        <server:property-ui type="textBox" label="Memory limit" description="The memory limit (e.g., 256M, 1024M, 1G)."/>
+        <server:property-ui type="textBox" label="Memory limit" description="The memory limit, for example: 256M, 1024M, 1G."/>
       </property>
       <property name="disk">
-        <server:property-ui type="textBox" label="Disk limit" description="The disk limit (e.g. 256M, 1024M, 1G)."/>
+        <server:property-ui type="textBox" label="Disk limit" description="The disk limit, for example: 256M, 1024M, 1G."/>
       </property>
       <property name="buildpack">
-        <server:property-ui type="textBox" label="Custom buildpack" description="Custom buildpack by name (e.g. my-buildpack) or GIT URL (e.g. https://github.com/heroku/heroku-buildpack-play.git)."/>
+        <server:property-ui type="textBox" label="Custom buildpack" description="The name of the custom buildpack, for example: my-buildpack, or the Git URL, for example: https://github.com/heroku/heroku-buildpack-play.git)."/>
       </property>
       <property name="stack">
-        <server:property-ui type="textBox" label="Stack" description=" Stack to use (a stack is a pre-built file system, including an operating system, that can run apps)."/>
+        <server:property-ui type="textBox" label="Stack" description=" The stack to use (a stack is a prebuilt file system, including an operating system, that can run applications)."/>
       </property>
       <property name="timeout">
-        <server:property-ui type="textBox" label="Timeout" description="Maximum time (in seconds) to wait for application start, other server side timeouts may apply."/>
+        <server:property-ui type="textBox" label="Timeout" description="The maximum time (in seconds) to wait for application start. Other server side timeouts may apply."/>
       </property>
       <property name="nostart">
-       <server:property-ui type="checkBox" label="No start" description="Does not start the application if selected."/>
+       <server:property-ui type="checkBox" label="No start" description="Does not start the application, if selected."/>
       </property>
       <property name="noroute">
-       <server:property-ui type="checkBox" label="No route" description="Does not create a URL route for the application if selected. Manually create and map a route later."/>
+       <server:property-ui type="checkBox" label="No route" description="Does not create a URL route for the application, if selected. Manually create and map a route later."/>
       </property>
       <property name="nomanifest">
-       <server:property-ui type="checkBox" label="No manifest" description="Ignore the manifest file if one exists."/>
+       <server:property-ui type="checkBox" label="No manifest" description="Ignore the manifest file, if one exists."/>
       </property>
       <property name="nohostname">
        <server:property-ui type="checkBox" label="No hostname" description="Map the root domain to this application."/>
       </property>
       <property name="randomroute">
-       <server:property-ui type="checkBox" label="Random route" description="Create a random route for this app."/>
+       <server:property-ui type="checkBox" label="Random route" description="Create a random route for this application."/>
       </property>
       <property name="selfSigned" >
-        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -979,7 +980,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plug-in, but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -1006,32 +1007,32 @@
     </command>
   </step-type>
   <step-type name="Restart App">
-    <description>Restart an application.</description>
+    <description>This step restarts an application.</description>
     <properties>
       <property name="api" required="true">
-        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A URL of the target Cloud Foundry system, sfor example:  http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
        <property name="org">
         <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="Name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="The name of the application."/>
       </property>
       <property name="selfSigned" >
-        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -1039,7 +1040,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plug-in, but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -1066,32 +1067,32 @@
     </command>
   </step-type>
   <step-type name="Start App">
-    <description>Start an application.</description>
+    <description>This step starts an application.</description>
     <properties>
       <property name="api" required="true">
-        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A URL of the target Cloud Foundry system, for example:  http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
        <property name="org">
         <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
         </property>
       <property name="space">
-        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
         </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="Name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="The name of the application."/>
       </property>
       <property name="selfSigned" >
-        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -1099,7 +1100,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -1126,32 +1127,32 @@
     </command>
   </step-type>
   <step-type name="Stop App">
-    <description>Stop an application.</description>
+    <description>This step stops an application.</description>
     <properties>
       <property name="api" required="true">
-        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A URL of the target Cloud Foundry system, for example:  http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
        <property name="org">
         <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for exaple: some-space."/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="Name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="The name of the application."/>
       </property>
       <property name="selfSigned" >
-        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -1159,7 +1160,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter"  default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plug-in, but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -1186,35 +1187,35 @@
     </command>
   </step-type>
   <step-type name="Unbind Service">
-    <description>Unbind a CF Service from a cf.application.</description>
+    <description>This step unbinds a Cloud Foundry Service from a cf.application.</description>
     <properties>
       <property name="api" required="true">
-        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A URL of the target Cloud Foundry system, for example: http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
        <property name="org">
         <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="Name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="The name of the application."/>
       </property>
       <property name="service" required="true">
-        <server:property-ui type="textBox" label="Service name" default-value="${p:component/cf.service}" description="Name of the service."/>
+        <server:property-ui type="textBox" label="Service name" default-value="${p:component/cf.service}" description="The name of the service."/>
       </property>
       <property name="selfSigned" >
-        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -1222,7 +1223,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter" default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plug-in, but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -1249,38 +1250,38 @@
     </command>
   </step-type>
   <step-type name="Unmap Route">
-    <description>Remove a url route to an application.</description>
+    <description>This step removes a url route to an application.</description>
     <properties>
       <property name="api" required="true">
-        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A url of the target Cloud Foundry system, such as http://api.ng.bluemix.net."/>
+        <server:property-ui type="textBox" label="API" default-value="${p:resource/cf.api}" description="A URL of the target Cloud Foundry system, for example: http://api.ng.bluemix.net."/>
       </property>
       <property name="user" required="false">
-        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="textBox" label="Cloud Foundry User" default-value="${p?:resource/cf.username}" description="The user name of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
       <property name="password" required="false">
-        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with Cloud Foundry system. Property is required unless authenticated outside of UrbanCode Deploy."/>
+        <server:property-ui type="secureBox" label="Cloud Foundry Password" default-value="${p?:resource/cf.password}" description="The password of the account that will interact with the Cloud Foundry system. Property is required, unless authenticated outside of UrbanCode Deploy."/>
       </property>
        <property name="org">
         <server:property-ui type="textBox" label="Organization" default-value="${p?:resource/cf.org}" description="The name of the organization where the application will be deployed."/>
       </property>
       <property name="space">
-        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed. (e.g some-space)"/>
+        <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="Name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="The name of the application."/>
       </property>
       <property name="domain" required="true">
-        <server:property-ui type="textBox" label="Domain" default-value="${p?:cf.domain}" description="The domain to use. (e.g. example.com)."/>
+        <server:property-ui type="textBox" label="Domain" default-value="${p?:cf.domain}" description="The domain to use, as in: example.com."/>
       </property>
       <property name="hostname">
-        <server:property-ui type="textBox" label="Hostname" description="The hostname within the domain for the url route."/>
+        <server:property-ui type="textBox" label="Hostname" description="The hostname within the domain for the URL route."/>
       </property>
       <property name="selfSigned" >
-        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
       </property>
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
-            for each step if not specified."/>
+            for each step, if not specified."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -1288,7 +1289,7 @@
       </property>
       <property name="interpreter">
         <property-ui type="selectBox" hidden="true" label="Use Shell Interpreter" default-value="${p&#63;:cf.interpreter}"
-                     description="Use a shell to interpret CF commands. This provides backward compatibility with the community plugin but does not escape special characters."/>
+                     description="Use a shell to interpret cf commands. This provides backward compatibility with the community plug-in, but does not escape special characters."/>
         <value label="${p&#63;:cf.interpreter}">${p&#63;:cf.interpreter}</value>
         <value label="True">true</value>
         <value label="False">false</value>
@@ -1315,11 +1316,11 @@
     </command>
   </step-type>
   <step-type name="CF Auto-Configure">
-    <description>Discover and configure all organizations and spaces for each organization into a resource tree in Urbancode Deploy.</description>
+    <description>This step discovers and configures all organizations and spaces for each organization into a resource tree in UrbanCode Deploy.</description>
     <properties>
       <property name="api">
         <server:property-ui type="textBox" default-value="${p?:resource/cf.api}" label="Cloud Foundry API"
-          description="The url of the Cloud Foundry API endpoint."/>
+          description="The URL of the Cloud Foundry API endpoint."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -1335,10 +1336,10 @@
       </property>
       <property name="resourcePath">
         <server:property-ui type="textBox" default-value="${p?:resource.path}" label="Resource"
-          description="The Resource being configured" hidden="true"/>
+          description="The Resource being configured." hidden="true"/>
       </property>
       <property name="selfSigned" >
-        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will be skipped." />
+        <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
       </property>
     </properties>
     <post-processing><![CDATA[
@@ -1361,11 +1362,11 @@
     <server:type>AUTO_CONFIGURE</server:type>
   </step-type>
   <step-type name="CF Discovery">
-    <description>This step will discover if Cloud Foundry is on an agent by checking common installation paths.  If it is, it will assign the role to the resource and set the command path property.</description>
+    <description>This step will discover if Cloud Foundry is on an agent, by checking common installation paths.  If Cloud Foundry is on the agent, UrbanCode Deploy will assign the role to the resource and set the command path property.</description>
     <properties>
       <property name="resourcePath">
         <server:property-ui type="textBox" default-value="${p:resource.path}" label="Resource"
-          description="The Resource being configured" hidden="true"/>
+          description="The Resource being configured." hidden="true"/>
       </property>
       <property name="overrideCommandPath">
         <server:property-ui type="textBox" default-value="${p?:agent/cf.commandPath}" label="Override CF CLI Path"
@@ -1378,7 +1379,7 @@
       </property>
       <property name="apiEndpoint">
         <server:property-ui type="textBox" default-value="${p?:agent/cf.api}" label="API Endpoint"
-          description="Provide the API Endpoint if the config.json file does not exist or is not configured correctly
+          description="Provide the API endpoint if the config.json file does not exist or is not configured correctly
             on the agent to be used during discovery."/>
       </property>
     </properties>
@@ -1405,13 +1406,13 @@
         <!-- ============================================= -->
 
   <server:property-group name="CloudFoundryController" type="ResourceRole" default-name-property="cf.api">
-    <server:description>Role for resources that represents a Cloud Controller in a Cloud Foundry instance.</server:description>
+    <server:description>The role for resources that represents a Cloud Controller in a Cloud Foundry instance.</server:description>
     <server:allowed-parent-roles/>
     <server:property name="cf.api">
       <server:property-ui 
         type="textBox" 
         label="cf.api"
-        description="The url of the Cloud Foundry API endpoint."/>
+        description="The URL of the Cloud Foundry API endpoint."/>
     </server:property>
     <server:property name="cf.commandPath">
       <server:property-ui
@@ -1436,7 +1437,7 @@
         <!-- ============================================= -->
 
   <server:property-group name="CloudFoundryOrganization" type="ResourceRole" default-name-property="cf.org">
-    <server:description>Role for resources that represents a Cloud Foundry organization in a Cloud Foundry instance.</server:description>
+    <server:description>The role for resources that represents a Cloud Foundry organization in a Cloud Foundry instance.</server:description>
     <server:allowed-parent-roles>
       <server:allowed-parent-role>
         <server:allowed-role-name>CloudFoundryController</server:allowed-role-name>
@@ -1457,7 +1458,7 @@
         <!-- ============================================= -->
 
   <server:property-group name="CloudFoundrySpace" type="ResourceRole" default-name-property="cf.space">
-    <server:description>Role for resources that represents a Cloud Foundry space within an organization in a Cloud Foundry instance.</server:description>
+    <server:description>The role for resources that represents a Cloud Foundry space within an organization in a Cloud Foundry instance.</server:description>
     <server:allowed-parent-roles>
       <server:allowed-parent-role>
         <server:allowed-role-name>CloudFoundryOrganization</server:allowed-role-name>
@@ -1475,7 +1476,7 @@
         <!-- ============================================= -->
 
   <server:property-group name="CloudFoundryApp" type="ResourceRole" default-name-property="cf.app">
-    <server:description>Role for resources that represents a Cloud Foundry application within an organization and space in a Cloud Foundry instance.</server:description>
+    <server:description>The role for resources that represents a Cloud Foundry application within an organization and space in a Cloud Foundry instance.</server:description>
     <server:allowed-parent-roles>
       <server:allowed-parent-role>
         <server:allowed-role-name>CloudFoundrySpace</server:allowed-role-name>
