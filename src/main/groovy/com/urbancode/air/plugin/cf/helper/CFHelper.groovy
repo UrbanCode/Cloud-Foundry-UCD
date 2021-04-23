@@ -201,6 +201,25 @@ class CFHelper {
         runHelperCommand("[Action] Executing CF create-route", commandArgs)
     }
 
+	
+	void createRouteCli7() {
+		def domain = props['domain']
+		def hostname = props['hostname']
+
+		setupEnvironment(api, organization, space)
+
+		// Execute create-route
+		def commandArgs = [cfFile, "create-route", domain]
+
+		if (hostname) {
+			commandArgs << "-n"
+			commandArgs << hostname
+		}
+
+		runHelperCommand("[Action] Executing CF create-route", commandArgs)
+	}
+
+	
     void createService() {
         def serviceName = props['service']
         def serviceType = props['serviceType']
@@ -469,6 +488,110 @@ class CFHelper {
         runHelperCommand("[Action] Deploying CloudFoundry application", commandArgs)
     }
 
+	void pushApplicationCli7() {
+		def appName = props['appName']
+		def file = props['path']
+		def manifest = props['manifest']
+		def instances = props['instances']
+		def memory = props['memory']
+		def disk = props['disk']
+		def buildpack = props['buildpack']
+		def stack = props['stack']
+		def timeout = props['timeout']
+		def nostart = props['nostart']
+		def noroute = props['noroute']
+		def nomanifest = props['nomanifest']
+		def nohostname = props['nohostname']
+		def randomroute = props['randomroute']
+
+		setupEnvironment(api, organization, space)
+
+		// Push the application
+		def commandArgs = [cfFile, "push"]
+
+		if (appName) {
+			commandArgs << appName
+		}
+
+
+		if (buildpack) {
+			commandArgs << "-b"
+			commandArgs << buildpack
+		}
+
+		if (manifest) {
+			File manifestPath = new File(workDir, manifest)
+
+			commandArgs << "-f"
+			if (manifestPath.exists() && manifestPath.isFile()) {
+				commandArgs << manifestPath.absolutePath
+			}
+			else {
+				commandArgs << manifest
+			}
+		}
+
+		if (instances) {
+			commandArgs << "-i"
+			commandArgs << instances
+		}
+
+		if (memory) {
+			commandArgs << "-m"
+			commandArgs << memory
+		}
+
+		if (disk) {
+			commandArgs << "-k"
+			commandArgs << disk
+		}
+
+		if (file) {
+			File filePath = new File(workDir, file)
+
+			commandArgs << "-p"
+			if (filePath.exists() && filePath.isFile()) {
+				commandArgs << filePath.absolutePath
+			}
+			else {
+				commandArgs << file
+			}
+		}
+
+		if (stack) {
+			commandArgs << "-s"
+			commandArgs << stack
+		}
+
+		if (timeout) {
+			commandArgs << "-t"
+			commandArgs << timeout
+		}
+
+		if (nostart == "true") {
+			commandArgs << "--no-start"
+		}
+
+		if (noroute == "true") {
+			commandArgs << "--no-route"
+		}
+
+		if (nomanifest == "true") {
+			commandArgs << "--no-manifest"
+		}
+
+		if (nohostname == "true") {
+			commandArgs << "--no-hostname"
+		}
+
+		if (randomroute == "true") {
+			commandArgs << "--random-route"
+		}
+
+		runHelperCommand("[Action] Deploying CloudFoundry application", commandArgs)
+	}
+
+	
     void restartApp() {
         def app = props['application']
 

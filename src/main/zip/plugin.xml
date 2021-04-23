@@ -8,7 +8,7 @@
 -->
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <header>
-    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="30"/>
+    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="31"/>
     <description>
     The Cloud Foundry plug-in uses the Cloud Foundry command line (cf) utility to interact with applications in a target Cloud Foundry system.
     </description>
@@ -168,6 +168,9 @@
       <property name="cfHome">
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step, if not specified."/>
+      </property>
+      <property name="cliversion">
+        <server:property-ui type="textBox" label="CLI Version" description="Specify 7 if using version cli 7 else leave blank."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
@@ -974,6 +977,9 @@
         <property-ui type="textBox" label="CF_HOME" default-value="${p?:resource/cf.home}" description="Set the CF_HOME variable to explicitly define the location of the config.json file. A new CF_HOME will be used
             for each step, if not specified."/>
       </property>
+      <property name="cliversion">
+        <server:property-ui type="textBox" label="CLI Version" description="Specify 7 if using version cli 7 else leave blank."/>
+      </property>      
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
           description="The path to the cf command line script."/>
