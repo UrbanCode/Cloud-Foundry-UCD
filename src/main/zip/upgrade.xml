@@ -722,4 +722,46 @@
     </migrate>
     <migrate to-version="30">
     </migrate>    
+    <migrate to-version="31">
+        <migrate-command name="Bind Service">
+            <migrate-properties>
+                <migrate-property name="application" default="${p?:component/cf.appName}${p?:resource/cf.app}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Delete App">
+            <migrate-properties>
+                <migrate-property name="application" default="${p?:component/cf.appName}${p?:resource/cf.app}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Map Route">
+            <migrate-properties>
+                <migrate-property name="application" default="${p?:component/cf.appName}${p?:resource/cf.app}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Restart App">
+            <migrate-properties>
+                <migrate-property name="application" default="${p?:component/cf.appName}${p?:resource/cf.app}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Start App">
+            <migrate-properties>
+                <migrate-property name="application" default="${p?:component/cf.appName}${p?:resource/cf.app}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Stop App">
+            <migrate-properties>
+                <migrate-property name="application" default="${p?:component/cf.appName}${p?:resource/cf.app}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Unbind Service">
+            <migrate-properties>
+                <migrate-property name="application" default="${p?:component/cf.appName}${p?:resource/cf.app}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Unmap Route">
+            <migrate-properties>
+                <migrate-property name="application" default="${p?:component/cf.appName}${p?:resource/cf.app}" />
+            </migrate-properties>
+        </migrate-command>
+    </migrate>
 </plugin-upgrade>
