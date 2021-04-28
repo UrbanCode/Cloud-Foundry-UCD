@@ -88,6 +88,9 @@
     <release-note plugin-version="30">
         Fixed APAR PH05332 Cloud Foundry Plugin v23 or v27 Create or Update Service step is failing. Refactored the way of fetching them from cli only.
     </release-note>
+    <release-note plugin-version="31">
+        Updated 'application' property default values to check for both component/cf.appName and resource/cf.app.
+    </release-note>  
     <release-note plugin-version="32">
         RFE 148034 - Add support for cli 7 - required upgrade in steps - push app, create route
     </release-note>    
