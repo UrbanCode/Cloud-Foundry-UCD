@@ -725,5 +725,7 @@
     <migrate to-version="31">
     </migrate>
     <migrate to-version="32">
-    </migrate>      
+    </migrate>
+    <migrate to-version="33">
+    </migrate>
 </plugin-upgrade>
