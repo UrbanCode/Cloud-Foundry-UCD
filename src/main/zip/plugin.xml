@@ -170,7 +170,7 @@
             for each step, if not specified."/>
       </property>
       <property name="cliversion">
-        <server:property-ui type="textBox" label="CLI Version" default-value="${p?:resource/cf.version123}" description="Specify 7 if using version cli 7 else leave blank."/>
+        <server:property-ui type="textBox" label="CLI Version" default-value="${p?:resource/cf.version}" description="Specify 7 if using version cli 7 else leave blank."/>
       </property>
       <property name="commandPath">
         <server:property-ui type="textBox" hidden="true" default-value="${p?:resource/cf.commandPath}" label="Cloud Foundry CLI Path"
