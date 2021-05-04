@@ -503,6 +503,9 @@ class CFHelper {
 		def nomanifest = props['nomanifest']
 		def nohostname = props['nohostname']
 		def randomroute = props['randomroute']
+		def nowait = props['nowait']
+		def endpoint = props['endpoint']
+		def strategy = props['strategy']
 
 		setupEnvironment(api, organization, space)
 
@@ -586,6 +589,21 @@ class CFHelper {
 
 		if (randomroute == "true") {
 			commandArgs << "--random-route"
+		}
+		
+		if (strategy == "true") {
+		    commandArgs << "--strategy"
+		    commandArgs << "rolling"
+		}
+
+		if (endpoint .trim()) {
+		    commandArgs << "--health-check-type=http"
+		    commandArgs << "--endpoint"
+		    commandArgs << endpoint.trim()
+		}
+
+		if (nowait == "true") {
+		    commandArgs << "--no-wait"
 		}
 
 		runHelperCommand("[Action] Deploying CloudFoundry application", commandArgs)
