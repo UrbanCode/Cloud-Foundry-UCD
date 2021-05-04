@@ -96,6 +96,9 @@
     </release-note>
     <release-note plugin-version="33">
         Add default version property reference to process's resource path
-    </release-note>   
+    </release-note>
+    <release-note plugin-version="34">
+        Add property  -  nowait, strategy, endpoint to Step - Push Application  
+    </release-note> 
   </release-notes>
 </pluginInfo>
