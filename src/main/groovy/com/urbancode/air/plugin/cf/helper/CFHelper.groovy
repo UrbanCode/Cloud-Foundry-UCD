@@ -596,10 +596,10 @@ class CFHelper {
 		    commandArgs << "rolling"
 		}
 
-		if (endpoint .trim()) {
+		if (endpoint?.trim()) {
 		    commandArgs << "--health-check-type=http"
 		    commandArgs << "--endpoint"
-		    commandArgs << endpoint.trim()
+		    commandArgs << endpoint?.trim()
 		}
 
 		if (nowait == "true") {
