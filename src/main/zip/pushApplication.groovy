@@ -25,9 +25,9 @@ else
 try {
 	
 	if(cliVersion=="7")
-        helper.pushApplication()
-	else
 		helper.pushApplicationCli7()
+	else
+		helper.pushApplication()	
 } catch(ExitCodeException e) {
     println(e)
     exitCode = 1
