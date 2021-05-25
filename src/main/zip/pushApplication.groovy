@@ -14,8 +14,20 @@ CFHelper helper = new CFHelper(apTool.getStepProperties())
 
 int exitCode = 0
 
+def cliVersion = helper.props["cliversion"]?helper.props["cliversion"]:""
+
+if(cliVersion!="7")
+	println("cli version passed other than 7 !")
+else
+	println("cli version passed :" + cliVersion)
+	
+
 try {
-    helper.pushApplication()
+	
+	if(cliVersion=="7")
+		helper.pushApplicationCli7()
+	else
+		helper.pushApplication()	
 } catch(ExitCodeException e) {
     println(e)
     exitCode = 1

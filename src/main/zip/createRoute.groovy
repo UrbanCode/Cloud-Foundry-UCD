@@ -13,9 +13,19 @@ AirPluginTool apTool = new AirPluginTool(this.args[0], this.args[1])
 CFHelper helper = new CFHelper(apTool.getStepProperties())
 
 int exitCode = 0
+def cliVersion = helper.props["cliversion"]?helper.props["cliversion"]:""
 
+if(cliVersion!="7")
+	println("cli version passed other than 7 !")
+else
+	println("cli version passed :" + cliVersion)
+	
 try {
-    helper.createRoute()
+	
+	if(cliVersion=="7")
+		helper.createRouteCli7()
+		else
+        helper.createRoute()
 } catch(ExitCodeException e) {
     println(e)
     exitCode = 1

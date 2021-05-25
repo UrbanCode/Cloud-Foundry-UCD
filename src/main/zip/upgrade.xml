@@ -764,4 +764,10 @@
             </migrate-properties>
         </migrate-command>
     </migrate>
+    <migrate to-version="32">
+    </migrate>
+    <migrate to-version="33">
+    </migrate>
+    <migrate to-version="34">
+    </migrate>  
 </plugin-upgrade>

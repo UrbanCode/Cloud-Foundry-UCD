@@ -90,6 +90,15 @@
     </release-note>
     <release-note plugin-version="31">
         Updated 'application' property default values to check for both component/cf.appName and resource/cf.app.
+    </release-note>  
+    <release-note plugin-version="32">
+        RFE 148034 - Add support for cli 7 - required upgrade in steps - push app, create route
     </release-note>
+    <release-note plugin-version="33">
+        Add default version property reference to process's resource path
+    </release-note>
+    <release-note plugin-version="34">
+        Add property  -  nowait, strategy, endpoint to Step - Push Application  
+    </release-note> 
   </release-notes>
 </pluginInfo>
