@@ -34,7 +34,7 @@
         <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization where the application will be deployed, for example: some-space"/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application Name" default-value="${p:resource/cf.app}" description="The name of the application to bind to the service."/>
+        <server:property-ui type="textBox" label="Application Name" default-value="${p?:component/cf.appName}${p?:resource/cf.app}" description="The name of the application to bind to the service."/>
       </property>
       <property name="service" required="true">
         <server:property-ui type="textBox" label="Service name" default-value="${p:component/cf.service}" description="The name of the service to be bound."/>
@@ -422,7 +422,7 @@
         <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="The name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p?:component/cf.appName}${p?:resource/cf.app}" description="The name of the application."/>
       </property>
       <property name="delete_Routes">
         <server:property-ui type="checkBox" label="Delete mapped routes" description="Also delete any mapped routes."/>
@@ -857,7 +857,7 @@
         <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="The name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p?:component/cf.appName}${p?:resource/cf.app}" description="The name of the application."/>
       </property>
       <property name="domain" required="true">
         <server:property-ui type="textBox" label="Domain" default-value="${p?:cf.domain}" description="The domain to use, as in: example.com."/>
@@ -1040,7 +1040,7 @@
         <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="The name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p?:component/cf.appName}${p?:resource/cf.app}" description="The name of the application."/>
       </property>
       <property name="selfSigned" >
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
@@ -1100,7 +1100,7 @@
         <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
         </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="The name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p?:component/cf.appName}${p?:resource/cf.app}" description="The name of the application."/>
       </property>
       <property name="selfSigned" >
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
@@ -1160,7 +1160,7 @@
         <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for exaple: some-space."/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="The name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p?:component/cf.appName}${p?:resource/cf.app}" description="The name of the application."/>
       </property>
       <property name="selfSigned" >
         <server:property-ui type="checkBox" label="Skip SSL Validation" description="If checked, SSL validation will not be performed." />
@@ -1220,7 +1220,7 @@
         <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="The name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p?:component/cf.appName}${p?:resource/cf.app}" description="The name of the application."/>
       </property>
       <property name="service" required="true">
         <server:property-ui type="textBox" label="Service name" default-value="${p:component/cf.service}" description="The name of the service."/>
@@ -1283,7 +1283,7 @@
         <server:property-ui type="textBox" label="Space" default-value="${p?:resource/cf.space}"  description="The name of the space within the organization that the application will be deployed, for example: some-space."/>
       </property>
       <property name="application" required="true">
-        <server:property-ui type="textBox" label="Application name" default-value="${p:resource/cf.app}" description="The name of the application."/>
+        <server:property-ui type="textBox" label="Application name" default-value="${p?:component/cf.appName}${p?:resource/cf.app}" description="The name of the application."/>
       </property>
       <property name="domain" required="true">
         <server:property-ui type="textBox" label="Domain" default-value="${p?:cf.domain}" description="The domain to use, as in: example.com."/>
