@@ -770,4 +770,19 @@
     </migrate>
     <migrate to-version="34">
     </migrate>  
+    <migrate to-version="35">
+        <migrate-command name="Create Route">
+            <migrate-properties>
+                <migrate-property name="cliversion" default="${p?:resource/cf.version}" />
+            </migrate-properties>
+        </migrate-command>
+        <migrate-command name="Push Application">
+            <migrate-properties>
+                <migrate-property name="strategy" default="" />
+                <migrate-property name="endpoint" default="" />
+                <migrate-property name="nowait" default="" />
+                <migrate-property name="cliversion" default="${p?:resource/cf.version}" />
+            </migrate-properties>
+        </migrate-command>
+    </migrate>
 </plugin-upgrade>

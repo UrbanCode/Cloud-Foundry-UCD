@@ -100,5 +100,8 @@
     <release-note plugin-version="34">
         Add property  -  nowait, strategy, endpoint to Step - Push Application  
     </release-note> 
+    <release-note plugin-version="35">
+        On upgrade to v34 , cli version was not picking up correctly that has been fixed in v35  
+    </release-note>
   </release-notes>
 </pluginInfo>
