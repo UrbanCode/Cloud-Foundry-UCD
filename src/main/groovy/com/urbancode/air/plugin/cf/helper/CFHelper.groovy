@@ -745,7 +745,7 @@ class CFHelper {
             // Ensure space exists. create-space does nothing if space exists
             commandArgs = [cfFile, "create-space", space]
 
-            runHelperCommand("[Action] Creating CloudFoundry space", commandArgs)
+            // runHelperCommand("[Action] Creating CloudFoundry space", commandArgs)
 
             // Set target space
             commandArgs = [cfFile, "target", "-s", space]
