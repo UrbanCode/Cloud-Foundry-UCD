@@ -23,7 +23,6 @@ else
 	
 
 try {
-	
 	if(cliVersion=="7")
 		helper.pushApplicationCli7()
 	else

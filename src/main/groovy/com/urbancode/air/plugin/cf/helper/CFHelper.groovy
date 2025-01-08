@@ -677,6 +677,7 @@ class CFHelper {
 
     // set the api, organization, and space targets for the cf executable
     void setupEnvironment(def api, def organization, def space) {
+        println("[Setting up the environment]")
         // Setup path
         def curPath = System.getenv("PATH")
 
@@ -742,8 +743,9 @@ class CFHelper {
         }
 
         if (space) {
+            println("[Checking , if space has been provided by the user]")
             // Ensure space exists. create-space does nothing if space exists
-            commandArgs = [cfFile, "create-space", space]
+            // commandArgs = [cfFile, "create-space", space]
 
             // runHelperCommand("[Action] Creating CloudFoundry space", commandArgs)
 
