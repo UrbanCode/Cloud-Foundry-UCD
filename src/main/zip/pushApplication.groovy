@@ -12,6 +12,7 @@ import com.urbancode.air.plugin.cf.helper.CFHelper
 AirPluginTool apTool = new AirPluginTool(this.args[0], this.args[1])
 CFHelper helper = new CFHelper(apTool.getStepProperties())
 
+
 int exitCode = 0
 
 def cliVersion = helper.props["cliversion"]?helper.props["cliversion"]:""
