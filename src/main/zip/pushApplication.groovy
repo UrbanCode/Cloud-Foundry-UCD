@@ -10,9 +10,9 @@ import com.urbancode.air.ExitCodeException
 import com.urbancode.air.plugin.cf.helper.CFHelper
 import com.urbancode.air.plugin.cf.helper.NewAirPluginTool
 
+
 def apTool = new NewAirPluginTool(this.args[0], this.args[1])
 CFHelper helper = new CFHelper(apTool.getStepProperties())
-
 
 int exitCode = 0
 
