@@ -8,7 +8,7 @@
 -->
 <plugin xmlns="http://www.urbancode.com/PluginXMLSchema_v1" xmlns:server="http://www.urbancode.com/PluginServerXMLSchema_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <header>
-    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="35"/>
+    <identifier id="com.urbancode.air.plugin.cloudfoundry" name="CloudFoundry" version="36"/>
     <description>
     The Cloud Foundry plug-in uses the Cloud Foundry command line (cf) utility to interact with applications in a target Cloud Foundry system.
     </description>
@@ -72,7 +72,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="bindService.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -132,7 +133,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="createDomain.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -198,7 +200,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="createRoute.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -267,7 +270,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="createOrUpdateUPS.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -333,7 +337,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="createService.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -396,7 +401,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="createSubdomain.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -460,7 +466,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="deleteApp.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -520,7 +527,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="deleteDomain.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -583,7 +591,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="deleteRoute.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -643,7 +652,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="deleteService.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -706,7 +716,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="deleteSubdomain.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -769,7 +780,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="executeCFScript.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -832,7 +844,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="executeBashScript.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -898,7 +911,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="mapRoute.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -1015,7 +1029,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="pushApplication.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -1075,7 +1090,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="restartApp.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -1135,7 +1151,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="startApp.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -1195,7 +1212,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="stopApp.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -1258,7 +1276,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="unbindService.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -1324,7 +1343,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="unmapRoute.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -1367,7 +1387,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/uDeployRestClient.jar:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/uDeployRestClient.jar:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="configureCF.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -1408,7 +1429,8 @@
      ]]></post-processing>
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/uDeployRestClient.jar:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/>
+      <arg path="classes:lib/*"/>
+      <!-- <arg path="classes:lib/uDeployRestClient.jar:lib/securedata.jar:lib/jettison-1.1.jar:lib/commons-codec.jar:lib/CommonsUtil.jar:lib/commons-io.jar"/> -->
       <arg file="discoverCF.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>

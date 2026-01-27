@@ -51,6 +51,7 @@ class CFHelper {
         envVars.each {
             helper.addEnvironmentVariable(it.key, it.value)
         }
+    
 
         /* Colorized output treated as ASCII control characters */
         helper.addEnvironmentVariable("CF_COLOR", "false")
@@ -390,8 +391,19 @@ class CFHelper {
         def nomanifest = props['nomanifest']
         def nohostname = props['nohostname']
         def randomroute = props['randomroute']
+        
+        println("[Coming from push application -----]")
+        println("[api]" + api)
+        println("[organization]" + organization)
+        println("[space]" + space)
 
-        setupEnvironment(api, organization, space)
+        try {
+            setupEnvironment(api, organization, space)
+        } catch (Exception e) {
+            println("[The issue occurs while setting up envrionment]" + e.message)
+        }
+
+    
 
         // Push the application
         def commandArgs = [cfFile, "push"]
@@ -677,6 +689,10 @@ class CFHelper {
 
     // set the api, organization, and space targets for the cf executable
     void setupEnvironment(def api, def organization, def space) {
+        println("[Setting up the environment]")
+        println("[api]" + api)
+        println("[organization]" + organization)
+        println("[space]" + space)
         // Setup path
         def curPath = System.getenv("PATH")
 
@@ -685,6 +701,7 @@ class CFHelper {
         println "[Action] Setup of path using plugin home: " + pluginHome
         def binDir = new File(pluginHome, "bin")
         def newPath = curPath+":"+binDir.absolutePath
+
         helper.addEnvironmentVariable("PATH", newPath)
 
         // change location of config.json file
@@ -714,13 +731,17 @@ class CFHelper {
             commandArgs << "--skip-ssl-validation"
         }
 
-        runHelperCommand("[Action] Setting cf target api", commandArgs)
-
+        try {
+            println("[commandArgs ----]" + commandArgs)
+            runHelperCommand("[Action] Setting cf target api", commandArgs)    
+        } catch (Exception e) {
+            println("[Fail to set cf target api] " + e.message)
+        }
+        
         // Authenticate with username and password
         if (!isAuthenticated && (username && password)) {
             if (organization && space) {
                 commandArgs = [cfFile, "auth", username, password]
-
                 runHelperCommand("[Action] Authenticating with CloudFoundry", commandArgs, false)
             }
 
@@ -742,10 +763,11 @@ class CFHelper {
         }
 
         if (space) {
+            println("[Checking , if space has been provided by the user]")
             // Ensure space exists. create-space does nothing if space exists
-            commandArgs = [cfFile, "create-space", space]
+            // commandArgs = [cfFile, "create-space", space]
 
-            runHelperCommand("[Action] Creating CloudFoundry space", commandArgs)
+            // runHelperCommand("[Action] Creating CloudFoundry space", commandArgs)
 
             // Set target space
             commandArgs = [cfFile, "target", "-s", space]
@@ -911,10 +933,16 @@ class CFHelper {
     }
 
     def runHelperCommand(def message, def baseArgs) {
+        println("[runHelperCommand - 1] ")
+        println("[message] " + message)
+        println("[baseArgs] " + baseArgs)
         runHelperCommand(message, baseArgs, true)
     }
 
     def runHelperCommand(def message, def baseArgs, Boolean usePrefix) {
+        println("[runHelperCommand - 2] ")
+        println("[message] " + message)
+        println("[baseArgs] " + baseArgs)
         def commandArgs = []
         if (interpreter && usePrefix) {
             commandArgs = ["sh", "-c"]

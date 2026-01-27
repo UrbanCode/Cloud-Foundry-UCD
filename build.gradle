@@ -61,6 +61,8 @@ dependencies {
     compile 'com.ibm.urbancode.plugins:groovy-plugin-utils:+'
     compile 'com.ibm.urbancode.util:i18n-scraper:+'
     compile 'com.ibm.urbancode.commons:uDeployRestClient:+'
+    compile 'commons-io:commons-io:+'
+
 
     // This compiles the i18n-scraper script
     compile localGroovy()

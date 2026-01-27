@@ -103,5 +103,8 @@
     <release-note plugin-version="35">
         On upgrade to v34 , cli version was not picking up correctly that has been fixed in v35  
     </release-note>
+    <release-note plugin-version="36">
+        Removed unwanted space creation for Push Application step and fixed groovy 3 issue
+    </release-note>
   </release-notes>
 </pluginInfo>
